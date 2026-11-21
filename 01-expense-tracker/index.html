@@ -1,9 +1,104 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Alireza Baghbani" />
+    <meta
+      name="description"
+      content="LedgerFlow is a trilingual (English, German, Persian) personal finance and expense tracking web application built with Vanilla JavaScript, featuring real-time cashflow analytics and local storage persistence."
+    />
+    <meta
+      name="keywords"
+      content="Expense Tracker, Budget Planner, Personal Finance App, Vanilla JavaScript, Trilingual Web App, Alireza Baghbani, مدیریت هزینه, حسابداری شخصی, Haushaltsbuch"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large"
+    />
+    <meta name="theme-color" content="#070c16" />
+
+    <!-- Security Headers via Meta -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Canonical & Multilingual Discovery -->
+    <link
+      rel="canonical"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/"
+    />
+    <link
+      rel="alternate"
+      hreflang="de"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/"
+    />
+    <link
+      rel="alternate"
+      hreflang="fa"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/"
+    />
+
+    <!-- Open Graph / Social & AI Preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LedgerFlow by Alireza Baghbani" />
+    <meta
+      property="og:title"
+      content="LedgerFlow — Smart Trilingual Expense & Budget Tracker"
+    />
+    <meta
+      property="og:description"
+      content="Zero-dependency Vanilla JavaScript personal finance tracker supporting English, German, and Persian (RTL) with real-time category analytics."
+    />
+    <meta
+      property="og:url"
+      content="https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/"
+    />
+
+    <!-- Structured Data (JSON-LD) for Search Engines & AI Agents -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "LedgerFlow — Smart Expense & Budget Tracker",
+        "url": "https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript and HTML5 LocalStorage",
+        "inLanguage": ["en", "de", "fa"],
+        "description": "A zero-dependency trilingual personal finance and budget management application featuring real-time balance analytics, category breakdowns, and client-side persistence.",
+        "featureList": [
+          "Real-time Net Balance, Income, Expense, and Savings Ratio KPIs",
+          "Trilingual UI supporting English, German, and Persian with automatic RTL layout",
+          "Category spending distribution progress visualization",
+          "Live search and transaction type filtering",
+          "Offline-ready LocalStorage data persistence"
+        ],
+        "author": {
+          "@type": "Person",
+          "name": "Alireza Baghbani",
+          "url": "https://github.com/alirezabaghbanicode"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+
     <title>LedgerFlow — Smart Expense &amp; Budget Tracker</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
@@ -15,17 +110,58 @@
           <span class="brand-logo" aria-hidden="true">LF</span>
           <div>
             <span class="brand-name">LedgerFlow</span>
-            <span class="brand-sub"
+            <span class="brand-sub" data-i18n="brandSub"
               >Personal Finance &amp; Cashflow Engine</span
             >
           </div>
         </div>
 
         <div class="topbar-actions">
-          <button type="button" id="seed-btn" class="btn btn-ghost">
+          <div
+            class="lang-switcher"
+            role="group"
+            aria-label="Language Switcher"
+          >
+            <button
+              type="button"
+              class="lang-btn active"
+              data-lang="en"
+              aria-pressed="true"
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              class="lang-btn"
+              data-lang="de"
+              aria-pressed="false"
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              class="lang-btn"
+              data-lang="fa"
+              aria-pressed="false"
+            >
+              FA
+            </button>
+          </div>
+
+          <button
+            type="button"
+            id="seed-btn"
+            class="btn btn-ghost"
+            data-i18n="seedBtn"
+          >
             Load Demo Data
           </button>
-          <button type="button" id="clear-btn" class="btn btn-danger-ghost">
+          <button
+            type="button"
+            id="clear-btn"
+            class="btn btn-danger-ghost"
+            data-i18n="clearBtn"
+          >
             Clear All
           </button>
         </div>
@@ -33,44 +169,60 @@
     </header>
 
     <main class="app-shell">
+      <h1 class="sr-only" data-i18n="pageH1">
+        LedgerFlow Personal Expense and Budget Tracker
+      </h1>
+
       <!-- KPI Summary Cards -->
       <section class="kpi-strip" aria-label="Financial Overview">
         <article class="kpi-card kpi-balance">
-          <span class="kpi-label">Net Balance</span>
+          <span class="kpi-label" data-i18n="kpiBalanceLabel">Net Balance</span>
           <strong class="kpi-value" id="net-balance">$0.00</strong>
-          <span class="kpi-meta">Available cashflow</span>
+          <span class="kpi-meta" data-i18n="kpiBalanceMeta"
+            >Available cashflow</span
+          >
         </article>
 
         <article class="kpi-card kpi-income">
-          <span class="kpi-label">Total Income</span>
+          <span class="kpi-label" data-i18n="kpiIncomeLabel">Total Income</span>
           <strong class="kpi-value" id="total-income">$0.00</strong>
-          <span class="kpi-meta">Inflows recorded</span>
+          <span class="kpi-meta" data-i18n="kpiIncomeMeta"
+            >Inflows recorded</span
+          >
         </article>
 
         <article class="kpi-card kpi-expense">
-          <span class="kpi-label">Total Expenses</span>
+          <span class="kpi-label" data-i18n="kpiExpenseLabel"
+            >Total Expenses</span
+          >
           <strong class="kpi-value" id="total-expense">$0.00</strong>
-          <span class="kpi-meta">Outflows recorded</span>
+          <span class="kpi-meta" data-i18n="kpiExpenseMeta"
+            >Outflows recorded</span
+          >
         </article>
 
         <article class="kpi-card kpi-savings">
-          <span class="kpi-label">Savings Ratio</span>
+          <span class="kpi-label" data-i18n="kpiSavingsLabel"
+            >Savings Ratio</span
+          >
           <strong class="kpi-value" id="savings-rate">0%</strong>
-          <span class="kpi-meta">Retained from income</span>
+          <span class="kpi-meta" data-i18n="kpiSavingsMeta"
+            >Retained from income</span
+          >
         </article>
       </section>
 
       <!-- Main Two-Column Workspace -->
       <div class="workspace">
-        <!-- Left Column: Add Transaction + Expense Breakdown -->
+        <!-- Start Column: Add Transaction + Expense Breakdown -->
         <div class="left-stack">
           <section class="panel" aria-labelledby="form-heading">
             <div class="panel-header">
-              <h2 id="form-heading">New Transaction</h2>
-              <p>Record an income source or expense item</p>
+              <h2 id="form-heading" data-i18n="formHeading">New Transaction</h2>
+              <p data-i18n="formSub">Record an income source or expense item</p>
             </div>
 
-            <form id="transaction-form" class="tx-form">
+            <form id="transaction-form" class="tx-form" autocomplete="off">
               <div
                 class="type-toggle"
                 role="group"
@@ -78,20 +230,25 @@
               >
                 <label class="type-option">
                   <input type="radio" name="tx-type" value="expense" checked />
-                  <span class="type-pill expense-pill">Expense (-)</span>
+                  <span class="type-pill expense-pill" data-i18n="typeExpense"
+                    >Expense (-)</span
+                  >
                 </label>
                 <label class="type-option">
                   <input type="radio" name="tx-type" value="income" />
-                  <span class="type-pill income-pill">Income (+)</span>
+                  <span class="type-pill income-pill" data-i18n="typeIncome"
+                    >Income (+)</span
+                  >
                 </label>
               </div>
 
               <div class="field">
-                <label for="tx-title">Description</label>
+                <label for="tx-title" data-i18n="labelDesc">Description</label>
                 <input
                   type="text"
                   id="tx-title"
                   placeholder="e.g., Cloud Hosting, Freelance Project"
+                  data-i18n-placeholder="placeholderDesc"
                   maxlength="60"
                   required
                 />
@@ -99,25 +256,30 @@
 
               <div class="field-row">
                 <div class="field">
-                  <label for="tx-amount">Amount (USD)</label>
+                  <label for="tx-amount" data-i18n="labelAmount"
+                    >Amount (USD)</label
+                  >
                   <input
                     type="number"
                     id="tx-amount"
                     placeholder="0.00"
                     step="0.01"
                     min="0.01"
+                    max="999999999"
                     required
                   />
                 </div>
 
                 <div class="field">
-                  <label for="tx-date">Date</label>
+                  <label for="tx-date" data-i18n="labelDate">Date</label>
                   <input type="date" id="tx-date" required />
                 </div>
               </div>
 
               <div class="field">
-                <label for="tx-category">Category</label>
+                <label for="tx-category" data-i18n="labelCategory"
+                  >Category</label
+                >
                 <select id="tx-category">
                   <option value="Software & Tools">Software &amp; Tools</option>
                   <option value="Housing & Bills">Housing &amp; Bills</option>
@@ -129,7 +291,11 @@
                 </select>
               </div>
 
-              <button type="submit" class="btn btn-primary">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-i18n="submitBtn"
+              >
                 Add Transaction
               </button>
             </form>
@@ -137,19 +303,26 @@
 
           <section class="panel" aria-labelledby="breakdown-heading">
             <div class="panel-header">
-              <h2 id="breakdown-heading">Expense Breakdown</h2>
-              <p>Spending distribution by category</p>
+              <h2 id="breakdown-heading" data-i18n="breakdownHeading">
+                Expense Breakdown
+              </h2>
+              <p data-i18n="breakdownSub">Spending distribution by category</p>
             </div>
             <div id="category-breakdown" class="breakdown-list"></div>
           </section>
         </div>
 
-        <!-- Right Column: Search, Filter & Transaction History -->
+        <!-- End Column: Search, Filter & Transaction History -->
         <section class="panel ledger-panel" aria-labelledby="ledger-heading">
           <div class="ledger-top">
             <div>
-              <h2 id="ledger-heading">Transaction Ledger</h2>
-              <p><span id="tx-count">0</span> matching records</p>
+              <h2 id="ledger-heading" data-i18n="ledgerHeading">
+                Transaction Ledger
+              </h2>
+              <p>
+                <span id="tx-count">0</span>
+                <span data-i18n="matchingRecords">matching records</span>
+              </p>
             </div>
 
             <div class="ledger-controls">
@@ -157,12 +330,18 @@
                 type="search"
                 id="search-input"
                 placeholder="Search description or category..."
+                data-i18n-placeholder="searchPlaceholder"
+                maxlength="60"
                 aria-label="Search transactions"
               />
               <select id="filter-type" aria-label="Filter by transaction type">
-                <option value="all">All Types</option>
-                <option value="income">Income Only</option>
-                <option value="expense">Expenses Only</option>
+                <option value="all" data-i18n="filterAll">All Types</option>
+                <option value="income" data-i18n="filterIncome">
+                  Income Only
+                </option>
+                <option value="expense" data-i18n="filterExpense">
+                  Expenses Only
+                </option>
               </select>
             </div>
           </div>
@@ -174,9 +353,11 @@
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <span>LedgerFlow • Vanilla JavaScript &amp; LocalStorage</span>
+        <span data-i18n="footerTech"
+          >LedgerFlow • Vanilla JavaScript &amp; LocalStorage</span
+        >
         <span>
-          Built by
+          <span data-i18n="footerBuiltBy">Built by</span>
           <a
             href="https://github.com/alirezabaghbanicode/js-practical-projects"
             target="_blank"
