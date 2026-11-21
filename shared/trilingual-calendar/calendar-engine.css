@@ -1,0 +1,216 @@
+/* ==========================================================================
+   SHARED TRILINGUAL CALENDAR ENGINE STYLES (EN / DE / FA-JALALI)
+   Adapts automatically to host project's theme variables & RTL/LTR direction
+   ========================================================================== */
+
+.tc-trigger-btn {
+    --cal-accent: var(--brand-accent, var(--brand-violet, var(--accent-sky, #d97706)));
+    --cal-surface: var(--surface-card, #141619);
+    --cal-input: var(--surface-input, #0d0f12);
+    --cal-text: var(--text-primary, #f8fafc);
+    --cal-muted: var(--text-muted, #94a3b8);
+    --cal-border: var(--border-subtle, rgba(148, 163, 184, 0.18));
+
+    width: 100%;
+    padding: 0.54rem 0.72rem;
+    border-radius: 0.52rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--cal-text);
+    background: var(--cal-input);
+    border: 1px solid var(--cal-border);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    text-align: start;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.tc-trigger-btn:hover,
+.tc-trigger-btn:focus-visible {
+    border-color: var(--cal-accent);
+    outline: none;
+}
+
+.tc-trigger-icon {
+    color: var(--cal-accent);
+    flex-shrink: 0;
+}
+
+.tc-trigger-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Floating Popover Container */
+.tc-popover {
+    --cal-accent: var(--brand-accent, var(--brand-violet, var(--accent-sky, #d97706)));
+    --cal-accent-soft: var(--brand-accent-soft, rgba(217, 119, 6, 0.16));
+    --cal-today: var(--emerald, #10b981);
+    --cal-surface: var(--surface-card, #141619);
+    --cal-input: var(--surface-input, #0d0f12);
+    --cal-text: var(--text-primary, #f8fafc);
+    --cal-secondary: var(--text-secondary, #cbd5e1);
+    --cal-muted: var(--text-muted, #94a3b8);
+    --cal-border: var(--border-subtle, rgba(148, 163, 184, 0.18));
+    --cal-border-strong: var(--border-strong, rgba(148, 163, 184, 0.34));
+
+    position: fixed;
+    z-index: 9999;
+    width: 18.5rem;
+    padding: 0.88rem;
+    border-radius: 0.95rem;
+    background: var(--cal-surface);
+    border: 1px solid var(--cal-border-strong);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.52);
+    display: grid;
+    gap: 0.65rem;
+    color: var(--cal-secondary);
+}
+
+.tc-popover[hidden] {
+    display: none;
+}
+
+.tc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+}
+
+.tc-title-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.tc-month-year {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--cal-text);
+}
+
+.tc-system-badge {
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: var(--cal-accent);
+}
+
+.tc-nav-btn {
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 0.48rem;
+    border: 1px solid var(--cal-border);
+    background: var(--cal-input);
+    color: var(--cal-text);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition:
+        border-color 0.18s ease,
+        background-color 0.18s ease;
+}
+
+.tc-nav-btn:hover {
+    border-color: var(--cal-accent);
+    background: var(--cal-accent-soft);
+}
+
+html[dir="rtl"] .tc-nav-icon {
+    transform: scaleX(-1);
+}
+
+.tc-weekdays,
+.tc-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.22rem;
+    text-align: center;
+}
+
+.tc-weekday {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--cal-muted);
+    padding-block: 0.2rem;
+}
+
+.tc-day-cell {
+    aspect-ratio: 1 / 1;
+    border-radius: 0.48rem;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--cal-secondary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition:
+        background-color 0.16s ease,
+        color 0.16s ease,
+        border-color 0.16s ease;
+}
+
+.tc-day-cell:hover {
+    background: var(--cal-accent-soft);
+    color: var(--cal-text);
+}
+
+.tc-day-cell.is-today {
+    border-color: var(--cal-today);
+    color: var(--cal-today);
+    font-weight: 800;
+}
+
+.tc-day-cell.is-selected {
+    background: var(--cal-accent);
+    border-color: var(--cal-accent);
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.tc-day-empty {
+    aspect-ratio: 1 / 1;
+}
+
+.tc-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--cal-border);
+}
+
+.tc-footer-btn {
+    padding: 0.3rem 0.65rem;
+    border-radius: 0.42rem;
+    border: 1px solid var(--cal-border);
+    background: var(--cal-input);
+    color: var(--cal-secondary);
+    font-size: 0.74rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.tc-footer-btn:hover {
+    border-color: var(--cal-accent);
+    color: var(--cal-accent);
+}
+
+@media (max-width: 400px) {
+    .tc-popover {
+        width: calc(100vw - 1.5rem);
+        left: 0.75rem !important;
+    }
+}
