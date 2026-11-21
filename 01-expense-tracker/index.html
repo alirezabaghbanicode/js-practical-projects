@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Alireza Baghbani" />
+    <title>LedgerFlow — Smart Expense &amp; Budget Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-logo" aria-hidden="true">LF</span>
+          <div>
+            <span class="brand-name">LedgerFlow</span>
+            <span class="brand-sub"
+              >Personal Finance &amp; Cashflow Engine</span
+            >
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button type="button" id="seed-btn" class="btn btn-ghost">
+            Load Demo Data
+          </button>
+          <button type="button" id="clear-btn" class="btn btn-danger-ghost">
+            Clear All
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <!-- KPI Summary Cards -->
+      <section class="kpi-strip" aria-label="Financial Overview">
+        <article class="kpi-card kpi-balance">
+          <span class="kpi-label">Net Balance</span>
+          <strong class="kpi-value" id="net-balance">$0.00</strong>
+          <span class="kpi-meta">Available cashflow</span>
+        </article>
+
+        <article class="kpi-card kpi-income">
+          <span class="kpi-label">Total Income</span>
+          <strong class="kpi-value" id="total-income">$0.00</strong>
+          <span class="kpi-meta">Inflows recorded</span>
+        </article>
+
+        <article class="kpi-card kpi-expense">
+          <span class="kpi-label">Total Expenses</span>
+          <strong class="kpi-value" id="total-expense">$0.00</strong>
+          <span class="kpi-meta">Outflows recorded</span>
+        </article>
+
+        <article class="kpi-card kpi-savings">
+          <span class="kpi-label">Savings Ratio</span>
+          <strong class="kpi-value" id="savings-rate">0%</strong>
+          <span class="kpi-meta">Retained from income</span>
+        </article>
+      </section>
+
+      <!-- Main Two-Column Workspace -->
+      <div class="workspace">
+        <!-- Left Column: Add Transaction + Expense Breakdown -->
+        <div class="left-stack">
+          <section class="panel" aria-labelledby="form-heading">
+            <div class="panel-header">
+              <h2 id="form-heading">New Transaction</h2>
+              <p>Record an income source or expense item</p>
+            </div>
+
+            <form id="transaction-form" class="tx-form">
+              <div
+                class="type-toggle"
+                role="group"
+                aria-label="Transaction type"
+              >
+                <label class="type-option">
+                  <input type="radio" name="tx-type" value="expense" checked />
+                  <span class="type-pill expense-pill">Expense (-)</span>
+                </label>
+                <label class="type-option">
+                  <input type="radio" name="tx-type" value="income" />
+                  <span class="type-pill income-pill">Income (+)</span>
+                </label>
+              </div>
+
+              <div class="field">
+                <label for="tx-title">Description</label>
+                <input
+                  type="text"
+                  id="tx-title"
+                  placeholder="e.g., Cloud Hosting, Freelance Project"
+                  maxlength="60"
+                  required
+                />
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="tx-amount">Amount (USD)</label>
+                  <input
+                    type="number"
+                    id="tx-amount"
+                    placeholder="0.00"
+                    step="0.01"
+                    min="0.01"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="tx-date">Date</label>
+                  <input type="date" id="tx-date" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="tx-category">Category</label>
+                <select id="tx-category">
+                  <option value="Software & Tools">Software &amp; Tools</option>
+                  <option value="Housing & Bills">Housing &amp; Bills</option>
+                  <option value="Food & Dining">Food &amp; Dining</option>
+                  <option value="Transport">Transport</option>
+                  <option value="Salary">Salary</option>
+                  <option value="Freelance">Freelance</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Add Transaction
+              </button>
+            </form>
+          </section>
+
+          <section class="panel" aria-labelledby="breakdown-heading">
+            <div class="panel-header">
+              <h2 id="breakdown-heading">Expense Breakdown</h2>
+              <p>Spending distribution by category</p>
+            </div>
+            <div id="category-breakdown" class="breakdown-list"></div>
+          </section>
+        </div>
+
+        <!-- Right Column: Search, Filter & Transaction History -->
+        <section class="panel ledger-panel" aria-labelledby="ledger-heading">
+          <div class="ledger-top">
+            <div>
+              <h2 id="ledger-heading">Transaction Ledger</h2>
+              <p><span id="tx-count">0</span> matching records</p>
+            </div>
+
+            <div class="ledger-controls">
+              <input
+                type="search"
+                id="search-input"
+                placeholder="Search description or category..."
+                aria-label="Search transactions"
+              />
+              <select id="filter-type" aria-label="Filter by transaction type">
+                <option value="all">All Types</option>
+                <option value="income">Income Only</option>
+                <option value="expense">Expenses Only</option>
+              </select>
+            </div>
+          </div>
+
+          <ul id="transaction-list" class="tx-list" aria-live="polite"></ul>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>LedgerFlow • Vanilla JavaScript &amp; LocalStorage</span>
+        <span>
+          Built by
+          <a
+            href="https://github.com/alirezabaghbanicode/js-practical-projects"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Alireza Baghbani</a
+          >
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
