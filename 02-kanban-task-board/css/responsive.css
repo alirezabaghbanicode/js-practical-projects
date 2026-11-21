@@ -1,0 +1,220 @@
+/* ==========================================================================
+   MASTER SEQUENTIAL RESPONSIVE SYSTEM (1280px -> 1024px -> 768px -> 576px -> 400px)
+   Covers: 1. Topbar  2. KPIs  3. Analytics  4. Composer & Filters  5. Board  6. Overlays
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   STAGE 1: Small Desktop / Large Tablet (max-width: 1280px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1280px) {
+
+    /* 3. Analytics */
+    .analytics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .analytics-grid>.chart-panel:last-child {
+        grid-column: span 2;
+    }
+
+    /* 4. Composer Form */
+    .task-form {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .field-title,
+    .field-desc {
+        grid-column: span 3;
+    }
+
+    .task-form>.field:nth-child(3),
+    .task-form>.field:nth-child(4),
+    .task-form>.field:nth-child(5),
+    .field-small,
+    .task-form>.date-field-wrap,
+    .task-form>.field:nth-child(8) {
+        grid-column: span 2;
+    }
+
+    .task-form>button[type="submit"] {
+        grid-column: span 6;
+    }
+
+    /* 5. Kanban Board */
+    .board-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* --------------------------------------------------------------------------
+   STAGE 2: Tablet Landscape (max-width: 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+
+    /* 1. Topbar */
+    .topbar-inner {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .topbar-actions {
+        justify-content: flex-start;
+    }
+
+    /* 2. KPIs */
+    .kpi-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* 3. Analytics */
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-grid>.chart-panel:last-child {
+        grid-column: span 1;
+    }
+
+    /* 4. Composer Header & RTL Alignment */
+    .composer-top,
+    html[dir="rtl"] .composer-top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    html[dir="rtl"] .composer-top>div:first-child {
+        text-align: start;
+    }
+
+    .filter-controls {
+        width: 100%;
+    }
+
+    .filter-controls input[type="search"] {
+        flex: 1 1 14rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   STAGE 3: Tablet Portrait (max-width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    /* 4. Composer Form */
+    .task-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field-title,
+    .field-desc,
+    .task-form>button[type="submit"] {
+        grid-column: span 2;
+    }
+
+    .task-form>.field:nth-child(3),
+    .task-form>.field:nth-child(4),
+    .task-form>.field:nth-child(5),
+    .field-small,
+    .task-form>.date-field-wrap,
+    .task-form>.field:nth-child(8) {
+        grid-column: span 1;
+    }
+
+    /* 5. Kanban Board */
+    .board-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .column-dropzone {
+        min-height: 10rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   STAGE 4: Mobile Large (max-width: 576px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 576px) {
+
+    /* 1. Topbar */
+    .topbar-actions {
+        gap: 0.4rem;
+    }
+
+    .topbar-actions .btn {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    /* 2. KPIs */
+    .kpi-strip {
+        grid-template-columns: 1fr;
+    }
+
+    /* 3. Analytics */
+    .donut-layout {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .donut-wrapper {
+        margin-inline: auto;
+    }
+
+    /* 4. Composer & Filters */
+    .filter-controls,
+    .filter-controls input[type="search"],
+    .filter-controls select {
+        width: 100%;
+    }
+
+    .task-form {
+        grid-template-columns: 1fr;
+    }
+
+    .field-title,
+    .field-desc,
+    .task-form>.field:nth-child(3),
+    .task-form>.field:nth-child(4),
+    .task-form>.field:nth-child(5),
+    .field-small,
+    .task-form>.date-field-wrap,
+    .task-form>.field:nth-child(8),
+    .task-form>button[type="submit"] {
+        grid-column: span 1;
+    }
+
+    /* 6. Modal & Footer */
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   STAGE 5: Mobile Compact (max-width: 400px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 400px) {
+    .app-shell {
+        padding-inline: 0.75rem;
+        gap: 1rem;
+    }
+
+    .panel,
+    .board-column {
+        padding: 0.85rem;
+    }
+
+    .lang-btn {
+        padding: 0.28rem 0.45rem;
+        font-size: 0.72rem;
+    }
+
+    .cal-popover {
+        width: calc(100vw - 1.5rem);
+        left: 0.75rem !important;
+    }
+}

@@ -1,0 +1,277 @@
+/* Task Inspection & Edit Modal */
+.task-modal {
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 1rem;
+    background: var(--surface-card);
+    color: var(--text-secondary);
+    width: min(94vw, 36rem);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+}
+
+.task-modal::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+}
+
+.modal-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1.02rem;
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: 1.15rem 1.25rem;
+    display: grid;
+    gap: 0.85rem;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.subtask-box {
+    padding: 0.85rem;
+    border-radius: 0.75rem;
+    background: var(--surface-input);
+    border: 1px solid var(--border-subtle);
+    display: grid;
+    gap: 0.65rem;
+}
+
+.subtask-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.subtask-list {
+    list-style: none;
+    display: grid;
+    gap: 0.42rem;
+}
+
+.subtask-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+}
+
+.subtask-item input[type="checkbox"] {
+    accent-color: var(--brand-violet);
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+}
+
+.subtask-item.is-checked span {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.subtask-add-row {
+    display: flex;
+    gap: 0.45rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0.35rem;
+}
+
+/* Custom Trilingual Calendar Picker */
+.date-trigger-btn {
+    width: 100%;
+    padding: 0.54rem 0.72rem;
+    border-radius: 0.52rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--surface-input);
+    border: 1px solid var(--border-subtle);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    text-align: start;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.date-trigger-btn:hover,
+.date-trigger-btn:focus-visible {
+    border-color: var(--brand-violet);
+    outline: none;
+}
+
+.cal-icon {
+    color: var(--brand-violet);
+    flex-shrink: 0;
+}
+
+.date-display-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cal-popover {
+    position: fixed;
+    z-index: 9999;
+    width: 18.25rem;
+    padding: 0.85rem;
+    border-radius: 0.95rem;
+    background: var(--surface-card);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.55);
+    display: grid;
+    gap: 0.65rem;
+}
+
+.cal-popover[hidden] {
+    display: none;
+}
+
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+}
+
+.cal-title-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.cal-month-year {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.cal-system-badge {
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: var(--brand-violet);
+}
+
+.cal-nav-btn {
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 0.48rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-input);
+    color: var(--text-primary);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition:
+        border-color 0.18s ease,
+        background-color 0.18s ease;
+}
+
+.cal-nav-btn:hover {
+    border-color: var(--brand-violet);
+    background: var(--brand-violet-soft);
+}
+
+.cal-weekdays,
+.cal-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.22rem;
+    text-align: center;
+}
+
+.cal-weekday {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    padding-block: 0.2rem;
+}
+
+.cal-day-cell {
+    aspect-ratio: 1 / 1;
+    border-radius: 0.48rem;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition:
+        background-color 0.16s ease,
+        color 0.16s ease,
+        border-color 0.16s ease;
+}
+
+.cal-day-cell:hover {
+    background: var(--brand-violet-soft);
+    color: var(--text-primary);
+}
+
+.cal-day-cell.is-today {
+    border-color: var(--emerald);
+    color: var(--emerald);
+    font-weight: 800;
+}
+
+.cal-day-cell.is-selected {
+    background: var(--brand-violet);
+    border-color: var(--brand-violet);
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.cal-day-empty {
+    aspect-ratio: 1 / 1;
+}
+
+.cal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.cal-footer-btn {
+    padding: 0.3rem 0.65rem;
+    border-radius: 0.42rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-input);
+    color: var(--text-secondary);
+    font-size: 0.74rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.cal-footer-btn:hover {
+    border-color: var(--brand-violet);
+    color: var(--brand-violet);
+}
