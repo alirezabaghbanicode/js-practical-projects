@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Alireza Baghbani" />
+    <meta
+      name="description"
+      content="NexusBoard is a trilingual (English, German, Persian) enterprise agile Kanban workspace featuring real-time SVG donut and bar analytics, subtask checklists, drag-and-drop workflow, and LocalStorage persistence."
+    />
+    <meta
+      name="keywords"
+      content="Kanban Board, Agile Sprint Dashboard, Task Management, Vanilla JavaScript, SVG Charts, Trilingual Web App, Alireza Baghbani, مدیریت پروژه, تخته کانبان"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large"
+    />
+    <meta name="theme-color" content="#0b0c10" />
+
+    <!-- Strict Content Security Policy -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Canonical & Multilingual Discovery -->
+    <link
+      rel="canonical"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=en"
+    />
+    <link
+      rel="alternate"
+      hreflang="de"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=de"
+    />
+    <link
+      rel="alternate"
+      hreflang="fa"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=fa"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/"
+    />
+
+    <!-- Open Graph / Social & AI Preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NexusBoard by Alireza Baghbani" />
+    <meta
+      property="og:title"
+      content="NexusBoard — Enterprise Agile Kanban & Sprint Analytics"
+    />
+    <meta
+      property="og:description"
+      content="Zero-dependency trilingual Kanban board with real-time SVG donut & bar charts, subtask checklists, dark/light themes, and drag-and-drop workflow."
+    />
+    <meta
+      property="og:url"
+      content="https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/"
+    />
+
+    <!-- Structured Data (JSON-LD) for Search Engines & AI Agents -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "NexusBoard — Enterprise Agile Kanban & Sprint Analytics",
+        "url": "https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript and HTML5 LocalStorage",
+        "inLanguage": ["en", "de", "fa"],
+        "description": "A zero-dependency trilingual Kanban project management board featuring 4 workflow stages, SVG donut and bar charts, subtask checklists, and JSON export.",
+        "author": {
+          "@type": "Person",
+          "name": "Alireza Baghbani",
+          "url": "https://github.com/alirezabaghbanicode"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+
+    <title>NexusBoard — Enterprise Agile Kanban &amp; Sprint Analytics</title>
+    <link rel="stylesheet" href="styles.css?v=2" />
+    <script src="app.js?v=2" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-logo" aria-hidden="true">NB</span>
+          <div>
+            <div class="brand-title-row">
+              <span class="brand-name">NexusBoard</span>
+              <span class="sprint-pill" data-i18n="sprintBadge"
+                >Sprint 14 • Active</span
+              >
+            </div>
+            <span class="brand-sub" data-i18n="brandSub"
+              >Enterprise Agile Workspace &amp; Visual Analytics</span
+            >
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <div
+            class="lang-switcher"
+            role="group"
+            aria-label="Language Switcher"
+          >
+            <button
+              type="button"
+              class="lang-btn active"
+              data-lang="en"
+              aria-pressed="true"
+            >
+              <svg
+                class="flag-icon"
+                viewBox="0 0 60 30"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="60" height="30" fill="#012169" />
+                <path
+                  d="M0,0 L60,30 M60,0 L0,30"
+                  stroke="#fff"
+                  stroke-width="6"
+                />
+                <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
+                <path
+                  d="M30,0 v30 M0,15 h60"
+                  stroke="#C8102E"
+                  stroke-width="6"
+                />
+              </svg>
+              <span>EN</span>
+            </button>
+
+            <button
+              type="button"
+              class="lang-btn"
+              data-lang="de"
+              aria-pressed="false"
+            >
+              <svg
+                class="flag-icon"
+                viewBox="0 0 5 3"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="5" height="1" y="0" fill="#000000" />
+                <rect width="5" height="1" y="1" fill="#DD0000" />
+                <rect width="5" height="1" y="2" fill="#FFCE00" />
+              </svg>
+              <span>DE</span>
+            </button>
+
+            <button
+              type="button"
+              class="lang-btn"
+              data-lang="fa"
+              aria-pressed="false"
+            >
+              <svg
+                class="flag-icon"
+                viewBox="0 0 60 36"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="60" height="12" y="0" fill="#239F40" />
+                <rect width="60" height="12" y="12" fill="#FFFFFF" />
+                <rect width="60" height="12" y="24" fill="#DA0000" />
+                <circle cx="30" cy="18" r="3.2" fill="#DA0000" />
+              </svg>
+              <span>FA</span>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            id="theme-toggle-btn"
+            class="btn btn-ghost"
+            aria-label="Toggle color theme"
+          >
+            <span id="theme-label" data-i18n="themeLight">Light Mode</span>
+          </button>
+
+          <button
+            type="button"
+            id="export-json-btn"
+            class="btn btn-ghost"
+            data-i18n="exportBtn"
+          >
+            Export JSON
+          </button>
+
+          <button
+            type="button"
+            id="seed-btn"
+            class="btn btn-ghost"
+            data-i18n="seedBtn"
+          >
+            Reset Demo
+          </button>
+
+          <button
+            type="button"
+            id="clear-btn"
+            class="btn btn-danger-ghost"
+            data-i18n="clearBtn"
+          >
+            Clear All
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <h1 class="sr-only" data-i18n="pageH1">
+        NexusBoard Enterprise Agile Kanban and Sprint Analytics Dashboard
+      </h1>
+
+      <!-- Top Percentage & Volume KPI Cards -->
+      <section class="kpi-strip" aria-label="Sprint KPI Summary">
+        <article class="kpi-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label" data-i18n="kpiTotalLabel"
+              >Sprint Scope</span
+            >
+            <span class="kpi-chip chip-violet" id="stat-hours-chip">0h</span>
+          </div>
+          <strong class="kpi-value" id="stat-total">0</strong>
+          <span class="kpi-meta" data-i18n="kpiTotalMeta"
+            >Total tasks &amp; estimated effort</span
+          >
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label" data-i18n="kpiCompletionLabel"
+              >Completion Rate</span
+            >
+            <span class="kpi-chip chip-emerald" id="stat-done-count">0/0</span>
+          </div>
+          <strong class="kpi-value text-emerald" id="stat-rate">0%</strong>
+          <progress
+            id="sprint-progress-bar"
+            class="sprint-progress"
+            value="0"
+            max="100"
+          ></progress>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label" data-i18n="kpiActiveLabel"
+              >Active Execution</span
+            >
+            <span class="kpi-chip chip-amber" id="stat-active-count">0</span>
+          </div>
+          <strong class="kpi-value text-amber" id="stat-active-pct">0%</strong>
+          <span class="kpi-meta" data-i18n="kpiActiveMeta"
+            >Share of tasks currently in progress</span
+          >
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label" data-i18n="kpiCriticalLabel"
+              >Critical Priority</span
+            >
+            <span class="kpi-chip chip-rose" id="stat-high-count">0</span>
+          </div>
+          <strong class="kpi-value text-rose" id="stat-high-pct">0%</strong>
+          <span class="kpi-meta" data-i18n="kpiCriticalMeta"
+            >High-priority items in sprint</span
+          >
+        </article>
+      </section>
+
+      <!-- Visual Analytics Dashboard (Donut Chart + Vertical Bar Chart + Percentage Breakdown) -->
+      <section class="analytics-grid" aria-label="Sprint Visual Analytics">
+        <!-- 1. SVG Donut / Pie Chart -->
+        <article class="panel chart-panel">
+          <div class="panel-header">
+            <h2 data-i18n="chartDonutTitle">Workflow Distribution</h2>
+            <p data-i18n="chartDonutSub">
+              Stage share by task count &amp; percentage
+            </p>
+          </div>
+          <div class="donut-layout">
+            <div class="donut-wrapper">
+              <svg
+                id="donut-svg"
+                viewBox="0 0 160 160"
+                width="160"
+                height="160"
+                role="img"
+                aria-label="Workflow Distribution Donut Chart"
+              ></svg>
+              <div class="donut-center">
+                <strong id="donut-center-pct">0%</strong>
+                <span data-i18n="donutCenterLabel">Done</span>
+              </div>
+            </div>
+            <ul id="donut-legend" class="chart-legend"></ul>
+          </div>
+        </article>
+
+        <!-- 2. SVG Vertical Column / Bar Chart -->
+        <article class="panel chart-panel">
+          <div class="panel-header">
+            <h2 data-i18n="chartBarTitle">Category Column Chart</h2>
+            <p data-i18n="chartBarSub">
+              Task volume &amp; percentage across engineering tracks
+            </p>
+          </div>
+          <div class="bar-chart-wrapper">
+            <svg
+              id="bar-chart-svg"
+              viewBox="0 0 420 205"
+              role="img"
+              aria-label="Category Column Bar Chart"
+            ></svg>
+          </div>
+        </article>
+
+        <!-- 3. Priority & Team Workload Percentage Bars -->
+        <article class="panel chart-panel">
+          <div class="panel-header">
+            <h2 data-i18n="chartPctTitle">Priority &amp; Team Load (%)</h2>
+            <p data-i18n="chartPctSub">
+              Urgency ratio &amp; member hour allocation
+            </p>
+          </div>
+          <div class="pct-stack">
+            <div id="priority-bars" class="metric-group"></div>
+            <div class="divider-line"></div>
+            <div id="workload-bars" class="metric-group"></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Task Composer & Multi-Filter Toolbar -->
+      <section class="panel composer-panel" aria-labelledby="composer-heading">
+        <div class="composer-top">
+          <div>
+            <h2 id="composer-heading" data-i18n="composerHeading">
+              Create Sprint Issue
+            </h2>
+            <p data-i18n="composerSub">
+              Assign tasks, estimate hours, and drag cards across stages
+            </p>
+          </div>
+
+          <div class="filter-controls">
+            <input
+              type="search"
+              id="search-input"
+              placeholder="Search ID, title, tag, or member..."
+              data-i18n-placeholder="searchPlaceholder"
+              maxlength="60"
+              aria-label="Search tasks"
+            />
+            <select id="filter-priority" aria-label="Filter by priority">
+              <option value="all" data-i18n="filterAllPriorities">
+                All Priorities
+              </option>
+              <option value="high" data-i18n="priorityHigh">
+                High Priority
+              </option>
+              <option value="medium" data-i18n="priorityMedium">
+                Medium Priority
+              </option>
+              <option value="low" data-i18n="priorityLow">Low Priority</option>
+            </select>
+            <select id="filter-assignee" aria-label="Filter by assignee">
+              <option value="all" data-i18n="filterAllMembers">
+                All Members
+              </option>
+              <option value="Alireza B.">Alireza B.</option>
+              <option value="Sara K.">Sara K.</option>
+              <option value="Lukas M.">Lukas M.</option>
+              <option value="Nina W.">Nina W.</option>
+            </select>
+          </div>
+        </div>
+
+        <form id="task-form" class="task-form" autocomplete="off">
+          <div class="field field-title">
+            <label for="task-title" data-i18n="labelTitle">Issue Title</label>
+            <input
+              type="text"
+              id="task-title"
+              placeholder="e.g., Build OAuth2 Refresh Token Interceptor"
+              data-i18n-placeholder="placeholderTitle"
+              maxlength="80"
+              required
+            />
+          </div>
+
+          <div class="field field-desc">
+            <label for="task-desc" data-i18n="labelDesc">Summary / Note</label>
+            <input
+              type="text"
+              id="task-desc"
+              placeholder="Acceptance criteria or technical note..."
+              data-i18n-placeholder="placeholderDesc"
+              maxlength="120"
+            />
+          </div>
+
+          <div class="field">
+            <label for="task-tag" data-i18n="labelTag">Track</label>
+            <select id="task-tag">
+              <option value="Frontend">Frontend</option>
+              <option value="Backend">Backend</option>
+              <option value="UI/UX">UI/UX</option>
+              <option value="DevOps">DevOps</option>
+              <option value="Testing">Testing</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="task-priority" data-i18n="labelPriority"
+              >Priority</label
+            >
+            <select id="task-priority">
+              <option value="high" data-i18n="priorityHigh">
+                High Priority
+              </option>
+              <option value="medium" selected data-i18n="priorityMedium">
+                Medium Priority
+              </option>
+              <option value="low" data-i18n="priorityLow">Low Priority</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="task-assignee" data-i18n="labelAssignee"
+              >Assignee</label
+            >
+            <select id="task-assignee">
+              <option value="Alireza B.">Alireza B.</option>
+              <option value="Sara K.">Sara K.</option>
+              <option value="Lukas M.">Lukas M.</option>
+              <option value="Nina W.">Nina W.</option>
+            </select>
+          </div>
+
+          <div class="field field-small">
+            <label for="task-hours" data-i18n="labelHours">Est. Hours</label>
+            <input
+              type="number"
+              id="task-hours"
+              min="1"
+              max="200"
+              value="4"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="task-due" data-i18n="labelDue">Due Date</label>
+            <input type="date" id="task-due" required />
+          </div>
+
+          <div class="field">
+            <label for="task-status" data-i18n="labelStage">Stage</label>
+            <select id="task-status">
+              <option value="backlog" data-i18n="colBacklog">Backlog</option>
+              <option value="todo" selected data-i18n="colTodo">To Do</option>
+              <option value="in-progress" data-i18n="colProgress">
+                In Progress
+              </option>
+              <option value="done" data-i18n="colDone">Done</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary" data-i18n="submitBtn">
+            Create Issue
+          </button>
+        </form>
+      </section>
+
+      <!-- Four-Column Enterprise Kanban Board -->
+      <section class="board-grid" aria-label="Kanban Workflow Columns">
+        <!-- Column 1: Backlog -->
+        <article class="board-column">
+          <header class="column-header">
+            <div class="column-title-group">
+              <span class="status-dot dot-backlog" aria-hidden="true"></span>
+              <h2 data-i18n="colBacklog">Backlog</h2>
+            </div>
+            <span class="column-count" id="count-backlog">0</span>
+          </header>
+          <ul
+            class="column-dropzone"
+            id="list-backlog"
+            data-status="backlog"
+            aria-label="Backlog Tasks"
+          ></ul>
+        </article>
+
+        <!-- Column 2: To Do -->
+        <article class="board-column">
+          <header class="column-header">
+            <div class="column-title-group">
+              <span class="status-dot dot-todo" aria-hidden="true"></span>
+              <h2 data-i18n="colTodo">To Do</h2>
+            </div>
+            <span class="column-count" id="count-todo">0</span>
+          </header>
+          <ul
+            class="column-dropzone"
+            id="list-todo"
+            data-status="todo"
+            aria-label="To Do Tasks"
+          ></ul>
+        </article>
+
+        <!-- Column 3: In Progress -->
+        <article class="board-column">
+          <header class="column-header">
+            <div class="column-title-group">
+              <span class="status-dot dot-progress" aria-hidden="true"></span>
+              <h2 data-i18n="colProgress">In Progress</h2>
+            </div>
+            <span class="column-count" id="count-in-progress">0</span>
+          </header>
+          <ul
+            class="column-dropzone"
+            id="list-in-progress"
+            data-status="in-progress"
+            aria-label="In Progress Tasks"
+          ></ul>
+        </article>
+
+        <!-- Column 4: Done -->
+        <article class="board-column col-done">
+          <header class="column-header">
+            <div class="column-title-group">
+              <span class="status-dot dot-done" aria-hidden="true"></span>
+              <h2 data-i18n="colDone">Done</h2>
+            </div>
+            <span class="column-count" id="count-done">0</span>
+          </header>
+          <ul
+            class="column-dropzone"
+            id="list-done"
+            data-status="done"
+            aria-label="Completed Tasks"
+          ></ul>
+        </article>
+      </section>
+    </main>
+
+    <!-- Task Inspection, Edit & Subtask Checklist Modal -->
+    <dialog id="task-modal" class="task-modal" aria-labelledby="modal-heading">
+      <div class="modal-card">
+        <header class="modal-header">
+          <div>
+            <span class="ticket-code" id="modal-ticket-code">NX-101</span>
+            <h2 id="modal-heading" data-i18n="modalHeading">
+              Issue Details &amp; Checklist
+            </h2>
+          </div>
+          <button
+            type="button"
+            id="modal-close-btn"
+            class="icon-btn"
+            aria-label="Close modal"
+          >
+            &times;
+          </button>
+        </header>
+
+        <form id="edit-form" class="modal-body" autocomplete="off">
+          <input type="hidden" id="edit-task-id" />
+
+          <div class="field">
+            <label for="edit-title" data-i18n="labelTitle">Issue Title</label>
+            <input type="text" id="edit-title" maxlength="80" required />
+          </div>
+
+          <div class="field">
+            <label for="edit-desc" data-i18n="labelDesc">Summary / Note</label>
+            <textarea id="edit-desc" rows="2" maxlength="180"></textarea>
+          </div>
+
+          <div class="modal-grid">
+            <div class="field">
+              <label for="edit-tag" data-i18n="labelTag">Track</label>
+              <select id="edit-tag">
+                <option value="Frontend">Frontend</option>
+                <option value="Backend">Backend</option>
+                <option value="UI/UX">UI/UX</option>
+                <option value="DevOps">DevOps</option>
+                <option value="Testing">Testing</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="edit-priority" data-i18n="labelPriority"
+                >Priority</label
+              >
+              <select id="edit-priority">
+                <option value="high" data-i18n="priorityHigh">
+                  High Priority
+                </option>
+                <option value="medium" data-i18n="priorityMedium">
+                  Medium Priority
+                </option>
+                <option value="low" data-i18n="priorityLow">
+                  Low Priority
+                </option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="edit-status" data-i18n="labelStage">Stage</label>
+              <select id="edit-status">
+                <option value="backlog" data-i18n="colBacklog">Backlog</option>
+                <option value="todo" data-i18n="colTodo">To Do</option>
+                <option value="in-progress" data-i18n="colProgress">
+                  In Progress
+                </option>
+                <option value="done" data-i18n="colDone">Done</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="edit-assignee" data-i18n="labelAssignee"
+                >Assignee</label
+              >
+              <select id="edit-assignee">
+                <option value="Alireza B.">Alireza B.</option>
+                <option value="Sara K.">Sara K.</option>
+                <option value="Lukas M.">Lukas M.</option>
+                <option value="Nina W.">Nina W.</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="edit-hours" data-i18n="labelHours">Est. Hours</label>
+              <input type="number" id="edit-hours" min="1" max="200" required />
+            </div>
+
+            <div class="field">
+              <label for="edit-due" data-i18n="labelDue">Due Date</label>
+              <input type="date" id="edit-due" required />
+            </div>
+          </div>
+
+          <!-- Subtasks Section -->
+          <div class="subtask-box">
+            <div class="subtask-header">
+              <span data-i18n="subtasksHeading">Action Checklist</span>
+              <span id="modal-subtask-pct" class="kpi-chip chip-violet"
+                >0%</span
+              >
+            </div>
+            <ul id="subtask-list" class="subtask-list"></ul>
+            <div class="subtask-add-row">
+              <input
+                type="text"
+                id="new-subtask-input"
+                placeholder="Add checklist step..."
+                data-i18n-placeholder="subtaskPlaceholder"
+                maxlength="70"
+              />
+              <button
+                type="button"
+                id="add-subtask-btn"
+                class="btn btn-ghost"
+                data-i18n="addStepBtn"
+              >
+                + Add
+              </button>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-i18n="saveBtn">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span data-i18n="footerTech"
+          >NexusBoard • Vanilla JavaScript, SVG Analytics &amp;
+          LocalStorage</span
+        >
+        <span>
+          <span data-i18n="footerBuiltBy">Built by</span>
+          <a
+            href="https://github.com/alirezabaghbanicode/js-practical-projects"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Alireza Baghbani</a
+          >
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
