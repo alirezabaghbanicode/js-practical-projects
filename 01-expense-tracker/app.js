@@ -1,7 +1,7 @@
 "use strict";
 
-const STORAGE_KEY = "alireza_ledgerflow_transactions_v1";
-const LANG_STORAGE_KEY = "alireza_ledgerflow_lang_v1";
+const STORAGE_KEY = "alireza_ledgerflow_transactions_v2";
+const LANG_STORAGE_KEY = "alireza_ledgerflow_lang_v2";
 
 const ALLOWED_CATEGORIES = new Set([
   "Software & Tools",
@@ -86,7 +86,7 @@ const I18N = {
     typeIncome: "Einnahme (+)",
     labelDesc: "Beschreibung",
     placeholderDesc: "z. B. Cloud-Hosting, Freelance-Projekt",
-    labelAmount: "Betrag (USD)",
+    labelAmount: "Betrag (EUR €)",
     labelDate: "Datum",
     labelCategory: "Kategorie",
     submitBtn: "Transaktion hinzufügen",
@@ -136,7 +136,7 @@ const I18N = {
     typeIncome: "درآمد (+)",
     labelDesc: "شرح تراکنش",
     placeholderDesc: "مثلاً: هزینه سرور ابری، پروژه فریلنسری",
-    labelAmount: "مبلغ (دلار)",
+    labelAmount: "مبلغ (تومان)",
     labelDate: "تاریخ",
     labelCategory: "دسته‌بندی",
     submitBtn: "افزودن تراکنش",
@@ -166,53 +166,140 @@ const I18N = {
   },
 };
 
-const SAMPLE_TRANSACTIONS = [
-  {
-    id: "tx-101",
-    title: "Frontend Web Development Milestone",
-    amount: 1450.0,
-    type: "income",
-    category: "Freelance",
-    date: "2026-11-18",
-  },
-  {
-    id: "tx-102",
-    title: "Monthly Software Engineering Retainer",
-    amount: 2800.0,
-    type: "income",
-    category: "Salary",
-    date: "2026-11-15",
-  },
-  {
-    id: "tx-103",
-    title: "Apartment Rent & Service Charge",
-    amount: 1150.0,
-    type: "expense",
-    category: "Housing & Bills",
-    date: "2026-11-14",
-  },
-  {
-    id: "tx-104",
-    title: "Cloud VPS & AI Developer Subscriptions",
-    amount: 68.5,
-    type: "expense",
-    category: "Software & Tools",
-    date: "2026-11-12",
-  },
-  {
-    id: "tx-105",
-    title: "Weekly Groceries & Specialty Coffee",
-    amount: 134.25,
-    type: "expense",
-    category: "Food & Dining",
-    date: "2026-11-10",
-  },
-];
+const SAMPLE_TRANSACTIONS_BY_LANG = {
+  en: [
+    {
+      id: "tx-101",
+      title: "Frontend Web Development Milestone",
+      amount: 1450,
+      type: "income",
+      category: "Freelance",
+      date: "2026-11-18",
+    },
+    {
+      id: "tx-102",
+      title: "Monthly Software Engineering Retainer",
+      amount: 2800,
+      type: "income",
+      category: "Salary",
+      date: "2026-11-15",
+    },
+    {
+      id: "tx-103",
+      title: "Apartment Rent & Service Charge",
+      amount: 1150,
+      type: "expense",
+      category: "Housing & Bills",
+      date: "2026-11-14",
+    },
+    {
+      id: "tx-104",
+      title: "Cloud VPS & AI Developer Subscriptions",
+      amount: 68.5,
+      type: "expense",
+      category: "Software & Tools",
+      date: "2026-11-12",
+    },
+    {
+      id: "tx-105",
+      title: "Weekly Groceries & Specialty Coffee",
+      amount: 134.25,
+      type: "expense",
+      category: "Food & Dining",
+      date: "2026-11-10",
+    },
+  ],
+  de: [
+    {
+      id: "tx-201",
+      title: "Frontend-Webentwicklung Meilenstein",
+      amount: 1450,
+      type: "income",
+      category: "Freelance",
+      date: "2026-11-18",
+    },
+    {
+      id: "tx-202",
+      title: "Monatliches Softwareentwickler-Gehalt",
+      amount: 2800,
+      type: "income",
+      category: "Salary",
+      date: "2026-11-15",
+    },
+    {
+      id: "tx-203",
+      title: "Wohnungsmiete & Nebenkosten",
+      amount: 1150,
+      type: "expense",
+      category: "Housing & Bills",
+      date: "2026-11-14",
+    },
+    {
+      id: "tx-204",
+      title: "Cloud-VPS & Entwickler-Abonnements",
+      amount: 68.5,
+      type: "expense",
+      category: "Software & Tools",
+      date: "2026-11-12",
+    },
+    {
+      id: "tx-205",
+      title: "Wocheneinkauf & Spezialitätenkaffee",
+      amount: 134.25,
+      type: "expense",
+      category: "Food & Dining",
+      date: "2026-11-10",
+    },
+  ],
+  fa: [
+    {
+      id: "tx-301",
+      title: "تسویه فاز اول طراحی وب‌سایت",
+      amount: 14500000,
+      type: "income",
+      category: "Freelance",
+      date: "2026-11-18",
+    },
+    {
+      id: "tx-302",
+      title: "حقوق ماهانه توسعه نرم‌افزار",
+      amount: 28000000,
+      type: "income",
+      category: "Salary",
+      date: "2026-11-15",
+    },
+    {
+      id: "tx-303",
+      title: "اجاره آپارتمان و شارژ ساختمان",
+      amount: 11500000,
+      type: "expense",
+      category: "Housing & Bills",
+      date: "2026-11-14",
+    },
+    {
+      id: "tx-304",
+      title: "خرید سرور ابری و اشتراک ابزارهای هوش مصنوعی",
+      amount: 1850000,
+      type: "expense",
+      category: "Software & Tools",
+      date: "2026-11-12",
+    },
+    {
+      id: "tx-305",
+      title: "خرید هفتگی خواربار و قهوه",
+      amount: 2450000,
+      type: "expense",
+      category: "Food & Dining",
+      date: "2026-11-10",
+    },
+  ],
+};
 
 // DOM References
 const form = document.getElementById("transaction-form");
 const titleInput = document.getElementById("tx-title");
 const amountInput = document.getElementById("tx-amount");
+const amountPreviewEl = document.getElementById("amount-preview");
 const dateInput = document.getElementById("tx-date");
 const categorySelect = document.getElementById("tx-category");
 
@@ -231,18 +318,42 @@ const seedBtn = document.getElementById("seed-btn");
 const clearBtn = document.getElementById("clear-btn");
 const langButtons = document.querySelectorAll(".lang-btn");
 
-// Application State
+function hasKey(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+function normalizeDigits(rawValue) {
+  const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
+  const arabicDigits = "٠١٢٣٤٥٦٧٨٩";
+  return String(rawValue)
+    .replace(/[۰-۹]/g, (d) => String(persianDigits.indexOf(d)))
+    .replace(/[٠-٩]/g, (d) => String(arabicDigits.indexOf(d)))
+    .replace(/[٬,،\s]/g, "")
+    .replace(/٫/g, ".");
+}
+
+function toPersianDigits(text) {
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  return String(text).replace(/\d/g, (digit) => persianDigits[Number(digit)]);
+}
+
+function loadLanguage() {
+  try {
+    const savedLang = localStorage.getItem(LANG_STORAGE_KEY);
+    return savedLang && hasKey(I18N, savedLang) ? savedLang : "en";
+  } catch {
+    return "en";
+  }
+}
+
+const initialLang = loadLanguage();
+
 const state = {
-  lang: loadLanguage(),
-  transactions: loadTransactions(),
+  lang: initialLang,
+  transactions: loadTransactions(initialLang),
   filterType: "all",
   searchQuery: "",
 };
-
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
 
 function isValidTransaction(item) {
   return (
@@ -260,21 +371,14 @@ function isValidTransaction(item) {
   );
 }
 
-function loadLanguage() {
-  try {
-    const savedLang = localStorage.getItem(LANG_STORAGE_KEY);
-    return savedLang && Object.hasOwn(I18N, savedLang) ? savedLang : "en";
-  } catch {
-    return "en";
-  }
-}
-
-function loadTransactions() {
+function loadTransactions(langCode) {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === null) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(SAMPLE_TRANSACTIONS));
-      return [...SAMPLE_TRANSACTIONS];
+      const defaults =
+        SAMPLE_TRANSACTIONS_BY_LANG[langCode] || SAMPLE_TRANSACTIONS_BY_LANG.en;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults));
+      return [...defaults];
     }
     const parsed = JSON.parse(saved);
     if (!Array.isArray(parsed)) return [];
@@ -301,6 +405,35 @@ function escapeHTML(value) {
     .replaceAll("'", "&#39;");
 }
 
+function formatNumberLocalized(num) {
+  if (state.lang === "fa") {
+    return new Intl.NumberFormat("fa-IR").format(num);
+  }
+  if (state.lang === "de") {
+    return new Intl.NumberFormat("de-DE").format(num);
+  }
+  return new Intl.NumberFormat("en-US").format(num);
+}
+
+function formatCurrency(amount) {
+  if (state.lang === "fa") {
+    const formatted = new Intl.NumberFormat("fa-IR", {
+      maximumFractionDigits: 0,
+    }).format(Math.round(amount));
+    return `${formatted} تومان`;
+  }
+  if (state.lang === "de") {
+    return new Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "EUR",
+    }).format(amount);
+  }
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+}
+
 function translateCategory(categoryKey) {
   const dict = I18N[state.lang];
   return dict.categories[categoryKey] || categoryKey;
@@ -318,8 +451,28 @@ function formatDate(isoDate) {
   });
 }
 
+function updateAmountPreview() {
+  const normalized = normalizeDigits(amountInput.value);
+  const numericVal = Number.parseFloat(normalized);
+  if (!normalized || !Number.isFinite(numericVal) || numericVal <= 0) {
+    amountPreviewEl.textContent = "";
+    return;
+  }
+  amountPreviewEl.textContent = formatCurrency(numericVal);
+}
+
 function applyLanguage(langCode) {
-  state.lang = Object.hasOwn(I18N, langCode) ? langCode : "en";
+  const nextLang = hasKey(I18N, langCode) ? langCode : "en";
+  const isDefaultDemoOnly =
+    state.transactions.length > 0 &&
+    state.transactions.every((tx) => /^tx-(10|20|30)\d$/.test(tx.id));
+
+  state.lang = nextLang;
+  if (isDefaultDemoOnly) {
+    state.transactions = [...SAMPLE_TRANSACTIONS_BY_LANG[state.lang]];
+    saveTransactions();
+  }
+
   try {
     localStorage.setItem(LANG_STORAGE_KEY, state.lang);
   } catch {
@@ -351,6 +504,7 @@ function applyLanguage(langCode) {
     option.textContent = translateCategory(option.value);
   });
 
+  updateAmountPreview();
   renderApp();
 }
 
@@ -373,10 +527,13 @@ function renderKPIs() {
       ? Math.max(0, Math.round((balance / totals.income) * 100))
       : 0;
 
-  netBalanceEl.textContent = currencyFormatter.format(balance);
-  totalIncomeEl.textContent = currencyFormatter.format(totals.income);
-  totalExpenseEl.textContent = currencyFormatter.format(totals.expense);
-  savingsRateEl.textContent = `${savingsRate}%`;
+  netBalanceEl.textContent = formatCurrency(balance);
+  totalIncomeEl.textContent = formatCurrency(totals.income);
+  totalExpenseEl.textContent = formatCurrency(totals.expense);
+  savingsRateEl.textContent =
+    state.lang === "fa"
+      ? `${toPersianDigits(savingsRate)}٪`
+      : `${savingsRate}%`;
 }
 
 function renderCategoryBreakdown() {
@@ -403,12 +560,15 @@ function renderCategoryBreakdown() {
         100,
         Math.max(0, Math.round((amount / totalExpense) * 100)),
       );
+      const percentLabel =
+        state.lang === "fa" ? `${toPersianDigits(percent)}٪` : `${percent}%`;
       const label = translateCategory(category);
+
       return `
         <div class="breakdown-item">
           <div class="breakdown-meta">
             <span>${escapeHTML(label)}</span>
-            <strong>${currencyFormatter.format(amount)} (${percent}%)</strong>
+            <strong>${escapeHTML(formatCurrency(amount))} (${percentLabel})</strong>
           </div>
           <div class="bar-track" role="progressbar" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100">
             <div class="bar-fill" style="width: ${percent}%"></div>
@@ -436,7 +596,7 @@ function renderTransactions() {
     })
     .sort((a, b) => b.date.localeCompare(a.date));
 
-  txCountEl.textContent = String(filtered.length);
+  txCountEl.textContent = formatNumberLocalized(filtered.length);
 
   if (filtered.length === 0) {
     transactionListEl.innerHTML = `
@@ -450,7 +610,7 @@ function renderTransactions() {
   transactionListEl.innerHTML = filtered
     .map((tx) => {
       const sign = tx.type === "income" ? "+" : "-";
-      const formattedAmount = `${sign}${currencyFormatter.format(tx.amount)}`;
+      const formattedAmount = `${sign}${formatCurrency(tx.amount)}`;
       const localizedCategory = translateCategory(tx.category);
 
       return `
@@ -463,7 +623,7 @@ function renderTransactions() {
             </div>
           </div>
           <div class="tx-right">
-            <span class="tx-amount ${tx.type}">${formattedAmount}</span>
+            <span class="tx-amount ${tx.type}">${escapeHTML(formattedAmount)}</span>
             <button
               type="button"
               class="delete-btn"
@@ -493,11 +653,20 @@ langButtons.forEach((btn) => {
   });
 });
 
+amountInput.addEventListener("input", () => {
+  if (state.lang === "fa") {
+    const cleaned = amountInput.value.replace(/[^0-9۰-۹٠-٩.,٬،٫]/g, "");
+    amountInput.value = toPersianDigits(cleaned);
+  }
+  updateAmountPreview();
+});
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const title = titleInput.value.trim().slice(0, 60);
-  const amount = Number.parseFloat(amountInput.value);
+  const normalizedAmount = normalizeDigits(amountInput.value);
+  const amount = Number.parseFloat(normalizedAmount);
   const typeInput = form.querySelector('input[name="tx-type"]:checked');
   const type = typeInput && typeInput.value === "income" ? "income" : "expense";
   const category = ALLOWED_CATEGORIES.has(categorySelect.value)
@@ -508,13 +677,19 @@ form.addEventListener("submit", (event) => {
     ? rawDate
     : new Date().toISOString().split("T")[0];
 
-  if (!title || !Number.isFinite(amount) || amount <= 0 || amount > 999999999) {
+  if (
+    !title ||
+    !Number.isFinite(amount) ||
+    amount <= 0 ||
+    amount > 999999999999
+  ) {
+    amountInput.focus();
     return;
   }
 
   const newTransaction = {
     id:
-      typeof crypto !== "undefined" && crypto.randomUUID
+      typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
         ? crypto.randomUUID()
         : `tx-${Date.now()}`,
     title,
@@ -530,6 +705,7 @@ form.addEventListener("submit", (event) => {
 
   titleInput.value = "";
   amountInput.value = "";
+  updateAmountPreview();
   titleInput.focus();
 });
 
@@ -555,7 +731,7 @@ searchInput.addEventListener("input", (event) => {
 });
 
 seedBtn.addEventListener("click", () => {
-  state.transactions = [...SAMPLE_TRANSACTIONS];
+  state.transactions = [...SAMPLE_TRANSACTIONS_BY_LANG[state.lang]];
   saveTransactions();
   renderApp();
 });

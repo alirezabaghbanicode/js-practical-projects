@@ -79,13 +79,6 @@
         "browserRequirements": "Requires JavaScript and HTML5 LocalStorage",
         "inLanguage": ["en", "de", "fa"],
         "description": "A zero-dependency trilingual personal finance and budget management application featuring real-time balance analytics, category breakdowns, and client-side persistence.",
-        "featureList": [
-          "Real-time Net Balance, Income, Expense, and Savings Ratio KPIs",
-          "Trilingual UI supporting English, German, and Persian with automatic RTL layout",
-          "Category spending distribution progress visualization",
-          "Live search and transaction type filtering",
-          "Offline-ready LocalStorage data persistence"
-        ],
         "author": {
           "@type": "Person",
           "name": "Alireza Baghbani",
@@ -128,23 +121,68 @@
               data-lang="en"
               aria-pressed="true"
             >
-              EN
+              <svg
+                class="flag-icon"
+                viewBox="0 0 60 30"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="60" height="30" fill="#012169" />
+                <path
+                  d="M0,0 L60,30 M60,0 L0,30"
+                  stroke="#fff"
+                  stroke-width="6"
+                />
+                <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
+                <path
+                  d="M30,0 v30 M0,15 h60"
+                  stroke="#C8102E"
+                  stroke-width="6"
+                />
+              </svg>
+              <span>EN</span>
             </button>
+
             <button
               type="button"
               class="lang-btn"
               data-lang="de"
               aria-pressed="false"
             >
-              DE
+              <svg
+                class="flag-icon"
+                viewBox="0 0 5 3"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="5" height="1" y="0" fill="#000000" />
+                <rect width="5" height="1" y="1" fill="#DD0000" />
+                <rect width="5" height="1" y="2" fill="#FFCE00" />
+              </svg>
+              <span>DE</span>
             </button>
+
             <button
               type="button"
               class="lang-btn"
               data-lang="fa"
               aria-pressed="false"
             >
-              FA
+              <svg
+                class="flag-icon"
+                viewBox="0 0 60 36"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="60" height="12" y="0" fill="#239F40" />
+                <rect width="60" height="12" y="12" fill="#FFFFFF" />
+                <rect width="60" height="12" y="24" fill="#DA0000" />
+                <circle cx="30" cy="18" r="3.2" fill="#DA0000" />
+              </svg>
+              <span>FA</span>
             </button>
           </div>
 
@@ -260,14 +298,18 @@
                     >Amount (USD)</label
                   >
                   <input
-                    type="number"
+                    type="text"
+                    inputmode="decimal"
                     id="tx-amount"
-                    placeholder="0.00"
-                    step="0.01"
-                    min="0.01"
-                    max="999999999"
+                    placeholder="0"
+                    maxlength="18"
                     required
                   />
+                  <span
+                    id="amount-preview"
+                    class="amount-preview"
+                    aria-live="polite"
+                  ></span>
                 </div>
 
                 <div class="field">
