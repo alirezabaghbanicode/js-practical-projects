@@ -112,6 +112,6 @@ Willkommen in meinem Repository **Praktische JavaScript-Projekte**. Jede Webanwe
 
 <div align="center">
 
-**Designed & Engineered by [Alireza Baghbani](https://github.com/alirezabaghbanicode)**
+**Designed & Engineered by [Alireza Baghbani](https://github.com/alirezabaghbanicode) • Telegram: [@Alirezabghni](https://t.me/Alirezabghni)**
 
 </div>
