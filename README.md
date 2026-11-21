@@ -22,11 +22,11 @@ Welcome to my **Practical JavaScript Projects** repository. Each application in 
 
 ### Live Applications
 
-|   #    | Project                                   | Description & Core Concepts                                                                                                                                                      |                                              Live Demo                                               |
-| :----: | :---------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------: |
-| **01** | **LedgerFlow — Expense & Budget Tracker** | Real-time cashflow KPIs, category spending analytics, trilingual UI (`EN / DE / FA`) with Toman/Euro/Dollar localization, live search/filtering, and `localStorage` persistence. | [View Live](https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/?lang=en) |
+|   #    | Project                                                     | Description & Core Concepts                                                                                                                                                                                                              |                                               Live Demo                                                |
+| :----: | :---------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------: |
+| **01** | **LedgerFlow — Expense & Budget Tracker**                   | Real-time cashflow KPIs, category spending analytics, trilingual UI (`EN / DE / FA`) with Toman/Euro/Dollar localization, live search/filtering, and `localStorage` persistence.                                                         |  [View Live](https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/?lang=en)  |
+| **02** | **NexusBoard — Enterprise Agile Kanban & Sprint Analytics** | 4-column agile Kanban workspace with zero-dependency SVG Donut & Column charts, percentage workload analytics, subtask checklists, localized EN/DE/FA Jalali calendar, dark/light themes, JSON export, and trilingual `EN / DE / FA` UI. | [View Live](https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=en) |
 
-| **02** | **NexusBoard — Enterprise Agile Kanban & Sprint Analytics** | 4-column agile Kanban workspace with zero-dependency SVG Donut & Column charts, percentage workload analytics, subtask checklists, dark/light themes, JSON export, and trilingual `EN / DE / FA` support. | [View Live](https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=en) |
 ### Engineering Highlights
 
 - **Predictable State Flow:** Single-source-of-truth data model separated from DOM rendering logic.
@@ -43,10 +43,11 @@ Willkommen in meinem Repository **Praktische JavaScript-Projekte**. Jede Webanwe
 
 ### Live-Anwendungen
 
-|   #    | Projekt                                    | Beschreibung & Kernkonzepte                                                                                                                                     |                                                Live-Demo                                                |
-| :----: | :----------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------------------------------------------------------------------------------------------------: |
-| **01** | **LedgerFlow — Haushalts- & Budgetplaner** | Echtzeit-Finanzübersicht, Ausgabenanalyse nach Kategorien, dreisprachige Oberfläche (`EN / DE / FA`), Live-Suche und dauerhafte Speicherung via `localStorage`. | [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/?lang=de) |
-| **02** | **NexusBoard — Agiles Kanban & Sprint-Analytics** | 4-Spalten-Kanban-Board mit interaktiven SVG-Kreis- und Säulendiagrammen, Prozent-Auslastungsanalyse, Checklisten, Dark/Light-Theme, JSON-Export und dreisprachiger Oberfläche (`EN / DE / FA`). | [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=de) |
+|   #    | Projekt                                           | Beschreibung & Kernkonzepte                                                                                                                                                                                                      |                                                 Live-Demo                                                 |
+| :----: | :------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------: |
+| **01** | **LedgerFlow — Haushalts- & Budgetplaner**        | Echtzeit-Finanzübersicht, Ausgabenanalyse nach Kategorien, dreisprachige Oberfläche (`EN / DE / FA`), Live-Suche und dauerhafte Speicherung via `localStorage`.                                                                  |  [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/?lang=de)  |
+| **02** | **NexusBoard — Agiles Kanban & Sprint-Analytics** | 4-Spalten-Kanban-Board mit interaktiven SVG-Kreis- und Säulendiagrammen, Prozent-Auslastungsanalyse, Checklisten, lokalisiertem EN/DE/FA-Kalender, Dark/Light-Theme, JSON-Export und dreisprachiger Oberfläche (`EN / DE / FA`). | [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=de) |
+
 ### Technische Schwerpunkte
 
 - **Saubere Zustandsverwaltung:** Klare Trennung zwischen Datenmodell und Benutzeroberfläche (DOM-Rendering).
@@ -80,12 +81,12 @@ Willkommen in meinem Repository **Praktische JavaScript-Projekte**. Jede Webanwe
       <td align="right"><strong>LedgerFlow — مدیریت هوشمند درآمد و هزینه</strong></td>
       <td align="right">محاسبه لحظه‌ای تراز مالی و نرخ پس‌انداز، رابط کاربری سه‌زبانه (فارسی با ارقام فارسی و واحد تومان، آلمانی و انگلیسی)، نمودار سهم هزینه‌ها، جستجو و فیلتر زنده و ذخیره‌سازی دائمی با <code>localStorage</code>.</td>
       <td align="center"><a href="https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/?lang=fa">مشاهده دمو</a></td>
-      <tr>
+    </tr>
+    <tr>
       <td align="center"><strong>02</strong></td>
       <td align="right"><strong>NexusBoard — سامانه مدیریت پروژه و تحلیل آماری اسپرینت</strong></td>
-      <td align="right">تخته کانبان ۴ ستونه سازمانی همراه با نمودارهای دایره‌ای و ستونی SVG، آمار درصدی اولویت و بار کاری تیم، چک‌لیست زیرتسک‌ها، تم تیره و روشن، خروجی JSON و پشتیبانی کامل از فارسی (RTL).</td>
+      <td align="right">تخته کانبان ۴ ستونه سازمانی همراه با نمودارهای دایره‌ای و ستونی SVG، آمار درصدی اولویت و بار کاری تیم، تقویم اختصاصی سه‌زبانه (هجری شمسی، آلمانی و انگلیسی)، چک‌لیست زیرتسک‌ها، تم تیره و روشن، خروجی JSON و پشتیبانی کامل از فارسی (RTL).</td>
       <td align="center"><a href="https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=fa">مشاهده دمو</a></td>
-    </tr>
     </tr>
   </tbody>
 </table>

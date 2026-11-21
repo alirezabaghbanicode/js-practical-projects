@@ -28,6 +28,111 @@ const STAGE_COLORS = {
   done: "#10b981",
 };
 
+const CALENDAR_META = {
+  en: {
+    systemLabel: "Gregorian Calendar",
+    months: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    shortMonths: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+    todayBtn: "Today",
+    closeBtn: "Close",
+  },
+  de: {
+    systemLabel: "Gregorianischer Kalender",
+    months: [
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember",
+    ],
+    shortMonths: [
+      "Jan.",
+      "Feb.",
+      "Mär.",
+      "Apr.",
+      "Mai",
+      "Jun.",
+      "Jul.",
+      "Aug.",
+      "Sep.",
+      "Okt.",
+      "Nov.",
+      "Dez.",
+    ],
+    weekdays: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+    todayBtn: "Heute",
+    closeBtn: "Schließen",
+  },
+  fa: {
+    systemLabel: "تقویم هجری شمسی",
+    months: [
+      "فروردین",
+      "اردیبهشت",
+      "خرداد",
+      "تیر",
+      "مرداد",
+      "شهریور",
+      "مهر",
+      "آبان",
+      "آذر",
+      "دی",
+      "بهمن",
+      "اسفند",
+    ],
+    shortMonths: [
+      "فروردین",
+      "اردیبهشت",
+      "خرداد",
+      "تیر",
+      "مرداد",
+      "شهریور",
+      "مهر",
+      "آبان",
+      "آذر",
+      "دی",
+      "بهمن",
+      "اسفند",
+    ],
+    weekdays: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
+    todayBtn: "امروز",
+    closeBtn: "بستن",
+  },
+};
+
 const I18N = {
   en: {
     dir: "ltr",
@@ -565,6 +670,7 @@ const prioritySelect = document.getElementById("task-priority");
 const assigneeSelect = document.getElementById("task-assignee");
 const hoursInput = document.getElementById("task-hours");
 const dueInput = document.getElementById("task-due");
+const dueDisplayCreateEl = document.getElementById("due-display-create");
 const statusSelect = document.getElementById("task-status");
 
 const stageCounts = {
@@ -595,10 +701,126 @@ const editStatusSelect = document.getElementById("edit-status");
 const editAssigneeSelect = document.getElementById("edit-assignee");
 const editHoursInput = document.getElementById("edit-hours");
 const editDueInput = document.getElementById("edit-due");
+const dueDisplayEditEl = document.getElementById("due-display-edit");
 const subtaskListEl = document.getElementById("subtask-list");
 const modalSubtaskPctEl = document.getElementById("modal-subtask-pct");
 const newSubtaskInput = document.getElementById("new-subtask-input");
 const addSubtaskBtn = document.getElementById("add-subtask-btn");
+
+// Custom Calendar DOM
+const calPopover = document.getElementById("custom-calendar-popover");
+const calPrevBtn = document.getElementById("cal-prev-month");
+const calNextBtn = document.getElementById("cal-next-month");
+const calMonthYearEl = document.getElementById("cal-month-year");
+const calSystemBadgeEl = document.getElementById("cal-system-badge");
+const calWeekdaysEl = document.getElementById("cal-weekdays");
+const calDaysGridEl = document.getElementById("cal-days-grid");
+const calTodayBtn = document.getElementById("cal-today-btn");
+const calCloseBtn = document.getElementById("cal-close-btn");
+
+/* =========================================================
+   JALALI (SHAMSI) & GREGORIAN DATE CONVERSION ENGINE
+   ========================================================= */
+function gregorianToJalali(gy, gm, gd) {
+  const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  const gy2 = gm > 2 ? gy + 1 : gy;
+  let days =
+    355666 +
+    365 * gy +
+    Math.floor((gy2 + 3) / 4) -
+    Math.floor((gy2 + 99) / 100) +
+    Math.floor((gy2 + 399) / 400) +
+    gd +
+    gdm[gm - 1];
+  let jy = -1595 + 33 * Math.floor(days / 12053);
+  days %= 12053;
+  jy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  if (days > 365) {
+    jy += Math.floor((days - 1) / 365);
+    days = (days - 1) % 365;
+  }
+  const jm =
+    days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+  const jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
+  return { jy, jm, jd };
+}
+
+function jalaliToGregorian(jy, jm, jd) {
+  jy += 1595;
+  let days =
+    -355668 +
+    365 * jy +
+    Math.floor(jy / 33) * 8 +
+    Math.floor(((jy % 33) + 3) / 4) +
+    jd +
+    (jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186);
+  let gy = 400 * Math.floor(days / 146097);
+  days %= 146097;
+  if (days > 36524) {
+    gy += 100 * Math.floor(--days / 36524);
+    days %= 36524;
+    if (days >= 365) days++;
+  }
+  gy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  if (days > 365) {
+    gy += Math.floor((days - 1) / 365);
+    days = (days - 1) % 365;
+  }
+  let gd = days + 1;
+  const salA = [
+    0,
+    31,
+    (gy % 4 === 0 && gy % 100 !== 0) || gy % 400 === 0 ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
+  let gm = 1;
+  for (gm = 1; gm <= 12 && gd > salA[gm]; gm++) {
+    gd -= salA[gm];
+  }
+  return { gy, gm, gd };
+}
+
+function getJalaliMonthLength(jy, jm) {
+  if (jm <= 6) return 31;
+  if (jm <= 11) return 30;
+  const g1 = jalaliToGregorian(jy, 1, 1);
+  const g2 = jalaliToGregorian(jy + 1, 1, 1);
+  const d1 = Date.UTC(g1.gy, g1.gm - 1, g1.gd);
+  const d2 = Date.UTC(g2.gy, g2.gm - 1, g2.gd);
+  return Math.round((d2 - d1) / 86400000) === 366 ? 30 : 29;
+}
+
+function pad2(num) {
+  return String(num).padStart(2, "0");
+}
+
+function toISODate(gy, gm, gd) {
+  return `${gy}-${pad2(gm)}-${pad2(gd)}`;
+}
+
+function parseISODate(isoStr) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(isoStr)) {
+    const now = new Date();
+    return {
+      gy: now.getFullYear(),
+      gm: now.getMonth() + 1,
+      gd: now.getDate(),
+    };
+  }
+  const [gy, gm, gd] = isoStr.split("-").map(Number);
+  return { gy, gm, gd };
+}
 
 function hasKey(obj, key) {
   return Boolean(key) && Object.prototype.hasOwnProperty.call(obj, key);
@@ -707,6 +929,13 @@ const state = {
   assigneeFilter: "all",
   draggedTaskId: null,
   activeModalTaskId: null,
+  calendar: {
+    isOpen: false,
+    targetInputId: "task-due",
+    triggerEl: null,
+    viewYear: 2026,
+    viewMonth: 11,
+  },
 };
 
 function saveTasks() {
@@ -736,14 +965,36 @@ function translateStage(stageKey) {
   return dict.colTodo;
 }
 
-function formatDate(isoDate) {
+function formatDate(isoDate, includeYear = false) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(isoDate)) return "";
-  const [year, month, day] = isoDate.split("-");
-  const dateObj = new Date(Number(year), Number(month) - 1, Number(day));
-  return dateObj.toLocaleDateString(I18N[state.lang].locale, {
-    month: "short",
-    day: "numeric",
-  });
+  const { gy, gm, gd } = parseISODate(isoDate);
+  const meta = CALENDAR_META[state.lang];
+
+  if (state.lang === "fa") {
+    const { jy, jm, jd } = gregorianToJalali(gy, gm, gd);
+    const dayStr = toPersianDigits(jd);
+    const monthStr = meta.months[jm - 1];
+    return includeYear
+      ? `${dayStr} ${monthStr} ${toPersianDigits(jy)}`
+      : `${dayStr} ${monthStr}`;
+  }
+
+  if (state.lang === "de") {
+    const monthStr = meta.shortMonths[gm - 1];
+    return includeYear ? `${gd}. ${monthStr} ${gy}` : `${gd}. ${monthStr}`;
+  }
+
+  const monthStr = meta.shortMonths[gm - 1];
+  return includeYear ? `${monthStr} ${gd}, ${gy}` : `${monthStr} ${gd}`;
+}
+
+function syncDueDisplays() {
+  if (dueInput.value) {
+    dueDisplayCreateEl.textContent = formatDate(dueInput.value, true);
+  }
+  if (editDueInput.value) {
+    dueDisplayEditEl.textContent = formatDate(editDueInput.value, true);
+  }
 }
 
 function getInitials(name) {
@@ -753,6 +1004,128 @@ function getInitials(name) {
     .join("")
     .toUpperCase()
     .slice(0, 2);
+}
+
+/* =========================================================
+   CUSTOM TRILINGUAL CALENDAR POPOVER ENGINE
+   ========================================================= */
+function openCalendar(triggerBtn) {
+  const targetId = triggerBtn.getAttribute("data-calendar-target");
+  const hiddenInput = document.getElementById(targetId);
+  if (!hiddenInput) return;
+
+  const { gy, gm, gd } = parseISODate(hiddenInput.value);
+  if (state.lang === "fa") {
+    const { jy, jm } = gregorianToJalali(gy, gm, gd);
+    state.calendar.viewYear = jy;
+    state.calendar.viewMonth = jm;
+  } else {
+    state.calendar.viewYear = gy;
+    state.calendar.viewMonth = gm;
+  }
+
+  state.calendar.isOpen = true;
+  state.calendar.targetInputId = targetId;
+  state.calendar.triggerEl = triggerBtn;
+
+  // Ensure calendar renders inside top-layer dialog if triggered inside modal
+  if (taskModal.open && taskModal.contains(triggerBtn)) {
+    taskModal.appendChild(calPopover);
+  } else {
+    document.body.appendChild(calPopover);
+  }
+
+  calPopover.hidden = false;
+  renderCalendar();
+  positionCalendar(triggerBtn);
+}
+
+function closeCalendar() {
+  state.calendar.isOpen = false;
+  calPopover.hidden = true;
+}
+
+function positionCalendar(triggerBtn) {
+  const rect = triggerBtn.getBoundingClientRect();
+  const popWidth = 292;
+  const popHeight = 320;
+
+  let left = state.lang === "fa" ? rect.right - popWidth : rect.left;
+  left = Math.max(12, Math.min(left, window.innerWidth - popWidth - 12));
+
+  let top = rect.bottom + 6;
+  if (top + popHeight > window.innerHeight - 12) {
+    top = Math.max(12, rect.top - popHeight - 6);
+  }
+
+  calPopover.style.left = `${left}px`;
+  calPopover.style.top = `${top}px`;
+}
+
+function renderCalendar() {
+  const meta = CALENDAR_META[state.lang];
+  const vy = state.calendar.viewYear;
+  const vm = state.calendar.viewMonth;
+
+  const hiddenInput = document.getElementById(state.calendar.targetInputId);
+  const selectedISO = hiddenInput ? hiddenInput.value : "";
+
+  const now = new Date();
+  const todayISO = toISODate(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    now.getDate(),
+  );
+
+  const yearLabel = state.lang === "fa" ? toPersianDigits(vy) : String(vy);
+  calMonthYearEl.textContent = `${meta.months[vm - 1]} ${yearLabel}`;
+  calSystemBadgeEl.textContent = meta.systemLabel;
+  calTodayBtn.textContent = meta.todayBtn;
+  calCloseBtn.textContent = meta.closeBtn;
+
+  calWeekdaysEl.innerHTML = meta.weekdays
+    .map((dayName) => `<span class="cal-weekday">${escapeHTML(dayName)}</span>`)
+    .join("");
+
+  let firstDayOffset = 0;
+  let totalDays = 30;
+
+  if (state.lang === "fa") {
+    const gFirst = jalaliToGregorian(vy, vm, 1);
+    const jsDay = new Date(gFirst.gy, gFirst.gm - 1, gFirst.gd).getDay(); // 0=Sun..6=Sat
+    firstDayOffset = (jsDay + 1) % 7; // Saturday = 0
+    totalDays = getJalaliMonthLength(vy, vm);
+  } else {
+    const jsDay = new Date(vy, vm - 1, 1).getDay(); // 0=Sun..6=Sat
+    firstDayOffset = state.lang === "de" ? (jsDay + 6) % 7 : jsDay; // Monday = 0 for DE, Sunday = 0 for EN
+    totalDays = new Date(vy, vm, 0).getDate();
+  }
+
+  let cellsHTML = "";
+  for (let i = 0; i < firstDayOffset; i++) {
+    cellsHTML += `<span class="cal-day-empty"></span>`;
+  }
+
+  for (let day = 1; day <= totalDays; day++) {
+    let cellISO = "";
+    if (state.lang === "fa") {
+      const gDate = jalaliToGregorian(vy, vm, day);
+      cellISO = toISODate(gDate.gy, gDate.gm, gDate.gd);
+    } else {
+      cellISO = toISODate(vy, vm, day);
+    }
+
+    const isSelected = cellISO === selectedISO;
+    const isToday = cellISO === todayISO;
+    const classes = ["cal-day-cell"];
+    if (isToday) classes.push("is-today");
+    if (isSelected) classes.push("is-selected");
+
+    const dayLabel = state.lang === "fa" ? toPersianDigits(day) : String(day);
+    cellsHTML += `<button type="button" class="${classes.join(" ")}" data-cal-iso="${cellISO}">${dayLabel}</button>`;
+  }
+
+  calDaysGridEl.innerHTML = cellsHTML;
 }
 
 function applyTheme(themeName) {
@@ -822,6 +1195,10 @@ function applyLanguage(langCode) {
     });
   });
 
+  if (state.calendar.isOpen) {
+    closeCalendar();
+  }
+  syncDueDisplays();
   applyTheme(state.theme);
   renderAll();
 }
@@ -1060,7 +1437,7 @@ function createTaskCardHTML(task) {
         </span>
         <div>
           ${subtaskBadge}
-          <span>${formatNum(task.hours)}${escapeHTML(dict.hoursUnit)} • ${escapeHTML(formatDate(task.dueDate))}</span>
+          <span>${formatNum(task.hours)}${escapeHTML(dict.hoursUnit)} • ${escapeHTML(formatDate(task.dueDate, false))}</span>
         </div>
       </div>
 
@@ -1183,6 +1560,7 @@ function openTaskModal(taskId) {
   const task = state.tasks.find((t) => t.id === taskId);
   if (!task) return;
 
+  closeCalendar();
   state.activeModalTaskId = task.id;
   modalTicketCodeEl.textContent = task.code;
   editTaskIdInput.value = task.id;
@@ -1194,6 +1572,7 @@ function openTaskModal(taskId) {
   editAssigneeSelect.value = task.assignee;
   editHoursInput.value = String(task.hours);
   editDueInput.value = task.dueDate;
+  syncDueDisplays();
 
   renderModalSubtasks(task);
   if (typeof taskModal.showModal === "function") {
@@ -1208,6 +1587,83 @@ document.addEventListener("click", (event) => {
   const langBtn = event.target.closest(".lang-btn[data-lang]");
   if (langBtn) {
     applyLanguage(langBtn.getAttribute("data-lang"));
+    return;
+  }
+
+  const calTrigger = event.target.closest(
+    ".date-trigger-btn[data-calendar-target]",
+  );
+  if (calTrigger) {
+    const targetId = calTrigger.getAttribute("data-calendar-target");
+    if (state.calendar.isOpen && state.calendar.targetInputId === targetId) {
+      closeCalendar();
+    } else {
+      openCalendar(calTrigger);
+    }
+    return;
+  }
+
+  const dayCell = event.target.closest(".cal-day-cell[data-cal-iso]");
+  if (dayCell) {
+    const pickedISO = dayCell.getAttribute("data-cal-iso");
+    const targetInput = document.getElementById(state.calendar.targetInputId);
+    if (targetInput && pickedISO) {
+      targetInput.value = pickedISO;
+      syncDueDisplays();
+    }
+    closeCalendar();
+    return;
+  }
+
+  if (
+    state.calendar.isOpen &&
+    !calPopover.contains(event.target) &&
+    !event.target.closest(".date-trigger-btn")
+  ) {
+    closeCalendar();
+  }
+});
+
+calPrevBtn.addEventListener("click", () => {
+  if (state.calendar.viewMonth === 1) {
+    state.calendar.viewMonth = 12;
+    state.calendar.viewYear -= 1;
+  } else {
+    state.calendar.viewMonth -= 1;
+  }
+  renderCalendar();
+});
+
+calNextBtn.addEventListener("click", () => {
+  if (state.calendar.viewMonth === 12) {
+    state.calendar.viewMonth = 1;
+    state.calendar.viewYear += 1;
+  } else {
+    state.calendar.viewMonth += 1;
+  }
+  renderCalendar();
+});
+
+calTodayBtn.addEventListener("click", () => {
+  const now = new Date();
+  const todayISO = toISODate(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    now.getDate(),
+  );
+  const targetInput = document.getElementById(state.calendar.targetInputId);
+  if (targetInput) {
+    targetInput.value = todayISO;
+    syncDueDisplays();
+  }
+  closeCalendar();
+});
+
+calCloseBtn.addEventListener("click", closeCalendar);
+
+window.addEventListener("resize", () => {
+  if (state.calendar.isOpen && state.calendar.triggerEl) {
+    positionCalendar(state.calendar.triggerEl);
   }
 });
 
@@ -1367,7 +1823,10 @@ Object.values(dropzones).forEach((zone) => {
 });
 
 // Modal Subtasks & Save
-modalCloseBtn.addEventListener("click", () => taskModal.close());
+modalCloseBtn.addEventListener("click", () => {
+  closeCalendar();
+  taskModal.close();
+});
 
 subtaskListEl.addEventListener("change", (event) => {
   const checkbox = event.target.closest('input[type="checkbox"][data-sub-idx]');
@@ -1423,6 +1882,7 @@ editForm.addEventListener("submit", (event) => {
     task.dueDate = editDueInput.value;
   }
 
+  closeCalendar();
   saveTasks();
   renderAll();
   taskModal.close();
@@ -1448,4 +1908,5 @@ filterAssigneeSelect.addEventListener("change", (event) => {
 dueInput.value = new Date(Date.now() + 3 * 86400000)
   .toISOString()
   .split("T")[0];
+syncDueDisplays();
 applyLanguage(state.lang);
