@@ -16,7 +16,7 @@ A curated, zero-dependency Vanilla JavaScript portfolio focused on clean DOM arc
 
 <a id="english-overview"></a>
 
-## <img src="./assets/flag-gb.svg" width="22" alt="UK Flag" /> English — Portfolio Overview
+## <img src="./assets/flag-for-flag-united-kingdom-svgrepo-com.svg" width="22" alt="UK Flag" /> English — Portfolio Overview
 
 Welcome to my **Practical JavaScript Projects** repository. Each application in this collection is engineered from scratch using **HTML5**, **CSS3**, and **Vanilla JavaScript (ES6+)** without external frameworks—demonstrating core frontend fundamentals, clean state flow, and responsive interface design.
 
@@ -36,7 +36,7 @@ Welcome to my **Practical JavaScript Projects** repository. Each application in 
 
 <a id="deutsch-uebersicht"></a>
 
-## <img src="./assets/flag-de.svg" width="22" alt="Germany Flag" /> Deutsch — Projektübersicht
+## <img src="./assets/flag-for-flag-germany-svgrepo-com.svg" width="22" alt="Germany Flag" /> Deutsch — Projektübersicht
 
 Willkommen in meinem Repository **Praktische JavaScript-Projekte**. Jede Webanwendung in dieser Sammlung wurde von Grund auf mit **HTML5**, **CSS3** und **Vanilla JavaScript (ES6+)** ohne externe Frameworks entwickelt, um saubere DOM-Architektur, Zustandsverwaltung und modernes UI-Design zu demonstrieren.
 
@@ -58,7 +58,7 @@ Willkommen in meinem Repository **Praktische JavaScript-Projekte**. Jede Webanwe
 
 <a id="persian-overview"></a>
 
-<h2 dir="rtl"><img src="./assets/flag-ir.svg" width="22" alt="پرچم ایران" /> فارسی — معرفی مخزن و پروژه‌ها</h2>
+<h2 dir="rtl"><img src="./assets/flag-for-flag-iran-svgrepo-com.svg" width="22" alt="پرچم ایران" /> فارسی — معرفی مخزن و پروژه‌ها</h2>
 
 <p dir="rtl">به مخزن <strong>پروژه‌های کاربردی جاوااسکریپت</strong> خوش آمدید. تمامی اپلیکیشن‌های این مجموعه بدون استفاده از فریم‌ورک‌های آماده و به‌صورت خالص با <strong>HTML5</strong>، <strong>CSS3</strong> و <strong>Vanilla JavaScript (ES6+)</strong> پیاده‌سازی شده‌اند تا تسلط بر معماری DOM، مدیریت وضعیت (State Management)، کار با APIهای مرورگر و طراحی رابط کاربری مدرن را به نمایش بگذارند.</p>
 
@@ -88,7 +88,7 @@ Willkommen in meinem Repository **Praktische JavaScript-Projekte**. Jede Webanwe
 <ul dir="rtl">
   <li><strong>معماری تک‌منبع حقیقت (Single Source of Truth):</strong> جداسازی کامل منطق داده‌ها از لایه نمایش DOM برای نگهداری آسان و بدون باگ.</li>
   <li><strong>بهینه‌سازی و امنیت:</strong> استفاده از Event Delegation برای مدیریت رویدادها، سیاست امنیت محتوا (CSP)، فرمت‌بندی استاندارد اعداد و واحدهای پولی با <code>Intl.NumberFormat</code> و پاک‌سازی ورودی‌ها در برابر XSS.</li>
-  <li><strong>رابط کاربری واکنش‌گرا و دوزبانه/سه‌زبانه:</strong> تغییر خودکار چیدمان راست‌به‌چپ (RTL) و چپ‌به‌راست (LTR) متناسب با زبان انتخابی کاربر.</li>
+  <li><strong>رابط کاربری واکنش‌گرا و سه‌زبانه:</strong> تغییر خودکار چیدمان راست‌به‌چپ (RTL) و چپ‌به‌راست (LTR) متناسب با زبان انتخابی کاربر.</li>
 </ul>
 <!-- prettier-ignore-end -->
 
