@@ -1,0 +1,421 @@
+/* ==========================================================================
+   DAILY POSITIVE HABITS & ADDICTION RECOVERY (SMOKING & SELF-CONTROL)
+   ========================================================================== */
+.habits-panel {
+    display: grid;
+    gap: 1rem;
+}
+
+.habits-header-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.habits-header-row h2 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.habits-header-row p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.habit-date-picker {
+    width: 12rem;
+}
+
+.habit-add-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 9.5rem auto;
+    align-items: stretch;
+    gap: 0.55rem;
+}
+
+.habit-list {
+    list-style: none;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.habit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.75rem;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-subtle);
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.habit-item.is-completed {
+    border-color: rgba(20, 184, 166, 0.35);
+    background: var(--teal-soft);
+}
+
+.habit-left {
+    display: flex;
+    align-items: center;
+    gap: 0.68rem;
+    min-width: 0;
+}
+
+.habit-check-btn {
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 0.45rem;
+    border: 2px solid var(--border-strong);
+    background: var(--surface-input);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+}
+
+.habit-item.is-completed .habit-check-btn {
+    background: var(--teal);
+    border-color: var(--teal);
+}
+
+.habit-title-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+.habit-item.is-completed .habit-title-text {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.habit-right {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+}
+
+.habit-cat-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    background: var(--surface-input);
+    color: var(--text-secondary);
+}
+
+.habit-streak-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    background: var(--brand-accent-soft);
+    color: var(--brand-accent);
+}
+
+/* ==========================================================================
+   RECOVERY & QUIT SECTION (SMOKING & SELF-CONTROL)
+   ========================================================================== */
+.recovery-section {
+    display: grid;
+    gap: 0.95rem;
+}
+
+.section-banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.15rem;
+    border-radius: 0.88rem;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+}
+
+.section-banner h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.section-banner p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.privacy-hint-pill {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    background: var(--teal-soft);
+    color: var(--teal);
+}
+
+.recovery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem;
+    align-items: start;
+}
+
+.recovery-card {
+    display: grid;
+    gap: 0.95rem;
+}
+
+.recovery-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.recovery-title-group h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-top: 0.25rem;
+}
+
+.recovery-badge {
+    display: inline-block;
+    font-size: 0.69rem;
+    font-weight: 700;
+    padding: 0.12rem 0.52rem;
+    border-radius: 999px;
+}
+
+.badge-emerald {
+    background: var(--emerald-soft);
+    color: var(--emerald);
+}
+
+.badge-copper {
+    background: var(--brand-accent-soft);
+    color: var(--brand-accent);
+}
+
+/* Collapsible Settings Drawer */
+.settings-drawer {
+    padding: 0.9rem;
+    border-radius: 0.78rem;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-subtle);
+    display: grid;
+    gap: 0.75rem;
+}
+
+.settings-drawer[hidden] {
+    display: none;
+}
+
+.drawer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+    gap: 0.68rem;
+}
+
+.drawer-span-full {
+    grid-column: 1 / -1;
+}
+
+/* Live Clean Timer Clock */
+.live-clock-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.85rem;
+    border-radius: 0.8rem;
+    background: var(--surface-input);
+    border: 1px solid var(--border-subtle);
+    direction: ltr;
+}
+
+.clock-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 3.6rem;
+}
+
+.clock-unit strong {
+    font-size: 1.65rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    color: var(--text-primary);
+}
+
+.clock-unit span {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.clock-sep {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    margin-top: -0.7rem;
+}
+
+/* Milestone Bar */
+.milestone-box {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.milestone-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+}
+
+.milestone-meta span {
+    color: var(--text-secondary);
+}
+
+.milestone-meta strong {
+    color: var(--text-primary);
+}
+
+.recovery-progress {
+    width: 100%;
+    height: 0.45rem;
+    border: none;
+    border-radius: 999px;
+    overflow: hidden;
+    background-color: var(--border-subtle);
+}
+
+.recovery-progress::-webkit-progress-bar {
+    background-color: var(--border-subtle);
+    border-radius: 999px;
+}
+
+.progress-emerald::-webkit-progress-value {
+    background: linear-gradient(90deg, var(--teal), var(--emerald));
+    border-radius: 999px;
+}
+
+.progress-copper::-webkit-progress-value {
+    background: linear-gradient(90deg, var(--brand-accent), var(--amber));
+    border-radius: 999px;
+}
+
+/* 3 Mini Metrics */
+.recovery-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+}
+
+.mini-stat {
+    padding: 0.6rem 0.65rem;
+    border-radius: 0.65rem;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-subtle);
+    text-align: center;
+    display: grid;
+    gap: 0.15rem;
+}
+
+.mini-stat span {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.mini-stat strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.recovery-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.empty-placeholder {
+    text-align: center;
+    padding: 1.5rem 0.75rem;
+    border: 1px dashed var(--border-subtle);
+    border-radius: 0.7rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Trilingual Calendar + Time Split Row inside Recovery Settings */
+.datetime-split-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.datetime-split-row .tc-trigger-btn {
+    width: 100%;
+    justify-content: flex-start;
+    min-height: 2.45rem;
+}
+
+.datetime-split-row input[type="time"] {
+    min-width: 7.4rem;
+    height: 2.45rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: var(--radius-sm, 8px);
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+html[data-theme="dark"] .datetime-split-row input[type="time"] {
+    color-scheme: dark;
+    background-color: var(--bg-elevated, #14161c);
+    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+    color: var(--text-primary, #f4f4f5);
+}
+
+html[data-theme="light"] .datetime-split-row input[type="time"] {
+    color-scheme: light;
+    background-color: var(--bg-elevated, #f7f5f0);
+    border: 1px solid var(--border-subtle, rgba(28, 25, 23, 0.16));
+    color: var(--text-primary, #1c1917);
+}
+
+.datetime-split-row input[type="time"]:focus {
+    outline: none;
+    border-color: var(--brand-accent, #ea580c);
+    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.2);
+}
+
+.datetime-split-row input[type="time"].is-invalid,
+.tc-trigger-btn.is-invalid {
+    border-color: var(--danger, #ef4444);
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.18);
+}
+
+@media (max-width: 480px) {
+    .datetime-split-row {
+        grid-template-columns: 1fr;
+    }
+}

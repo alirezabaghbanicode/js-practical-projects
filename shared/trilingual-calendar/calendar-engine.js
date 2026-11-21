@@ -71,7 +71,7 @@
       closeBtn: "Schließen",
     },
     fa: {
-      systemLabel: "تقویم هجری شمسی",
+      systemLabel: "تقویم رسمی هجری شمسی",
       months: [
         "فروردین",
         "اردیبهشت",
@@ -111,6 +111,22 @@
     return String(text).replace(/\d/g, (d) => digits[Number(d)]);
   }
 
+  function toLatinDigits(text) {
+    const map = {
+      "۰": "0",
+      "۱": "1",
+      "۲": "2",
+      "۳": "3",
+      "۴": "4",
+      "۵": "5",
+      "۶": "6",
+      "۷": "7",
+      "۸": "8",
+      "۹": "9",
+    };
+    return String(text).replace(/[۰-۹]/g, (ch) => map[ch] || ch);
+  }
+
   function pad2(num) {
     return String(num).padStart(2, "0");
   }
@@ -138,6 +154,31 @@
   }
 
   function gregorianToJalali(gy, gm, gd) {
+    try {
+      const dateObj = new Date(Date.UTC(gy, gm - 1, gd, 12, 0, 0));
+      const parts = new Intl.DateTimeFormat("en-US-u-ca-persian", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        timeZone: "UTC",
+      }).formatToParts(dateObj);
+
+      const yearPart = parts.find((p) => p.type === "year");
+      const monthPart = parts.find((p) => p.type === "month");
+      const dayPart = parts.find((p) => p.type === "day");
+
+      if (yearPart && monthPart && dayPart) {
+        const jy = Number.parseInt(toLatinDigits(yearPart.value), 10);
+        const jm = Number.parseInt(toLatinDigits(monthPart.value), 10);
+        const jd = Number.parseInt(toLatinDigits(dayPart.value), 10);
+        if (Number.isFinite(jy) && jy > 1300 && jy < 1600) {
+          return { jy, jm, jd };
+        }
+      }
+    } catch {
+      // Fallback to arithmetic conversion below
+    }
+
     const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
     const gy2 = gm > 2 ? gy + 1 : gy;
     let days =
@@ -220,11 +261,10 @@
   }
 
   function getActiveLang(explicitLang) {
-    const candidate = (
-      explicitLang ||
-      document.documentElement.lang ||
-      "en"
-    ).toLowerCase();
+    const raw = String(explicitLang || document.documentElement.lang || "en")
+      .trim()
+      .toLowerCase();
+    const candidate = raw.split("-")[0];
     return Object.prototype.hasOwnProperty.call(CALENDAR_META, candidate)
       ? candidate
       : "en";
@@ -262,6 +302,7 @@
     triggerEl: null,
     viewYear: 2026,
     viewMonth: 11,
+    activeLang: "en",
     elements: null,
   };
 
@@ -333,7 +374,7 @@
       } else {
         popoverState.viewMonth -= 1;
       }
-      renderPopover();
+      renderPopover(popoverState.activeLang);
     });
 
     nextBtn.addEventListener("click", () => {
@@ -343,7 +384,7 @@
       } else {
         popoverState.viewMonth += 1;
       }
-      renderPopover();
+      renderPopover(popoverState.activeLang);
     });
 
     todayBtn.addEventListener("click", () => {
@@ -368,6 +409,8 @@
 
     popoverState.elements = {
       popover,
+      prevBtn,
+      nextBtn,
       monthYearEl,
       systemBadgeEl,
       weekdaysEl,
@@ -379,9 +422,20 @@
     return popoverState.elements;
   }
 
-  function renderPopover() {
+  function renderPopover(explicitLang) {
     const els = buildPopoverDOM();
-    const lang = getActiveLang();
+    const lang = getActiveLang(explicitLang);
+    popoverState.activeLang = lang;
+    const isRTL = lang === "fa";
+
+    els.popover.dir = isRTL ? "rtl" : "ltr";
+    els.prevBtn.innerHTML = isRTL
+      ? '<svg class="tc-nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>'
+      : '<svg class="tc-nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+    els.nextBtn.innerHTML = isRTL
+      ? '<svg class="tc-nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>'
+      : '<svg class="tc-nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+
     const meta = CALENDAR_META[lang];
     const vy = popoverState.viewYear;
     const vm = popoverState.viewMonth;
@@ -452,7 +506,9 @@
     const rect = triggerBtn.getBoundingClientRect();
     const popWidth = 296;
     const popHeight = 324;
-    const isRTL = document.documentElement.dir === "rtl";
+    const isRTL =
+      popoverState.activeLang === "fa" ||
+      document.documentElement.dir === "rtl";
 
     let left = isRTL ? rect.right - popWidth : rect.left;
     left = Math.max(12, Math.min(left, window.innerWidth - popWidth - 12));
@@ -466,15 +522,8 @@
     els.popover.style.top = `${top}px`;
   }
 
-  function open(triggerBtn) {
-    const targetId = triggerBtn.getAttribute("data-calendar-target");
-    const hiddenInput = targetId ? document.getElementById(targetId) : null;
-    if (!hiddenInput) return;
-
-    const els = buildPopoverDOM();
-    const lang = getActiveLang();
-    const { gy, gm, gd } = parseISODate(hiddenInput.value || getTodayISO());
-
+  function syncViewCoordinates(isoStr, lang) {
+    const { gy, gm, gd } = parseISODate(isoStr || getTodayISO());
     if (lang === "fa") {
       const { jy, jm } = gregorianToJalali(gy, gm, gd);
       popoverState.viewYear = jy;
@@ -483,12 +532,21 @@
       popoverState.viewYear = gy;
       popoverState.viewMonth = gm;
     }
+  }
+
+  function open(triggerBtn) {
+    const targetId = triggerBtn.getAttribute("data-calendar-target");
+    const hiddenInput = targetId ? document.getElementById(targetId) : null;
+    if (!hiddenInput) return;
+
+    const els = buildPopoverDOM();
+    const lang = getActiveLang();
+    syncViewCoordinates(hiddenInput.value || getTodayISO(), lang);
 
     popoverState.isOpen = true;
     popoverState.targetInputId = targetId;
     popoverState.triggerEl = triggerBtn;
 
-    // Mount inside top-layer <dialog> if trigger is inside an open dialog
     const parentDialog = triggerBtn.closest("dialog[open]");
     if (parentDialog) {
       parentDialog.appendChild(els.popover);
@@ -497,7 +555,7 @@
     }
 
     els.popover.hidden = false;
-    renderPopover();
+    renderPopover(lang);
     positionPopover(triggerBtn);
   }
 
@@ -523,15 +581,24 @@
   }
 
   function syncAll(explicitLang) {
+    const activeLang = getActiveLang(explicitLang);
     document
       .querySelectorAll(".tc-trigger-btn[data-calendar-target]")
       .forEach((btn) => {
         const targetId = btn.getAttribute("data-calendar-target");
-        if (targetId) syncTriggerDisplay(targetId, explicitLang);
+        if (targetId) syncTriggerDisplay(targetId, activeLang);
       });
 
-    if (popoverState.isOpen) {
-      close();
+    if (popoverState.isOpen && popoverState.targetInputId) {
+      const targetInput = document.getElementById(popoverState.targetInputId);
+      syncViewCoordinates(
+        targetInput ? targetInput.value : getTodayISO(),
+        activeLang,
+      );
+      renderPopover(activeLang);
+      if (popoverState.triggerEl) {
+        positionPopover(popoverState.triggerEl);
+      }
     }
   }
 

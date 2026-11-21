@@ -26,6 +26,7 @@ Welcome to my **Practical JavaScript Projects** repository. Each application in 
 | :----: | :---------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------: |
 | **01** | **LedgerFlow — Expense & Budget Tracker**                   | Real-time cashflow KPIs, category spending analytics, trilingual UI (`EN / DE / FA`) with Toman/Euro/Dollar localization, live search/filtering, and `localStorage` persistence.                                                         |  [View Live](https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/?lang=en)  |
 | **02** | **NexusBoard — Enterprise Agile Kanban & Sprint Analytics** | 4-column agile Kanban workspace with zero-dependency SVG Donut & Column charts, percentage workload analytics, subtask checklists, localized EN/DE/FA Jalali calendar, dark/light themes, JSON export, and trilingual `EN / DE / FA` UI. | [View Live](https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=en) |
+| **03** | **FocusHabit OS — Deep Work, Habits & Recovery Tracker**    | Drift-free Web Audio Pomodoro timer, daily habit builder, live sobriety & quit-smoking trackers with trigger diagnostics, privacy blur mode, 365-day SVG heatmap, and trilingual EN/DE/FA Jalali calendar.                               |  [View Live](https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/?lang=en)   |
 
 ### Engineering Highlights
 
@@ -43,10 +44,11 @@ Willkommen in meinem Repository **Praktische JavaScript-Projekte**. Jede Webanwe
 
 ### Live-Anwendungen
 
-|   #    | Projekt                                           | Beschreibung & Kernkonzepte                                                                                                                                                                                                      |                                                 Live-Demo                                                 |
-| :----: | :------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------: |
-| **01** | **LedgerFlow — Haushalts- & Budgetplaner**        | Echtzeit-Finanzübersicht, Ausgabenanalyse nach Kategorien, dreisprachige Oberfläche (`EN / DE / FA`), Live-Suche und dauerhafte Speicherung via `localStorage`.                                                                  |  [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/?lang=de)  |
-| **02** | **NexusBoard — Agiles Kanban & Sprint-Analytics** | 4-Spalten-Kanban-Board mit interaktiven SVG-Kreis- und Säulendiagrammen, Prozent-Auslastungsanalyse, Checklisten, lokalisiertem EN/DE/FA-Kalender, Dark/Light-Theme, JSON-Export und dreisprachiger Oberfläche (`EN / DE / FA`). | [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=de) |
+|   #    | Projekt                                                        | Beschreibung & Kernkonzepte                                                                                                                                                                                                      |                                                 Live-Demo                                                 |
+| :----: | :------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------: |
+| **01** | **LedgerFlow — Haushalts- & Budgetplaner**                     | Echtzeit-Finanzübersicht, Ausgabenanalyse nach Kategorien, dreisprachige Oberfläche (`EN / DE / FA`), Live-Suche und dauerhafte Speicherung via `localStorage`.                                                                  |  [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/01-expense-tracker/?lang=de)  |
+| **02** | **NexusBoard — Agiles Kanban & Sprint-Analytics**              | 4-Spalten-Kanban-Board mit interaktiven SVG-Kreis- und Säulendiagrammen, Prozent-Auslastungsanalyse, Checklisten, lokalisiertem EN/DE/FA-Kalender, Dark/Light-Theme, JSON-Export und dreisprachiger Oberfläche (`EN / DE / FA`). | [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=de) |
+| **03** | **FocusHabit OS — Deep Work, Gewohnheiten & Recovery-Tracker** | Präziser Web-Audio-Pomodoro-Timer, Gewohnheitstracker, Live-Entwöhnungs- & Rauchfrei-Zähler mit Auslöser-Analyse, Privatsphäre-Modus, 365-Tage-SVG-Heatmap und dreisprachigem EN/DE/FA-Kalender.                                 |  [Live ansehen](https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/?lang=de)   |
 
 ### Technische Schwerpunkte
 
@@ -87,6 +89,12 @@ Willkommen in meinem Repository **Praktische JavaScript-Projekte**. Jede Webanwe
       <td align="right"><strong>NexusBoard — سامانه مدیریت پروژه و تحلیل آماری اسپرینت</strong></td>
       <td align="right">تخته کانبان ۴ ستونه سازمانی همراه با نمودارهای دایره‌ای و ستونی SVG، آمار درصدی اولویت و بار کاری تیم، تقویم اختصاصی سه‌زبانه (هجری شمسی، آلمانی و انگلیسی)، چک‌لیست زیرتسک‌ها، تم تیره و روشن، خروجی JSON و پشتیبانی کامل از فارسی (RTL).</td>
       <td align="center"><a href="https://alirezabaghbanicode.github.io/js-practical-projects/02-kanban-task-board/?lang=fa">مشاهده دمو</a></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>03</strong></td>
+      <td align="right"><strong>FocusHabit OS — سامانه مدیریت تمرکز عمیق، عادت‌ها و ترک عادت</strong></td>
+      <td align="right">تایمر پومودورو بدون خطا با Web Audio API، ردیاب عادت‌های روزانه، تایمر زنده ترک سیگار و خودکنترلی با تحلیل عوامل وسوسه، حالت حریم خصوصی (Privacy Blur)، نقشه حرارتی ۳۶۵ روزه SVG و تقویم سه‌زبانه شمسی/میلادی.</td>
+      <td align="center"><a href="https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/?lang=fa">مشاهده دمو</a></td>
     </tr>
   </tbody>
 </table>

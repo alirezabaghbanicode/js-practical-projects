@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark" data-privacy="false">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Alireza Baghbani" />
+    <meta
+      name="description"
+      content="FocusHabit OS is a trilingual (English, German, Persian) deep-work Pomodoro timer, daily habit tracker, and addiction recovery dashboard with 365-day SVG heatmaps, privacy blur mode, and LocalStorage persistence."
+    />
+    <meta
+      name="keywords"
+      content="Focus Timer, Pomodoro App, Habit Tracker, Quit Smoking Tracker, Self Control Streak, SVG Heatmap, Trilingual Web App, Alireza Baghbani, مدیریت زمان, ترک سیگار, ردیاب عادت"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large"
+    />
+    <meta name="theme-color" content="#0d0e11" />
+
+    <!-- Strict Content Security Policy with Vazirmatn Font Support -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; font-src 'self' https://cdn.jsdelivr.net data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Vazirmatn Persian Webfont -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+    />
+
+    <!-- Canonical & Multilingual Discovery -->
+    <link
+      rel="canonical"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/?lang=en"
+    />
+    <link
+      rel="alternate"
+      hreflang="de"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/?lang=de"
+    />
+    <link
+      rel="alternate"
+      hreflang="fa"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/?lang=fa"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/"
+    />
+
+    <!-- Open Graph / Social & AI Preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FocusHabit OS by Alireza Baghbani" />
+    <meta
+      property="og:title"
+      content="FocusHabit OS — Deep Work, Habits &amp; Recovery Tracker"
+    />
+    <meta
+      property="og:description"
+      content="Zero-dependency trilingual productivity and habit recovery operating system featuring Web Audio Pomodoro timer, live sobriety timers, trigger analytics, and a 365-day SVG heatmap."
+    />
+    <meta
+      property="og:url"
+      content="https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/"
+    />
+
+    <!-- Structured Data (JSON-LD) for Search Engines & AI Agents -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "FocusHabit OS — Deep Work, Habits & Recovery Tracker",
+        "url": "https://alirezabaghbanicode.github.io/js-practical-projects/03-focus-habit-os/",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript, Web Audio API, and HTML5 LocalStorage",
+        "inLanguage": ["en", "de", "fa"],
+        "description": "A zero-dependency trilingual deep-work Pomodoro timer, positive habit builder, and quit-smoking/self-control recovery tracker with 365-day SVG heatmap analytics and instant privacy blur.",
+        "author": {
+          "@type": "Person",
+          "name": "Alireza Baghbani",
+          "url": "https://github.com/alirezabaghbanicode"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+
+    <title>FocusHabit OS — Deep Work, Habits &amp; Recovery Tracker</title>
+
+    <!-- Shared Trilingual Calendar CSS + Modular Project CSS -->
+    <link
+      rel="stylesheet"
+      href="../shared/trilingual-calendar/calendar-engine.css?v=3"
+    />
+    <link rel="stylesheet" href="css/base.css?v=3" />
+    <link rel="stylesheet" href="css/header-kpi.css?v=3" />
+    <link rel="stylesheet" href="css/focus-timer.css?v=3" />
+    <link rel="stylesheet" href="css/habits-recovery.css?v=3" />
+    <link rel="stylesheet" href="css/analytics-heatmap.css?v=3" />
+    <link rel="stylesheet" href="css/responsive.css?v=3" />
+
+    <!-- Shared Calendar Engine + Modular App Scripts -->
+    <script
+      src="../shared/trilingual-calendar/calendar-engine.js?v=3"
+      defer
+    ></script>
+    <script src="js/i18n-data.js?v=3" defer></script>
+    <script src="js/storage-state.js?v=3" defer></script>
+    <script src="js/timer-audio.js?v=3" defer></script>
+    <script src="js/recovery-engine.js?v=3" defer></script>
+    <script src="js/charts-heatmap.js?v=3" defer></script>
+    <script src="js/app.js?v=3" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-logo" aria-hidden="true">FH</span>
+          <div>
+            <div class="brand-title-row">
+              <span class="brand-name">FocusHabit OS</span>
+              <span class="streak-pill" id="header-streak-badge"
+                >0d Streak</span
+              >
+            </div>
+            <span class="brand-sub" data-i18n="brandSub"
+              >Deep Work, Daily Habits &amp; Recovery Engine</span
+            >
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <div
+            class="lang-switcher"
+            role="group"
+            aria-label="Language Switcher"
+          >
+            <button
+              type="button"
+              class="lang-btn active"
+              data-lang="en"
+              aria-pressed="true"
+            >
+              <svg
+                class="flag-icon"
+                viewBox="0 0 60 30"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="60" height="30" fill="#012169" />
+                <path
+                  d="M0,0 L60,30 M60,0 L0,30"
+                  stroke="#fff"
+                  stroke-width="6"
+                />
+                <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
+                <path
+                  d="M30,0 v30 M0,15 h60"
+                  stroke="#C8102E"
+                  stroke-width="6"
+                />
+              </svg>
+              <span>EN</span>
+            </button>
+
+            <button
+              type="button"
+              class="lang-btn"
+              data-lang="de"
+              aria-pressed="false"
+            >
+              <svg
+                class="flag-icon"
+                viewBox="0 0 5 3"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="5" height="1" y="0" fill="#000000" />
+                <rect width="5" height="1" y="1" fill="#DD0000" />
+                <rect width="5" height="1" y="2" fill="#FFCE00" />
+              </svg>
+              <span>DE</span>
+            </button>
+
+            <button
+              type="button"
+              class="lang-btn"
+              data-lang="fa"
+              aria-pressed="false"
+            >
+              <svg
+                class="flag-icon"
+                viewBox="0 0 60 36"
+                width="18"
+                height="12"
+                aria-hidden="true"
+              >
+                <rect width="60" height="12" y="0" fill="#239F40" />
+                <rect width="60" height="12" y="12" fill="#FFFFFF" />
+                <rect width="60" height="12" y="24" fill="#DA0000" />
+                <circle cx="30" cy="18" r="3.2" fill="#DA0000" />
+              </svg>
+              <span>FA</span>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            id="privacy-toggle-btn"
+            class="btn btn-privacy"
+            aria-pressed="false"
+            title="Blur sensitive recovery stats"
+          >
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span id="privacy-label" data-i18n="privacyOff">Privacy: Off</span>
+          </button>
+
+          <button
+            type="button"
+            id="theme-toggle-btn"
+            class="btn btn-ghost"
+            aria-label="Toggle color theme"
+          >
+            <span id="theme-label" data-i18n="themeLight">Light Mode</span>
+          </button>
+
+          <button
+            type="button"
+            id="export-json-btn"
+            class="btn btn-ghost"
+            data-i18n="exportBtn"
+          >
+            Export JSON
+          </button>
+
+          <button
+            type="button"
+            id="seed-btn"
+            class="btn btn-ghost"
+            data-i18n="seedBtn"
+          >
+            Demo Data
+          </button>
+
+          <button
+            type="button"
+            id="clear-btn"
+            class="btn btn-danger-ghost"
+            data-i18n="clearBtn"
+          >
+            Reset All
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <h1 class="sr-only" data-i18n="pageH1">
+        FocusHabit OS Deep Work Timer, Daily Habits, and Recovery Tracker
+      </h1>
+
+      <!-- Top 4 KPI Summary Cards -->
+      <section
+        class="kpi-strip"
+        aria-label="Productivity and Recovery Overview"
+      >
+        <article class="kpi-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label" data-i18n="kpiFocusLabel"
+              >Deep Focus Today</span
+            >
+            <span class="kpi-chip chip-copper" id="kpi-focus-sessions"
+              >0 sessions</span
+            >
+          </div>
+          <strong class="kpi-value text-copper" id="kpi-focus-mins">0m</strong>
+          <span class="kpi-meta" data-i18n="kpiFocusMeta"
+            >Logged deep-work duration</span
+          >
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label" data-i18n="kpiHabitLabel"
+              >Daily Habits</span
+            >
+            <span class="kpi-chip chip-teal" id="kpi-habit-ratio">0/0</span>
+          </div>
+          <strong class="kpi-value text-teal" id="kpi-habit-pct">0%</strong>
+          <progress
+            id="kpi-habit-bar"
+            class="kpi-progress"
+            value="0"
+            max="100"
+          ></progress>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label" data-i18n="kpiSmokeLabel"
+              >Smoke-Free Streak</span
+            >
+            <span
+              class="kpi-chip chip-emerald privacy-sensitive"
+              id="kpi-smoke-saved"
+              >$0</span
+            >
+          </div>
+          <strong
+            class="kpi-value text-emerald privacy-sensitive"
+            id="kpi-smoke-days"
+            >0d</strong
+          >
+          <span class="kpi-meta" data-i18n="kpiSmokeMeta"
+            >Continuous nicotine-free time &amp; savings</span
+          >
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label" data-i18n="kpiCleanLabel"
+              >Self-Control Streak</span
+            >
+            <span
+              class="kpi-chip chip-amber privacy-sensitive"
+              id="kpi-urges-won"
+              >0 wins</span
+            >
+          </div>
+          <strong
+            class="kpi-value text-amber privacy-sensitive"
+            id="kpi-clean-days"
+            >0d</strong
+          >
+          <span class="kpi-meta" data-i18n="kpiCleanMeta"
+            >Clean streak &amp; urges overcome</span
+          >
+        </article>
+      </section>
+
+      <!-- Workspace Row 1: Deep Focus Timer + Daily Positive Habits -->
+      <section class="workspace-grid" aria-label="Focus Timer and Daily Habits">
+        <!-- Left/Start Column: Deep Work Pomodoro Engine -->
+        <article class="panel timer-panel" aria-labelledby="timer-heading">
+          <div class="panel-header">
+            <h2 id="timer-heading" data-i18n="timerHeading">
+              Deep Focus Timer
+            </h2>
+            <p data-i18n="timerSub">
+              Drift-free Pomodoro engine with Web Audio chime
+            </p>
+          </div>
+
+          <div
+            class="timer-modes"
+            role="group"
+            aria-label="Timer duration presets"
+          >
+            <button
+              type="button"
+              class="mode-btn active"
+              data-mode="pomodoro"
+              data-minutes="25"
+              data-i18n="modePomodoro"
+            >
+              Focus 25m
+            </button>
+            <button
+              type="button"
+              class="mode-btn"
+              data-mode="deep"
+              data-minutes="50"
+              data-i18n="modeDeep"
+            >
+              Deep 50m
+            </button>
+            <button
+              type="button"
+              class="mode-btn"
+              data-mode="short"
+              data-minutes="5"
+              data-i18n="modeShort"
+            >
+              Break 5m
+            </button>
+            <button
+              type="button"
+              class="mode-btn"
+              data-mode="long"
+              data-minutes="15"
+              data-i18n="modeLong"
+            >
+              Rest 15m
+            </button>
+          </div>
+
+          <div class="timer-ring-box">
+            <svg
+              class="timer-svg"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              aria-hidden="true"
+            >
+              <circle
+                class="timer-ring-track"
+                cx="100"
+                cy="100"
+                r="86"
+                fill="none"
+                stroke-width="10"
+              ></circle>
+              <circle
+                id="timer-ring-progress"
+                class="timer-ring-fill"
+                cx="100"
+                cy="100"
+                r="86"
+                fill="none"
+                stroke-width="10"
+                stroke-dasharray="540.35"
+                stroke-dashoffset="0"
+              ></circle>
+            </svg>
+            <div class="timer-center-readout">
+              <strong id="timer-display" class="timer-clock">25:00</strong>
+              <span id="timer-status-text" class="timer-state-label"
+                >Ready to focus</span
+              >
+            </div>
+          </div>
+
+          <div class="timer-session-meta">
+            <div class="field">
+              <label for="timer-category" data-i18n="labelFocusTrack"
+                >Focus Track</label
+              >
+              <select id="timer-category">
+                <option value="Coding">Coding</option>
+                <option value="Study">Study</option>
+                <option value="Language">Language</option>
+                <option value="Reading">Reading</option>
+                <option value="Planning">Planning</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="timer-task-note" data-i18n="labelFocusGoal"
+                >Session Objective</label
+              >
+              <input
+                type="text"
+                id="timer-task-note"
+                placeholder="e.g., Build REST API endpoints"
+                data-i18n-placeholder="placeholderFocusGoal"
+                maxlength="60"
+              />
+            </div>
+          </div>
+
+          <div class="timer-controls">
+            <button
+              type="button"
+              id="timer-start-btn"
+              class="btn btn-primary"
+              data-i18n="btnStart"
+            >
+              Start Focus
+            </button>
+            <button
+              type="button"
+              id="timer-reset-btn"
+              class="btn btn-ghost"
+              data-i18n="btnReset"
+            >
+              Reset
+            </button>
+            <button
+              type="button"
+              id="timer-complete-btn"
+              class="btn btn-teal"
+              data-i18n="btnLogNow"
+            >
+              + Log Session
+            </button>
+            <button
+              type="button"
+              id="timer-sound-btn"
+              class="icon-btn"
+              aria-pressed="true"
+              title="Toggle completion chime"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="recent-sessions-box">
+            <h3 class="sub-heading" data-i18n="recentSessionsHeading">
+              Today's Completed Focus Sessions
+            </h3>
+            <ul id="focus-session-log" class="session-log-list"></ul>
+          </div>
+        </article>
+
+        <!-- Right/End Column: Daily Positive Habits Builder -->
+        <article class="panel habits-panel" aria-labelledby="habits-heading">
+          <div class="habits-header-row">
+            <div>
+              <h2 id="habits-heading" data-i18n="habitsHeading">
+                Daily Positive Habits
+              </h2>
+              <p data-i18n="habitsSub">
+                Build consistency across key personal disciplines
+              </p>
+            </div>
+
+            <!-- Shared Trilingual Calendar Trigger -->
+            <div class="habit-date-picker">
+              <input type="hidden" id="habit-active-date" />
+              <button
+                type="button"
+                class="tc-trigger-btn"
+                data-calendar-target="habit-active-date"
+                aria-haspopup="dialog"
+              >
+                <svg
+                  class="tc-trigger-icon"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span class="tc-trigger-text"></span>
+              </button>
+            </div>
+          </div>
+
+          <form
+            id="habit-form"
+            class="habit-add-form"
+            novalidate
+            autocomplete="off"
+          >
+            <input
+              type="text"
+              id="habit-title"
+              placeholder="New daily habit (e.g., 45m Strength Workout)..."
+              data-i18n-placeholder="placeholderHabit"
+              maxlength="65"
+              required
+            />
+            <select id="habit-category" aria-label="Habit category">
+              <option value="Coding">Coding</option>
+              <option value="Health">Health</option>
+              <option value="Study">Study</option>
+              <option value="Language">Language</option>
+              <option value="Mindset">Mindset</option>
+            </select>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-i18n="addHabitBtn"
+            >
+              + Add Habit
+            </button>
+          </form>
+          <p
+            id="habit-form-error"
+            class="form-error-msg"
+            role="alert"
+            hidden
+          ></p>
+
+          <ul id="habit-list" class="habit-list" aria-live="polite"></ul>
+        </article>
+      </section>
+
+      <!-- Workspace Row 2: Dedicated Addiction Recovery & Self-Control Tracker -->
+      <section
+        class="recovery-section"
+        aria-labelledby="recovery-section-heading"
+      >
+        <div class="section-banner">
+          <div>
+            <h2 id="recovery-section-heading" data-i18n="recoveryHeading">
+              Habit Recovery &amp; Self-Control Tracker
+            </h2>
+            <p data-i18n="recoverySub">
+              Live sobriety timers, financial savings, urge resistance wins, and
+              trigger diagnostics
+            </p>
+          </div>
+          <span class="privacy-hint-pill" data-i18n="privacyHintBadge"
+            >Protected by Privacy Mode</span
+          >
+        </div>
+
+        <div class="recovery-grid">
+          <!-- Card 1: Smoking Cessation Tracker -->
+          <article class="panel recovery-card" id="smoke-card">
+            <div class="recovery-card-top">
+              <div class="recovery-title-group">
+                <span class="recovery-badge badge-emerald" data-i18n="smokeTag"
+                  >Nicotine Recovery</span
+                >
+                <h3 class="privacy-sensitive" data-i18n="smokeTitle">
+                  Smoke-Free Tracker
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                id="smoke-settings-toggle"
+                class="icon-btn"
+                aria-expanded="false"
+                title="Configure smoking baseline"
+              >
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Collapsible Smoking Baseline Settings -->
+            <form
+              id="smoke-settings-panel"
+              class="settings-drawer"
+              hidden
+              novalidate
+              autocomplete="off"
+            >
+              <div class="drawer-grid">
+                <div class="field">
+                  <label for="smoke-cigs-day" data-i18n="labelCigsPerDay"
+                    >Cigarettes / Day</label
+                  >
+                  <input
+                    type="number"
+                    id="smoke-cigs-day"
+                    min="1"
+                    max="100"
+                    value="15"
+                    required
+                  />
+                </div>
+                <div class="field">
+                  <label for="smoke-pack-price" data-i18n="labelPackPrice"
+                    >Pack Price</label
+                  >
+                  <input
+                    type="number"
+                    id="smoke-pack-price"
+                    min="0.1"
+                    step="0.1"
+                    value="5"
+                    required
+                  />
+                </div>
+                <div class="field drawer-span-full">
+                  <label for="smoke-start-time" data-i18n="labelQuitStart"
+                    >Quit Start Date &amp; Time</label
+                  >
+                  <div class="datetime-split-row">
+                    <input type="hidden" id="smoke-start-date" />
+                    <button
+                      type="button"
+                      class="tc-trigger-btn"
+                      data-calendar-target="smoke-start-date"
+                      aria-haspopup="dialog"
+                    >
+                      <svg
+                        class="tc-trigger-icon"
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect
+                          x="3"
+                          y="4"
+                          width="18"
+                          height="18"
+                          rx="2"
+                          ry="2"
+                        ></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                      <span class="tc-trigger-text"></span>
+                    </button>
+                    <input type="time" id="smoke-start-time" required />
+                  </div>
+                  <span
+                    id="smoke-start-preview"
+                    class="datetime-preview"
+                  ></span>
+                </div>
+              </div>
+              <p
+                id="smoke-form-error"
+                class="form-error-msg"
+                role="alert"
+                hidden
+              ></p>
+              <button
+                type="submit"
+                class="btn btn-teal btn-sm"
+                data-i18n="saveSettingsBtn"
+              >
+                Save Baseline
+              </button>
+            </form>
+
+            <!-- Live Clean Clock -->
+            <div
+              class="live-clock-strip privacy-sensitive"
+              id="smoke-live-clock"
+            >
+              <div class="clock-unit">
+                <strong id="smoke-days">0</strong>
+                <span data-i18n="unitDays">Days</span>
+              </div>
+              <span class="clock-sep">:</span>
+              <div class="clock-unit">
+                <strong id="smoke-hours">00</strong>
+                <span data-i18n="unitHours">Hours</span>
+              </div>
+              <span class="clock-sep">:</span>
+              <div class="clock-unit">
+                <strong id="smoke-mins">00</strong>
+                <span data-i18n="unitMins">Mins</span>
+              </div>
+            </div>
+
+            <!-- Milestone Progress -->
+            <div class="milestone-box privacy-sensitive">
+              <div class="milestone-meta">
+                <span id="smoke-milestone-label">Next Milestone: 7 Days</span>
+                <strong id="smoke-milestone-pct">0%</strong>
+              </div>
+              <progress
+                id="smoke-milestone-bar"
+                class="recovery-progress progress-emerald"
+                value="0"
+                max="100"
+              ></progress>
+            </div>
+
+            <!-- 3 Mini Metrics: Cigarettes Avoided, Money Saved, Best Streak -->
+            <div class="recovery-metrics-row privacy-sensitive">
+              <div class="mini-stat">
+                <span data-i18n="metricCigsAvoided">Avoided</span>
+                <strong id="smoke-avoided-count">0</strong>
+              </div>
+              <div class="mini-stat">
+                <span data-i18n="metricMoneySaved">Saved</span>
+                <strong id="smoke-saved-money">$0</strong>
+              </div>
+              <div class="mini-stat">
+                <span data-i18n="metricBestStreak">Best Record</span>
+                <strong id="smoke-best-record">0d</strong>
+              </div>
+            </div>
+
+            <div class="recovery-actions">
+              <button
+                type="button"
+                class="btn btn-teal"
+                data-recovery-action="win"
+                data-track="smoking"
+                data-i18n="btnUrgeWin"
+              >
+                +1 Resisted Urge
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger-ghost"
+                data-recovery-action="relapse"
+                data-track="smoking"
+                data-i18n="btnLogRelapse"
+              >
+                Log Slip / Reset
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 2: Self-Control / Clean Streak Tracker -->
+          <article class="panel recovery-card" id="nofap-card">
+            <div class="recovery-card-top">
+              <div class="recovery-title-group">
+                <span class="recovery-badge badge-copper" data-i18n="cleanTag"
+                  >Dopamine &amp; Focus</span
+                >
+                <h3 class="privacy-sensitive" data-i18n="cleanTitle">
+                  Self-Control &amp; Clean Streak
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                id="nofap-settings-toggle"
+                class="icon-btn"
+                aria-expanded="false"
+                title="Configure start date"
+              >
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Collapsible Self-Control Start Date Settings -->
+            <form
+              id="nofap-settings-panel"
+              class="settings-drawer"
+              hidden
+              novalidate
+              autocomplete="off"
+            >
+              <div class="field">
+                <label for="nofap-start-time" data-i18n="labelCleanStart"
+                  >Streak Start Date &amp; Time</label
+                >
+                <div class="datetime-split-row">
+                  <input type="hidden" id="nofap-start-date" />
+                  <button
+                    type="button"
+                    class="tc-trigger-btn"
+                    data-calendar-target="nofap-start-date"
+                    aria-haspopup="dialog"
+                  >
+                    <svg
+                      class="tc-trigger-icon"
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.1"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <rect
+                        x="3"
+                        y="4"
+                        width="18"
+                        height="18"
+                        rx="2"
+                        ry="2"
+                      ></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span class="tc-trigger-text"></span>
+                  </button>
+                  <input type="time" id="nofap-start-time" required />
+                </div>
+                <span id="nofap-start-preview" class="datetime-preview"></span>
+              </div>
+              <p
+                id="nofap-form-error"
+                class="form-error-msg"
+                role="alert"
+                hidden
+              ></p>
+              <button
+                type="submit"
+                class="btn btn-primary btn-sm"
+                data-i18n="saveSettingsBtn"
+              >
+                Save Baseline
+              </button>
+            </form>
+
+            <!-- Live Clean Clock -->
+            <div
+              class="live-clock-strip privacy-sensitive"
+              id="nofap-live-clock"
+            >
+              <div class="clock-unit">
+                <strong id="nofap-days">0</strong>
+                <span data-i18n="unitDays">Days</span>
+              </div>
+              <span class="clock-sep">:</span>
+              <div class="clock-unit">
+                <strong id="nofap-hours">00</strong>
+                <span data-i18n="unitHours">Hours</span>
+              </div>
+              <span class="clock-sep">:</span>
+              <div class="clock-unit">
+                <strong id="nofap-mins">00</strong>
+                <span data-i18n="unitMins">Mins</span>
+              </div>
+            </div>
+
+            <!-- Milestone Progress -->
+            <div class="milestone-box privacy-sensitive">
+              <div class="milestone-meta">
+                <span id="nofap-milestone-label">Next Milestone: 14 Days</span>
+                <strong id="nofap-milestone-pct">0%</strong>
+              </div>
+              <progress
+                id="nofap-milestone-bar"
+                class="recovery-progress progress-copper"
+                value="0"
+                max="100"
+              ></progress>
+            </div>
+
+            <!-- 3 Mini Metrics: Urges Overcome, Clean Score, Best Record -->
+            <div class="recovery-metrics-row privacy-sensitive">
+              <div class="mini-stat">
+                <span data-i18n="metricUrgesWon">Urges Won</span>
+                <strong id="nofap-wins-count">0</strong>
+              </div>
+              <div class="mini-stat">
+                <span data-i18n="metricEnergyScore">Focus Clarity</span>
+                <strong id="nofap-clarity-pct">0%</strong>
+              </div>
+              <div class="mini-stat">
+                <span data-i18n="metricBestStreak">Best Record</span>
+                <strong id="nofap-best-record">0d</strong>
+              </div>
+            </div>
+
+            <div class="recovery-actions">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-recovery-action="win"
+                data-track="selfcontrol"
+                data-i18n="btnUrgeWin"
+              >
+                +1 Resisted Urge
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger-ghost"
+                data-recovery-action="relapse"
+                data-track="selfcontrol"
+                data-i18n="btnLogRelapse"
+              >
+                Log Slip / Reset
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Workspace Row 3: 365-Day SVG Activity Heatmap & Visual Charts -->
+      <section
+        class="analytics-section"
+        aria-label="Activity Heatmap and Charts"
+      >
+        <!-- Full-Width 365-Day Contribution Heatmap -->
+        <article class="panel heatmap-panel">
+          <div class="heatmap-header">
+            <div>
+              <h2 data-i18n="heatmapHeading">365-Day Consistency Heatmap</h2>
+              <p data-i18n="heatmapSub">
+                Combined daily score from deep-work focus blocks &amp; completed
+                habits
+              </p>
+            </div>
+            <div class="heatmap-legend">
+              <span data-i18n="legendLess">Less</span>
+              <span class="heat-box heat-0"></span>
+              <span class="heat-box heat-1"></span>
+              <span class="heat-box heat-2"></span>
+              <span class="heat-box heat-3"></span>
+              <span class="heat-box heat-4"></span>
+              <span data-i18n="legendMore">More</span>
+            </div>
+          </div>
+
+          <div class="heatmap-scroll-wrap">
+            <svg
+              id="heatmap-svg"
+              viewBox="0 0 840 132"
+              role="img"
+              aria-label="365 Day Activity Heatmap"
+            ></svg>
+          </div>
+          <div
+            id="heatmap-hover-info"
+            class="heatmap-readout"
+            aria-live="polite"
+          ></div>
+        </article>
+
+        <!-- 3-Column Analytics Charts -->
+        <div class="charts-grid">
+          <!-- Chart 1: Weekly Focus Minutes Bar Chart -->
+          <article class="panel">
+            <div class="panel-header">
+              <h2 data-i18n="chartWeeklyTitle">7-Day Focus Trend</h2>
+              <p data-i18n="chartWeeklySub">
+                Daily deep-work minutes over the past week
+              </p>
+            </div>
+            <div class="svg-chart-box">
+              <svg
+                id="weekly-bar-svg"
+                viewBox="0 0 420 205"
+                role="img"
+                aria-label="7 Day Focus Bar Chart"
+              ></svg>
+            </div>
+          </article>
+
+          <!-- Chart 2: Focus Category Donut Chart -->
+          <article class="panel">
+            <div class="panel-header">
+              <h2 data-i18n="chartDonutTitle">Focus Distribution (%)</h2>
+              <p data-i18n="chartDonutSub">
+                Time share across deep-work categories
+              </p>
+            </div>
+            <div class="donut-layout">
+              <div class="donut-wrapper">
+                <svg
+                  id="focus-donut-svg"
+                  viewBox="0 0 160 160"
+                  width="150"
+                  height="150"
+                  role="img"
+                  aria-label="Focus Distribution Donut Chart"
+                ></svg>
+                <div class="donut-center">
+                  <strong id="focus-donut-total">0h</strong>
+                  <span data-i18n="donutCenterLabel">Total</span>
+                </div>
+              </div>
+              <ul id="focus-donut-legend" class="chart-legend"></ul>
+            </div>
+          </article>
+
+          <!-- Chart 3: Trigger Vulnerability Percentage Breakdown -->
+          <article class="panel">
+            <div class="panel-header">
+              <h2 data-i18n="chartTriggerTitle">Trigger Diagnostics (%)</h2>
+              <p data-i18n="chartTriggerSub">
+                Root causes behind urges &amp; slips
+              </p>
+            </div>
+            <div
+              id="trigger-bars"
+              class="trigger-bars-list privacy-sensitive"
+            ></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <!-- Urge Resistance / Relapse Trigger Logging Modal -->
+    <dialog
+      id="trigger-modal"
+      class="app-modal"
+      aria-labelledby="trigger-modal-title"
+    >
+      <div class="modal-card">
+        <header class="modal-header">
+          <div>
+            <span class="recovery-badge badge-copper" id="trigger-modal-badge"
+              >Urge Log</span
+            >
+            <h2 id="trigger-modal-title" data-i18n="triggerModalHeading">
+              Identify Primary Trigger
+            </h2>
+          </div>
+          <button
+            type="button"
+            id="trigger-modal-close"
+            class="icon-btn"
+            aria-label="Close dialog"
+          >
+            &times;
+          </button>
+        </header>
+
+        <form
+          id="trigger-form"
+          class="modal-body"
+          novalidate
+          autocomplete="off"
+        >
+          <input type="hidden" id="trigger-track-input" />
+          <input type="hidden" id="trigger-outcome-input" />
+
+          <div class="field">
+            <label for="trigger-cause-select" data-i18n="labelTriggerCause"
+              >What triggered this urge?</label
+            >
+            <select id="trigger-cause-select">
+              <option value="Stress">Stress &amp; Pressure</option>
+              <option value="Boredom">Boredom &amp; Idle Time</option>
+              <option value="Loneliness">Loneliness / Isolation</option>
+              <option value="LateNight">Fatigue / Late Night</option>
+              <option value="CoffeeRoutine">Coffee / Meal Routine</option>
+              <option value="ScreenScrolling">Aimless Screen Scrolling</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="trigger-note-input" data-i18n="labelTriggerNote"
+              >Action Taken / Reflection (Optional)</label
+            >
+            <input
+              type="text"
+              id="trigger-note-input"
+              placeholder="e.g., Drank cold water & did 20 pushups"
+              data-i18n-placeholder="placeholderTriggerNote"
+              maxlength="90"
+            />
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-i18n="confirmLogBtn"
+            >
+              Confirm &amp; Record
+            </button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span data-i18n="footerTech"
+          >FocusHabit OS • Vanilla JS, Web Audio API, SVG Heatmap &amp;
+          LocalStorage</span
+        >
+        <span>
+          <span data-i18n="footerBuiltBy">Built by</span>
+          <a
+            href="https://github.com/alirezabaghbanicode/js-practical-projects"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Alireza Baghbani</a
+          >
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

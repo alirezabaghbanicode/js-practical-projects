@@ -1,0 +1,370 @@
+/* ==========================================================================
+   BASE THEME VARIABLES (WARM COPPER & DEEP TEAL), RESET & SHARED CONTROLS
+   ========================================================================== */
+:root,
+html[data-theme="dark"] {
+    --bg-canvas: #0d0e11;
+    --surface-card: #15171c;
+    --surface-elevated: #1c1f26;
+    --surface-input: #0a0b0e;
+    --border-subtle: rgba(168, 162, 158, 0.15);
+    --border-strong: rgba(168, 162, 158, 0.3);
+
+    --text-primary: #fafaf9;
+    --text-secondary: #d6d3d1;
+    --text-muted: #a8a29e;
+
+    --brand-accent: #ea580c;
+    --brand-accent-hover: #c2410c;
+    --brand-accent-soft: rgba(234, 88, 12, 0.16);
+
+    --teal: #14b8a6;
+    --teal-hover: #0d9488;
+    --teal-soft: rgba(20, 184, 166, 0.16);
+
+    --emerald: #10b981;
+    --emerald-soft: rgba(16, 185, 129, 0.16);
+    --amber: #f59e0b;
+    --amber-soft: rgba(245, 158, 11, 0.16);
+    --rose: #f43f5e;
+    --rose-soft: rgba(244, 63, 94, 0.16);
+
+    --heat-0: #1e2028;
+    --heat-1: #431407;
+    --heat-2: #9a3412;
+    --heat-3: #ea580c;
+    --heat-4: #14b8a6;
+
+    --shadow-card: 0 8px 26px rgba(0, 0, 0, 0.36);
+}
+
+html[data-theme="light"] {
+    --bg-canvas: #f7f5f0;
+    --surface-card: #ffffff;
+    --surface-elevated: #f2efe9;
+    --surface-input: #f8f6f2;
+    --border-subtle: rgba(28, 25, 23, 0.1);
+    --border-strong: rgba(28, 25, 23, 0.22);
+
+    --text-primary: #1c1917;
+    --text-secondary: #44403c;
+    --text-muted: #78716c;
+
+    --brand-accent: #c2410c;
+    --brand-accent-hover: #9a3412;
+    --brand-accent-soft: rgba(194, 65, 12, 0.11);
+
+    --teal: #0f766e;
+    --teal-hover: #115e59;
+    --teal-soft: rgba(15, 118, 110, 0.11);
+
+    --emerald: #059669;
+    --emerald-soft: rgba(5, 150, 105, 0.12);
+    --amber: #d97706;
+    --amber-soft: rgba(217, 119, 6, 0.12);
+    --rose: #e11d48;
+    --rose-soft: rgba(225, 29, 72, 0.11);
+
+    --heat-0: #e7e5e4;
+    --heat-1: #fed7aa;
+    --heat-2: #fb923c;
+    --heat-3: #ea580c;
+    --heat-4: #0d9488;
+
+    --shadow-card: 0 4px 18px rgba(28, 25, 23, 0.06);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    font-family:
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+    color: var(--text-secondary);
+    background-color: var(--bg-canvas);
+    background-image:
+        radial-gradient(circle at 12% 6%,
+            rgba(234, 88, 12, 0.12),
+            transparent 38%),
+        radial-gradient(circle at 88% 88%,
+            rgba(20, 184, 166, 0.1),
+            transparent 42%);
+    line-height: 1.5;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+/* Enforce Vazirmatn Font Across All Persian Elements & Form Controls */
+html[dir="rtl"] body,
+html[dir="rtl"] input,
+html[dir="rtl"] select,
+html[dir="rtl"] textarea,
+html[dir="rtl"] button {
+    font-family: "Vazirmatn", system-ui, -apple-system, sans-serif;
+}
+
+/* Privacy Blur Mode */
+html[data-privacy="true"] .privacy-sensitive {
+    filter: blur(7px);
+    user-select: none;
+    pointer-events: none;
+    transition: filter 0.2s ease;
+}
+
+/* Layout Shell & Cards */
+.app-shell {
+    flex: 1;
+    width: min(100%, 88rem);
+    margin-inline: auto;
+    padding: clamp(1.15rem, 2.5vw, 1.85rem) clamp(1rem, 2.5vw, 2rem);
+    display: grid;
+    gap: 1.3rem;
+}
+
+.panel {
+    padding: clamp(1rem, 2.2vw, 1.4rem);
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+}
+
+.panel-header {
+    margin-bottom: 1rem;
+}
+
+.panel-header h2 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.panel-header p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+/* Buttons */
+.btn {
+    min-height: 2.5rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 0.55rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-sm {
+    min-height: 2.2rem;
+    padding: 0.42rem 0.85rem;
+    font-size: 0.78rem;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background: var(--brand-accent);
+}
+
+.btn-primary:hover {
+    background: var(--brand-accent-hover);
+}
+
+.btn-teal {
+    color: #ffffff;
+    background: var(--teal);
+}
+
+.btn-teal:hover {
+    background: var(--teal-hover);
+}
+
+.btn-ghost {
+    color: var(--text-secondary);
+    background: var(--surface-input);
+    border-color: var(--border-subtle);
+}
+
+.btn-ghost:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+}
+
+.btn-danger-ghost {
+    color: var(--rose);
+    background: var(--rose-soft);
+    border-color: rgba(244, 63, 94, 0.25);
+}
+
+.btn-danger-ghost:hover {
+    filter: brightness(1.08);
+}
+
+.icon-btn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.48rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-input);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+}
+
+.icon-btn:hover {
+    border-color: var(--brand-accent);
+    color: var(--brand-accent);
+}
+
+/* Uniform Inputs & Selects */
+.field {
+    display: grid;
+    gap: 0.34rem;
+}
+
+.field label {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+select {
+    width: 100%;
+    min-height: 2.5rem;
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.52rem;
+    font-size: 0.83rem;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--surface-input);
+    border: 1px solid var(--border-subtle);
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+input[type="datetime-local"] {
+    direction: ltr;
+    text-align: left;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--brand-accent);
+}
+
+input.is-invalid,
+select.is-invalid {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px var(--rose-soft);
+}
+
+.form-error-msg {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--rose);
+    background: var(--rose-soft);
+    border: 1px solid rgba(244, 63, 94, 0.28);
+    padding: 0.45rem 0.75rem;
+    border-radius: 0.5rem;
+}
+
+.form-error-msg[hidden] {
+    display: none;
+}
+
+.datetime-preview {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-top: 0.12rem;
+}
+
+/* Semantic Text Colors */
+.text-copper {
+    color: var(--brand-accent);
+}
+
+.text-teal {
+    color: var(--teal);
+}
+
+.text-emerald {
+    color: var(--emerald);
+}
+
+.text-amber {
+    color: var(--amber);
+}
+
+/* Footer */
+.site-footer {
+    border-top: 1px solid var(--border-subtle);
+    background: var(--surface-card);
+    margin-top: auto;
+}
+
+.footer-inner {
+    width: min(100%, 88rem);
+    margin-inline: auto;
+    padding: 0.95rem clamp(1rem, 2.5vw, 2rem);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.footer-inner a {
+    color: var(--brand-accent);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.footer-inner a:hover {
+    text-decoration: underline;
+}
