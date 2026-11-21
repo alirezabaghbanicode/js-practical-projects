@@ -1,7 +1,7 @@
 "use strict";
 
-const STORAGE_KEY = "alireza_ledgerflow_transactions_v2";
-const LANG_STORAGE_KEY = "alireza_ledgerflow_lang_v2";
+const STORAGE_KEY = "alireza_ledgerflow_transactions_v3";
+const LANG_STORAGE_KEY = "alireza_ledgerflow_lang_v3";
 
 const ALLOWED_CATEGORIES = new Set([
   "Software & Tools",
@@ -316,10 +316,9 @@ const filterTypeSelect = document.getElementById("filter-type");
 
 const seedBtn = document.getElementById("seed-btn");
 const clearBtn = document.getElementById("clear-btn");
-const langButtons = document.querySelectorAll(".lang-btn");
 
 function hasKey(obj, key) {
-  return Object.prototype.hasOwnProperty.call(obj, key);
+  return Boolean(key) && Object.prototype.hasOwnProperty.call(obj, key);
 }
 
 function normalizeDigits(rawValue) {
@@ -337,16 +336,26 @@ function toPersianDigits(text) {
   return String(text).replace(/\d/g, (digit) => persianDigits[Number(digit)]);
 }
 
-function loadLanguage() {
+function getInitialLanguage() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const urlLang = (params.get("lang") || "").toLowerCase();
+    if (hasKey(I18N, urlLang)) return urlLang;
+  } catch {
+    // Ignore URL parsing errors
+  }
+
   try {
     const savedLang = localStorage.getItem(LANG_STORAGE_KEY);
-    return savedLang && hasKey(I18N, savedLang) ? savedLang : "en";
+    if (hasKey(I18N, savedLang)) return savedLang;
   } catch {
-    return "en";
+    // Ignore storage errors
   }
+
+  return "en";
 }
 
-const initialLang = loadLanguage();
+const initialLang = getInitialLanguage();
 
 const state = {
   lang: initialLang,
@@ -398,11 +407,11 @@ function saveTransactions() {
 
 function escapeHTML(value) {
   return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function formatNumberLocalized(num) {
@@ -479,24 +488,32 @@ function applyLanguage(langCode) {
     // Ignore storage errors
   }
 
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set("lang", state.lang);
+    window.history.replaceState({}, "", url.toString());
+  } catch {
+    // Ignore history API errors
+  }
+
   const dict = I18N[state.lang];
   document.documentElement.lang = state.lang;
   document.documentElement.dir = dict.dir;
   document.title = dict.pageTitle;
 
-  langButtons.forEach((btn) => {
-    const isActive = btn.dataset.lang === state.lang;
+  document.querySelectorAll(".lang-btn").forEach((btn) => {
+    const isActive = btn.getAttribute("data-lang") === state.lang;
     btn.classList.toggle("active", isActive);
     btn.setAttribute("aria-pressed", String(isActive));
   });
 
   document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const key = el.dataset.i18n;
+    const key = el.getAttribute("data-i18n");
     if (dict[key]) el.textContent = dict[key];
   });
 
   document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-    const key = el.dataset.i18nPlaceholder;
+    const key = el.getAttribute("data-i18n-placeholder");
     if (dict[key]) el.placeholder = dict[key];
   });
 
@@ -646,11 +663,11 @@ function renderApp() {
   renderTransactions();
 }
 
-// Event Listeners
-langButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    applyLanguage(btn.dataset.lang);
-  });
+// Event Delegation for Language Switcher
+document.addEventListener("click", (event) => {
+  const langBtn = event.target.closest(".lang-btn[data-lang]");
+  if (!langBtn) return;
+  applyLanguage(langBtn.getAttribute("data-lang"));
 });
 
 amountInput.addEventListener("input", () => {
@@ -713,7 +730,7 @@ transactionListEl.addEventListener("click", (event) => {
   const deleteBtn = event.target.closest("[data-delete-id]");
   if (!deleteBtn) return;
 
-  const idToDelete = deleteBtn.dataset.deleteId;
+  const idToDelete = deleteBtn.getAttribute("data-delete-id");
   state.transactions = state.transactions.filter((tx) => tx.id !== idToDelete);
   saveTransactions();
   renderApp();
