@@ -1047,8 +1047,8 @@ function closeCalendar() {
 
 function positionCalendar(triggerBtn) {
   const rect = triggerBtn.getBoundingClientRect();
-  const popWidth = 292;
-  const popHeight = 320;
+  const popWidth = calPopover.offsetWidth || 292;
+  const popHeight = calPopover.offsetHeight || 320;
 
   let left = state.lang === "fa" ? rect.right - popWidth : rect.left;
   left = Math.max(12, Math.min(left, window.innerWidth - popWidth - 12));
@@ -1057,6 +1057,7 @@ function positionCalendar(triggerBtn) {
   if (top + popHeight > window.innerHeight - 12) {
     top = Math.max(12, rect.top - popHeight - 6);
   }
+  top = Math.max(12, top);
 
   calPopover.style.left = `${left}px`;
   calPopover.style.top = `${top}px`;
@@ -1667,6 +1668,16 @@ window.addEventListener("resize", () => {
   }
 });
 
+window.addEventListener(
+  "scroll",
+  () => {
+    if (state.calendar.isOpen && state.calendar.triggerEl) {
+      positionCalendar(state.calendar.triggerEl);
+    }
+  },
+  { capture: true, passive: true },
+);
+
 themeToggleBtn.addEventListener("click", () => {
   applyTheme(state.theme === "dark" ? "light" : "dark");
 });
@@ -1826,6 +1837,14 @@ Object.values(dropzones).forEach((zone) => {
 modalCloseBtn.addEventListener("click", () => {
   closeCalendar();
   taskModal.close();
+});
+
+taskModal.addEventListener("close", closeCalendar);
+
+taskModal.addEventListener("click", (event) => {
+  if (event.target === taskModal) {
+    taskModal.close();
+  }
 });
 
 subtaskListEl.addEventListener("change", (event) => {

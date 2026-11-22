@@ -12,6 +12,9 @@
     --cal-border: var(--border-subtle, rgba(148, 163, 184, 0.18));
 
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 2.5rem;
     padding: 0.54rem 0.72rem;
     border-radius: 0.52rem;
     font-size: 0.82rem;
@@ -42,6 +45,7 @@
 }
 
 .tc-trigger-text {
+    min-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -62,7 +66,11 @@
 
     position: fixed;
     z-index: 9999;
-    width: 18.5rem;
+    width: min(18.5rem, calc(100vw - 1.5rem));
+    max-height: calc(100dvh - 1.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     padding: 0.88rem;
     border-radius: 0.95rem;
     background: var(--cal-surface);
@@ -85,6 +93,7 @@
 }
 
 .tc-title-box {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -104,14 +113,15 @@
 }
 
 .tc-nav-btn {
-    width: 1.85rem;
-    height: 1.85rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 0.48rem;
     border: 1px solid var(--cal-border);
     background: var(--cal-input);
     color: var(--cal-text);
     display: grid;
     place-items: center;
+    flex-shrink: 0;
     cursor: pointer;
     transition:
         border-color 0.18s ease,
@@ -143,6 +153,7 @@ html[dir="rtl"] .tc-nav-icon {
 }
 
 .tc-day-cell {
+    min-width: 0;
     aspect-ratio: 1 / 1;
     border-radius: 0.48rem;
     border: 1px solid transparent;
@@ -186,12 +197,13 @@ html[dir="rtl"] .tc-nav-icon {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
     padding-top: 0.55rem;
     border-top: 1px solid var(--cal-border);
 }
 
 .tc-footer-btn {
-    padding: 0.3rem 0.65rem;
+    padding: 0.36rem 0.75rem;
     border-radius: 0.42rem;
     border: 1px solid var(--cal-border);
     background: var(--cal-input);
@@ -208,9 +220,11 @@ html[dir="rtl"] .tc-nav-icon {
     color: var(--cal-accent);
 }
 
-@media (max-width: 400px) {
+@media (max-width: 576px) {
     .tc-popover {
-        width: calc(100vw - 1.5rem);
-        left: 0.75rem !important;
+        width: min(19.5rem, calc(100vw - 1.5rem));
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%);
     }
 }

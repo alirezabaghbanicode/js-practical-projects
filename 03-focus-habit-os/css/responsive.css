@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MASTER SEQUENTIAL RESPONSIVE SYSTEM (1280px -> 1024px -> 768px -> 576px -> 400px)
+   MASTER SEQUENTIAL RESPONSIVE SYSTEM (1280px -> 1024px -> 768px -> 576px -> 420px -> 359px)
    ========================================================================== */
 
 /* 1. Small Desktop / Large Tablet (max-width: 1280px) */
@@ -48,8 +48,12 @@
 
 /* 3. Tablet Portrait (max-width: 768px) */
 @media (max-width: 768px) {
+    .topbar {
+        position: static;
+    }
+
     .habit-add-form {
-        grid-template-columns: 1fr auto;
+        grid-template-columns: minmax(0, 1fr) auto;
     }
 
     .habit-add-form input[type="text"] {
@@ -68,20 +72,43 @@
     }
 }
 
-/* 4. Mobile Large (max-width: 576px) */
+/* 4. Mobile Standard (max-width: 576px) */
 @media (max-width: 576px) {
+    .topbar-actions {
+        gap: 0.45rem;
+    }
+
+    .lang-switcher {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .lang-btn {
+        min-height: 2.3rem;
+    }
+
     .topbar-actions .btn {
-        flex: 1 1 auto;
+        flex: 1 1 calc(50% - 0.25rem);
+        min-height: 2.35rem;
     }
 
     .kpi-strip {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+    }
+
+    .kpi-card {
+        padding: 0.85rem 0.95rem;
+    }
+
+    .timer-modes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .timer-session-meta,
     .habit-add-form,
-    .drawer-grid,
-    .recovery-actions {
+    .drawer-grid {
         grid-template-columns: 1fr;
     }
 
@@ -95,39 +122,88 @@
     }
 
     .donut-wrapper {
+        width: 136px;
+        height: 136px;
         margin-inline: auto;
+    }
+
+    .chart-legend {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .app-modal {
+        width: calc(100vw - 1rem);
+        max-width: calc(100vw - 1rem);
+        max-height: 92dvh;
+        border-radius: 0.88rem;
+    }
+
+    .modal-card {
+        max-height: 92dvh;
+    }
+
+    .modal-header {
+        padding: 0.85rem 1rem;
+    }
+
+    .modal-body {
+        padding: 0.95rem 1rem;
+    }
+
+    .modal-footer .btn-primary {
+        width: 100%;
     }
 
     .footer-inner {
         flex-direction: column;
+        align-items: center;
         text-align: center;
     }
 }
 
-/* 5. Mobile Compact (max-width: 400px) */
+/* 5. Mobile Compact (max-width: 460px) */
+@media (max-width: 460px) {
+    .recovery-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .timer-controls .btn-primary {
+        flex: 1 1 100%;
+    }
+
+    .timer-controls .btn-ghost,
+    .timer-controls .btn-teal {
+        flex: 1 1 0;
+    }
+}
+
+/* 6. Narrow Phones (max-width: 400px) */
 @media (max-width: 400px) {
     .app-shell {
-        padding-inline: 0.75rem;
-        gap: 1rem;
+        padding-inline: 0.7rem;
+        gap: 0.95rem;
     }
 
     .panel {
-        padding: 0.85rem;
+        padding: 0.82rem;
     }
 
-    .timer-modes {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .chart-legend {
+        grid-template-columns: 1fr;
     }
 
     .clock-unit {
-        min-width: 2.8rem;
-    }
-
-    .clock-unit strong {
-        font-size: 1.35rem;
+        min-width: 2.75rem;
     }
 
     .recovery-metrics-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 7. Extra-Narrow Screens (max-width: 359px) */
+@media (max-width: 359px) {
+    .kpi-strip {
         grid-template-columns: 1fr;
     }
 }

@@ -2,8 +2,13 @@
    365-DAY SVG HEATMAP, CHARTS & TRIGGER MODAL
    ========================================================================== */
 .analytics-section {
+    min-width: 0;
     display: grid;
     gap: 1.15rem;
+}
+
+.heatmap-panel {
+    min-width: 0;
 }
 
 .heatmap-header {
@@ -63,6 +68,7 @@
 .heatmap-scroll-wrap {
     width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     padding-bottom: 0.35rem;
 }
 
@@ -178,11 +184,13 @@
 .chart-legend {
     list-style: none;
     flex: 1;
+    min-width: 0;
     display: grid;
     gap: 0.48rem;
 }
 
 .legend-item {
+    min-width: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -191,10 +199,17 @@
 }
 
 .legend-left {
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 0.42rem;
     color: var(--text-secondary);
+}
+
+.legend-left span:last-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .legend-dot {
@@ -206,7 +221,9 @@
 
 .legend-val {
     font-weight: 700;
+    font-variant-numeric: tabular-nums;
     color: var(--text-primary);
+    flex-shrink: 0;
 }
 
 /* Trigger Diagnostics Percentage Bars */
@@ -223,6 +240,7 @@
 .trigger-bar-meta {
     display: flex;
     justify-content: space-between;
+    gap: 0.5rem;
     font-size: 0.79rem;
 }
 
@@ -232,6 +250,7 @@
 
 .trigger-bar-meta strong {
     color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
 }
 
 .trigger-track {
@@ -257,7 +276,15 @@
     background: var(--surface-card);
     color: var(--text-secondary);
     width: min(94vw, 28rem);
+    max-width: calc(100vw - 1rem);
+    max-height: 90dvh;
+    overflow: hidden;
     box-shadow: 0 24px 48px rgba(0, 0, 0, 0.52);
+}
+
+.app-modal[open] {
+    display: flex;
+    flex-direction: column;
 }
 
 .app-modal::backdrop {
@@ -265,12 +292,22 @@
     backdrop-filter: blur(4px);
 }
 
+.modal-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: 90dvh;
+}
+
 .modal-header {
-    padding: 1rem 1.25rem;
+    flex-shrink: 0;
+    padding: 0.95rem 1.2rem;
     border-bottom: 1px solid var(--border-subtle);
+    background: var(--surface-card);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.75rem;
 }
 
 .modal-header h2 {
@@ -280,12 +317,16 @@
 }
 
 .modal-body {
-    padding: 1.15rem 1.25rem;
+    padding: 1.1rem 1.2rem;
     display: grid;
     gap: 0.9rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal-footer {
     display: flex;
     justify-content: flex-end;
+    padding-top: 0.25rem;
 }

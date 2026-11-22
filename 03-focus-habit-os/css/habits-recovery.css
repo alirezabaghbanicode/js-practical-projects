@@ -2,6 +2,7 @@
    DAILY POSITIVE HABITS & ADDICTION RECOVERY (SMOKING & SELF-CONTROL)
    ========================================================================== */
 .habits-panel {
+    min-width: 0;
     display: grid;
     gap: 1rem;
 }
@@ -27,11 +28,12 @@
 
 .habit-date-picker {
     width: 12rem;
+    max-width: 100%;
 }
 
 .habit-add-form {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 9.5rem auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 9.5rem) auto;
     align-items: stretch;
     gap: 0.55rem;
 }
@@ -43,6 +45,7 @@
 }
 
 .habit-item {
+    min-width: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -66,11 +69,12 @@
     align-items: center;
     gap: 0.68rem;
     min-width: 0;
+    flex: 1;
 }
 
 .habit-check-btn {
-    width: 1.55rem;
-    height: 1.55rem;
+    width: 1.65rem;
+    height: 1.65rem;
     border-radius: 0.45rem;
     border: 2px solid var(--border-strong);
     background: var(--surface-input);
@@ -91,7 +95,7 @@
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-primary);
-    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .habit-item.is-completed .habit-title-text {
@@ -101,6 +105,7 @@
 
 .habit-right {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.45rem;
     flex-shrink: 0;
@@ -128,6 +133,7 @@
    RECOVERY & QUIT SECTION (SMOKING & SELF-CONTROL)
    ========================================================================== */
 .recovery-section {
+    min-width: 0;
     display: grid;
     gap: 0.95rem;
 }
@@ -172,6 +178,7 @@
 }
 
 .recovery-card {
+    min-width: 0;
     display: grid;
     gap: 0.95rem;
 }
@@ -181,6 +188,10 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 0.5rem;
+}
+
+.recovery-title-group {
+    min-width: 0;
 }
 
 .recovery-title-group h3 {
@@ -210,6 +221,7 @@
 
 /* Collapsible Settings Drawer */
 .settings-drawer {
+    min-width: 0;
     padding: 0.9rem;
     border-radius: 0.78rem;
     background: var(--surface-elevated);
@@ -238,8 +250,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.65rem;
-    padding: 0.85rem;
+    gap: clamp(0.35rem, 2vw, 0.65rem);
+    padding: 0.85rem 0.65rem;
     border-radius: 0.8rem;
     background: var(--surface-input);
     border: 1px solid var(--border-subtle);
@@ -250,11 +262,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 3.6rem;
+    min-width: 3.3rem;
 }
 
 .clock-unit strong {
-    font-size: 1.65rem;
+    font-size: clamp(1.35rem, 4vw, 1.65rem);
     font-weight: 800;
     font-variant-numeric: tabular-nums;
     line-height: 1.1;
@@ -269,7 +281,7 @@
 }
 
 .clock-sep {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     font-weight: 800;
     color: var(--text-muted);
     margin-top: -0.7rem;
@@ -277,13 +289,16 @@
 
 /* Milestone Bar */
 .milestone-box {
+    min-width: 0;
     display: grid;
     gap: 0.35rem;
 }
 
 .milestone-meta {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    gap: 0.35rem;
     font-size: 0.78rem;
 }
 
@@ -327,7 +342,8 @@
 }
 
 .mini-stat {
-    padding: 0.6rem 0.65rem;
+    min-width: 0;
+    padding: 0.6rem 0.55rem;
     border-radius: 0.65rem;
     background: var(--surface-elevated);
     border: 1px solid var(--border-subtle);
@@ -342,15 +358,25 @@
 }
 
 .mini-stat strong {
-    font-size: 0.95rem;
+    font-size: clamp(0.84rem, 2.2vw, 0.95rem);
     font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
     color: var(--text-primary);
 }
 
 .recovery-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.6rem;
+}
+
+.recovery-actions .btn {
+    width: 100%;
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
 }
 
 .empty-placeholder {
@@ -365,22 +391,23 @@
 /* Trilingual Calendar + Time Split Row inside Recovery Settings */
 .datetime-split-row {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.5rem;
     align-items: center;
 }
 
 .datetime-split-row .tc-trigger-btn {
     width: 100%;
+    min-width: 0;
     justify-content: flex-start;
-    min-height: 2.45rem;
+    min-height: 2.5rem;
 }
 
 .datetime-split-row input[type="time"] {
     min-width: 7.4rem;
-    height: 2.45rem;
+    height: 2.5rem;
     padding: 0.45rem 0.7rem;
-    border-radius: var(--radius-sm, 8px);
+    border-radius: 0.52rem;
     font-family: inherit;
     font-size: 0.86rem;
     font-weight: 500;
@@ -390,32 +417,37 @@
 
 html[data-theme="dark"] .datetime-split-row input[type="time"] {
     color-scheme: dark;
-    background-color: var(--bg-elevated, #14161c);
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
-    color: var(--text-primary, #f4f4f5);
+    background-color: var(--surface-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
 }
 
 html[data-theme="light"] .datetime-split-row input[type="time"] {
     color-scheme: light;
-    background-color: var(--bg-elevated, #f7f5f0);
-    border: 1px solid var(--border-subtle, rgba(28, 25, 23, 0.16));
-    color: var(--text-primary, #1c1917);
+    background-color: var(--surface-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
 }
 
 .datetime-split-row input[type="time"]:focus {
     outline: none;
-    border-color: var(--brand-accent, #ea580c);
+    border-color: var(--brand-accent);
     box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.2);
 }
 
 .datetime-split-row input[type="time"].is-invalid,
 .tc-trigger-btn.is-invalid {
-    border-color: var(--danger, #ef4444);
-    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.18);
+    border-color: var(--rose);
+    box-shadow: 0 0 0 2px var(--rose-soft);
 }
 
 @media (max-width: 480px) {
     .datetime-split-row {
         grid-template-columns: 1fr;
+    }
+
+    .datetime-split-row input[type="time"] {
+        width: 100%;
+        min-width: 0;
     }
 }

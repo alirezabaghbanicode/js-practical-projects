@@ -28,6 +28,13 @@
     padding: 0;
 }
 
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+}
+
 .sr-only {
     position: absolute;
     width: 1px;
@@ -74,7 +81,7 @@ body {
 .topbar-inner {
     width: min(100%, 76rem);
     margin-inline: auto;
-    padding: 0.85rem clamp(1rem, 3vw, 2rem);
+    padding: 0.85rem clamp(0.9rem, 3vw, 2rem);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -86,6 +93,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    min-width: 0;
 }
 
 .brand-logo {
@@ -98,6 +106,7 @@ body {
     font-size: 0.9rem;
     color: #04101a;
     background: linear-gradient(135deg, #38bdf8, #34d399);
+    flex-shrink: 0;
 }
 
 .brand-name {
@@ -134,8 +143,9 @@ body {
 .lang-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.38rem;
-    padding: 0.34rem 0.62rem;
+    padding: 0.38rem 0.65rem;
     border: none;
     border-radius: 0.42rem;
     background: transparent;
@@ -168,7 +178,7 @@ body {
 
 /* Buttons */
 .btn {
-    padding: 0.48rem 0.9rem;
+    padding: 0.52rem 0.9rem;
     border-radius: 0.55rem;
     font-size: 0.82rem;
     font-weight: 600;
@@ -187,7 +197,7 @@ body {
 
 .btn-primary {
     width: 100%;
-    padding: 0.72rem 1rem;
+    padding: 0.75rem 1rem;
     font-size: 0.9rem;
     color: #04101a;
     background: var(--accent-sky);
@@ -223,9 +233,9 @@ body {
     flex: 1;
     width: min(100%, 76rem);
     margin-inline: auto;
-    padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 3vw, 2rem);
+    padding: clamp(1rem, 3vw, 2rem) clamp(0.9rem, 3vw, 2rem);
     display: grid;
-    gap: 1.35rem;
+    gap: 1.25rem;
 }
 
 /* KPI Strip */
@@ -236,6 +246,7 @@ body {
 }
 
 .kpi-card {
+    min-width: 0;
     padding: 1.1rem 1.25rem;
     background: var(--surface-card);
     border: 1px solid var(--border-subtle);
@@ -254,9 +265,11 @@ body {
 }
 
 .kpi-value {
-    font-size: 1.45rem;
+    font-size: clamp(1.12rem, 2.6vw, 1.45rem);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
     color: var(--text-primary);
 }
 
@@ -286,12 +299,14 @@ body {
 }
 
 .left-stack {
+    min-width: 0;
     display: grid;
     gap: 1.35rem;
 }
 
 .panel {
-    padding: clamp(1.1rem, 2.5vw, 1.45rem);
+    min-width: 0;
+    padding: clamp(1rem, 2.5vw, 1.45rem);
     background: var(--surface-card);
     border: 1px solid var(--border-subtle);
     border-radius: 1rem;
@@ -333,7 +348,10 @@ body {
 }
 
 .type-pill {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
     text-align: center;
     padding: 0.52rem;
     border-radius: 0.55rem;
@@ -359,6 +377,7 @@ body {
 }
 
 .field {
+    min-width: 0;
     display: grid;
     gap: 0.35rem;
     align-content: start;
@@ -366,7 +385,7 @@ body {
 
 .field-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.75rem;
 }
 
@@ -388,6 +407,9 @@ input[type="date"],
 input[type="search"],
 select {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 2.65rem;
     padding: 0.58rem 0.78rem;
     border-radius: 0.55rem;
     font-size: 0.88rem;
@@ -397,6 +419,11 @@ select {
     border: 1px solid var(--border-subtle);
     outline: none;
     transition: border-color 0.2s ease;
+}
+
+input[type="date"] {
+    display: block;
+    color-scheme: dark;
 }
 
 input:focus,
@@ -417,9 +444,10 @@ select:focus {
 
 .breakdown-meta {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     font-size: 0.82rem;
-    gap: 0.5rem;
+    gap: 0.35rem 0.5rem;
 }
 
 .breakdown-meta span {
@@ -505,6 +533,7 @@ select:focus {
 
 .tx-info {
     min-width: 0;
+    flex: 1;
 }
 
 .tx-title {
@@ -521,13 +550,13 @@ select:focus {
     flex-wrap: wrap;
     align-items: center;
     gap: 0.45rem;
-    margin-top: 0.18rem;
+    margin-top: 0.25rem;
     font-size: 0.76rem;
     color: var(--text-muted);
 }
 
 .cat-tag {
-    padding: 0.1rem 0.48rem;
+    padding: 0.12rem 0.5rem;
     border-radius: 999px;
     background: rgba(148, 163, 184, 0.12);
     color: var(--text-secondary);
@@ -555,13 +584,13 @@ select:focus {
 }
 
 .delete-btn {
-    width: 1.85rem;
-    height: 1.85rem;
+    width: 2.15rem;
+    height: 2.15rem;
     border-radius: 0.45rem;
     border: 1px solid transparent;
     background: transparent;
     color: var(--text-muted);
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     line-height: 1;
     cursor: pointer;
     display: grid;
@@ -611,7 +640,7 @@ html[dir="rtl"] .tx-amount {
 .footer-inner {
     width: min(100%, 76rem);
     margin-inline: auto;
-    padding: 1rem clamp(1rem, 3vw, 2rem);
+    padding: 1rem clamp(0.9rem, 3vw, 2rem);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -630,20 +659,109 @@ html[dir="rtl"] .tx-amount {
     text-decoration: underline;
 }
 
+/* Tablet & Small Desktop */
 @media (max-width: 900px) {
     .workspace {
         grid-template-columns: 1fr;
     }
+
+    .ledger-controls {
+        width: 100%;
+    }
+
+    .ledger-controls input[type="search"] {
+        flex: 1 1 14rem;
+        width: auto;
+    }
+
+    .ledger-controls select {
+        flex: 0 1 11rem;
+    }
 }
 
+/* Mobile Layout */
+@media (max-width: 640px) {
+    .topbar {
+        position: static;
+    }
+
+    .topbar-actions {
+        width: 100%;
+    }
+
+    .lang-switcher {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .lang-btn {
+        min-height: 2.35rem;
+    }
+
+    .topbar-actions .btn {
+        flex: 1 1 calc(50% - 0.3rem);
+        min-height: 2.4rem;
+        text-align: center;
+    }
+
+    .kpi-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+    }
+
+    .kpi-card {
+        padding: 0.9rem 1rem;
+    }
+}
+
+/* Narrow Phones */
 @media (max-width: 520px) {
     .field-row {
         grid-template-columns: 1fr;
     }
 
-    .ledger-controls,
     .ledger-controls input[type="search"],
     .ledger-controls select {
+        flex: 1 1 100%;
         width: 100%;
+    }
+
+    .tx-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+    }
+
+    .tx-title {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .tx-right {
+        width: 100%;
+        justify-content: space-between;
+        padding-top: 0.55rem;
+        border-top: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .delete-btn {
+        width: 2.35rem;
+        height: 2.35rem;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* Extra-Narrow Screens */
+@media (max-width: 359px) {
+    .kpi-strip {
+        grid-template-columns: 1fr;
     }
 }

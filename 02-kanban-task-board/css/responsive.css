@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MASTER SEQUENTIAL RESPONSIVE SYSTEM (1280px -> 1024px -> 768px -> 576px -> 400px)
+   MASTER SEQUENTIAL RESPONSIVE SYSTEM (1280px -> 1024px -> 768px -> 576px -> 420px -> 360px)
    Covers: 1. Topbar  2. KPIs  3. Analytics  4. Composer & Filters  5. Board  6. Overlays
    ========================================================================== */
 
@@ -92,6 +92,7 @@
 
     .filter-controls input[type="search"] {
         flex: 1 1 14rem;
+        width: auto;
     }
 }
 
@@ -99,6 +100,11 @@
    STAGE 3: Tablet Portrait (max-width: 768px)
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+
+    /* 1. Topbar: unstick multi-row bar so mobile viewport stays open */
+    .topbar {
+        position: static;
+    }
 
     /* 4. Composer Form */
     .task-form {
@@ -126,28 +132,44 @@
     }
 
     .column-dropzone {
-        min-height: 10rem;
+        min-height: 8.5rem;
     }
 }
 
 /* --------------------------------------------------------------------------
-   STAGE 4: Mobile Large (max-width: 576px)
+   STAGE 4: Mobile Standard (max-width: 576px)
    -------------------------------------------------------------------------- */
 @media (max-width: 576px) {
 
     /* 1. Topbar */
     .topbar-actions {
-        gap: 0.4rem;
+        gap: 0.45rem;
+    }
+
+    .lang-switcher {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .lang-btn {
+        min-height: 2.3rem;
     }
 
     .topbar-actions .btn {
-        flex: 1 1 auto;
+        flex: 1 1 calc(50% - 0.25rem);
+        min-height: 2.35rem;
         text-align: center;
     }
 
-    /* 2. KPIs */
+    /* 2. KPIs (compact 2x2 grid on mobile) */
     .kpi-strip {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+    }
+
+    .kpi-card {
+        padding: 0.85rem 0.95rem;
     }
 
     /* 3. Analytics */
@@ -157,14 +179,82 @@
     }
 
     .donut-wrapper {
+        width: 136px;
+        height: 136px;
         margin-inline: auto;
     }
 
-    /* 4. Composer & Filters */
+    .chart-legend {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* 4. Filters */
     .filter-controls,
     .filter-controls input[type="search"],
     .filter-controls select {
+        flex: 1 1 100%;
         width: 100%;
+    }
+
+    /* 6. Modal & Popover Calendar */
+    .task-modal {
+        width: calc(100vw - 1rem);
+        max-width: calc(100vw - 1rem);
+        max-height: 92dvh;
+        border-radius: 0.88rem;
+    }
+
+    .modal-card {
+        max-height: 92dvh;
+    }
+
+    .modal-header {
+        padding: 0.85rem 1rem;
+    }
+
+    .modal-body {
+        padding: 0.95rem 1rem;
+    }
+
+    .modal-footer .btn-primary {
+        width: 100%;
+    }
+
+    .cal-popover {
+        width: min(19.5rem, calc(100vw - 1.5rem));
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%);
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   STAGE 5: Mobile Compact (max-width: 420px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 420px) {
+    .app-shell {
+        padding-inline: 0.7rem;
+        gap: 0.95rem;
+    }
+
+    .panel,
+    .board-column {
+        padding: 0.82rem;
+    }
+
+    .lang-btn {
+        padding: 0.28rem 0.45rem;
+        font-size: 0.72rem;
+    }
+
+    .chart-legend {
+        grid-template-columns: 1fr;
     }
 
     .task-form {
@@ -183,38 +273,16 @@
         grid-column: span 1;
     }
 
-    /* 6. Modal & Footer */
     .modal-grid {
         grid-template-columns: 1fr;
-    }
-
-    .footer-inner {
-        flex-direction: column;
-        text-align: center;
     }
 }
 
 /* --------------------------------------------------------------------------
-   STAGE 5: Mobile Compact (max-width: 400px)
+   STAGE 6: Extra-Narrow Screens (max-width: 359px)
    -------------------------------------------------------------------------- */
-@media (max-width: 400px) {
-    .app-shell {
-        padding-inline: 0.75rem;
-        gap: 1rem;
-    }
-
-    .panel,
-    .board-column {
-        padding: 0.85rem;
-    }
-
-    .lang-btn {
-        padding: 0.28rem 0.45rem;
-        font-size: 0.72rem;
-    }
-
-    .cal-popover {
-        width: calc(100vw - 1.5rem);
-        left: 0.75rem !important;
+@media (max-width: 359px) {
+    .kpi-strip {
+        grid-template-columns: 1fr;
     }
 }
