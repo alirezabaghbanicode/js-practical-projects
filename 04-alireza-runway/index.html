@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="author" content="Alireza Baghbani" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>ALIREZA — Try the Look | Interactive 3D Runway</title>
+    <meta
+      name="description"
+      content="ALIREZA Runway Studio: Explore ten curated women's and men's looks on an interactive 3D ring carousel, inspect pieces with hotspot pins, and build your styling bag."
+    />
+    <meta
+      name="keywords"
+      content="ALIREZA Runway, Interactive 3D Lookbook, Shoppable Runway, Vanilla JavaScript, Trilingual Web App, Alireza Baghbani"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large"
+    />
+
+    <!-- Content Security Policy -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: blob:; font-src 'self' https://cdn.jsdelivr.net data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Preload First Runway Model -->
+    <link
+      rel="preload"
+      as="image"
+      href="assets/models/f-01.webp"
+      fetchpriority="high"
+    />
+
+    <!-- Vazirmatn Persian Webfont -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+    />
+
+    <!-- Canonical & Multilingual Discovery -->
+    <link
+      rel="canonical"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/04-alireza-runway/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/04-alireza-runway/?lang=en"
+    />
+    <link
+      rel="alternate"
+      hreflang="de"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/04-alireza-runway/?lang=de"
+    />
+    <link
+      rel="alternate"
+      hreflang="fa"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/04-alireza-runway/?lang=fa"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://alirezabaghbanicode.github.io/js-practical-projects/04-alireza-runway/"
+    />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ALIREZA — Interactive 3D Runway & Lookbook Studio",
+        "url": "https://alirezabaghbanicode.github.io/js-practical-projects/04-alireza-runway/",
+        "applicationCategory": "ShoppingApplication",
+        "operatingSystem": "All",
+        "inLanguage": ["en", "de", "fa"],
+        "author": {
+          "@type": "Person",
+          "name": "Alireza Baghbani",
+          "url": "https://github.com/alirezabaghbanicode"
+        }
+      }
+    </script>
+
+    <!-- Modular CSS Architecture -->
+    <link rel="stylesheet" href="css/tokens-base.css?v=1" />
+    <link rel="stylesheet" href="css/stage-3d.css?v=1" />
+    <link rel="stylesheet" href="css/lightbox-pins.css?v=1" />
+    <link rel="stylesheet" href="css/panel-bag.css?v=1" />
+    <link rel="stylesheet" href="css/responsive.css?v=1" />
+
+    <!-- Type-Checked Modular JavaScript (@ts-check) -->
+    <script src="js/i18n.js?v=1" defer></script>
+    <script src="js/products-data.js?v=1" defer></script>
+    <script src="js/looks-data.js?v=1" defer></script>
+    <script src="js/physics-engine.js?v=1" defer></script>
+    <script src="js/bag-store.js?v=1" defer></script>
+    <script src="js/dom-builder.js?v=1" defer></script>
+    <script src="js/runway-app.js?v=1" defer></script>
+  </head>
+  <body>
+    <header class="site-header shopify-section-group-header-group">
+      <a href="./" class="brand" aria-label="ALIREZA Runway Home">
+        <svg
+          class="brand-mark"
+          width="28"
+          height="28"
+          viewBox="0 0 32 32"
+          fill="none"
+          aria-hidden="true"
+        >
+          <rect
+            x="1"
+            y="1"
+            width="30"
+            height="30"
+            stroke="currentColor"
+            stroke-width="1.6"
+          />
+          <path
+            d="M16 6L24 25H20.8L19.1 20.8H12.9L11.2 25H8L16 6ZM16 11.4L13.9 18.2H18.1L16 11.4Z"
+            fill="currentColor"
+          />
+        </svg>
+        <span class="brand-wordmark">ALIREZA</span>
+      </a>
+
+      <nav class="header-nav" aria-label="Collection Filter">
+        <button
+          type="button"
+          class="nav-filter-btn is-active"
+          data-rw-collection="all"
+          aria-pressed="true"
+          data-i18n="navAll"
+        >
+          All Runway (10)
+        </button>
+        <button
+          type="button"
+          class="nav-filter-btn"
+          data-rw-collection="women"
+          aria-pressed="false"
+          data-i18n="navWomen"
+        >
+          Women (5)
+        </button>
+        <button
+          type="button"
+          class="nav-filter-btn"
+          data-rw-collection="men"
+          aria-pressed="false"
+          data-i18n="navMen"
+        >
+          Men (5)
+        </button>
+      </nav>
+
+      <div class="header-tools">
+        <div class="lang-switcher" role="group" aria-label="Language Switcher">
+          <button
+            type="button"
+            class="lang-btn active"
+            data-lang="en"
+            aria-pressed="true"
+          >
+            <svg
+              class="flag-icon"
+              viewBox="0 0 60 30"
+              width="16"
+              height="11"
+              aria-hidden="true"
+            >
+              <rect width="60" height="30" fill="#012169" />
+              <path
+                d="M0,0 L60,30 M60,0 L0,30"
+                stroke="#fff"
+                stroke-width="6"
+              />
+              <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
+              <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6" />
+            </svg>
+            <span>EN</span>
+          </button>
+
+          <button
+            type="button"
+            class="lang-btn"
+            data-lang="de"
+            aria-pressed="false"
+          >
+            <svg
+              class="flag-icon"
+              viewBox="0 0 5 3"
+              width="16"
+              height="11"
+              aria-hidden="true"
+            >
+              <rect width="5" height="1" y="0" fill="#000000" />
+              <rect width="5" height="1" y="1" fill="#DD0000" />
+              <rect width="5" height="1" y="2" fill="#FFCE00" />
+            </svg>
+            <span>DE</span>
+          </button>
+
+          <button
+            type="button"
+            class="lang-btn"
+            data-lang="fa"
+            aria-pressed="false"
+          >
+            <svg
+              class="flag-icon"
+              viewBox="0 0 60 36"
+              width="16"
+              height="11"
+              aria-hidden="true"
+            >
+              <rect width="60" height="12" y="0" fill="#239F40" />
+              <rect width="60" height="12" y="12" fill="#FFFFFF" />
+              <rect width="60" height="12" y="24" fill="#DA0000" />
+              <circle cx="30" cy="18" r="3.2" fill="#DA0000" />
+            </svg>
+            <span>FA</span>
+          </button>
+        </div>
+
+        <button
+          type="button"
+          id="theme-toggle-btn"
+          class="header-icon-btn"
+          aria-label="Toggle studio theme"
+          title="Switch Light / Dark Studio"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+            />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          id="open-bag"
+          class="header-bag-btn"
+          aria-label="Open styling bag"
+        >
+          <svg
+            width="21"
+            height="23"
+            viewBox="0 0 24 26"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            aria-hidden="true"
+          >
+            <path d="M4 8h16l1 16H3L4 8zM8 8V6a4 4 0 0 1 8 0v2" />
+          </svg>
+          <span data-cart-count>0</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <h1 class="sr-only" data-i18n="pageH1">
+        ALIREZA Runway Interactive 3D Lookbook and Styling Studio
+      </h1>
+
+      <runway-section
+        id="Runway-Alireza-Studio"
+        class="rw rw--add-icon rw--popup rw--list has-dividers has-border"
+        data-feel="balanced"
+        data-blur="true"
+        data-style="ring"
+        data-mstyle="classic"
+        data-fit="true"
+        data-autoplay="true"
+        data-speed="5000"
+        data-collection="all"
+      >
+        <div class="rw__sticky">
+          <div class="rw__grid">
+            <!-- Start Column: 3D Runway Stage -->
+            <div class="rw__left">
+              <header class="rw__head">
+                <div class="rw__intro">
+                  <span class="rw__eyebrow" data-i18n="eyebrow"
+                    >ALIREZA • ATELIER COLLECTION</span
+                  >
+                  <h2 class="rw__title" data-i18n="heroTitle">Try the Look.</h2>
+                  <p class="rw__sub" data-i18n="heroSub">
+                    Ten signature silhouettes, styled head to toe. Rotate the
+                    stage or tap a model to inspect every piece.
+                  </p>
+                </div>
+
+                <!-- Mobile Quick Collection Switcher -->
+                <div
+                  class="rw__mobile-filters"
+                  role="group"
+                  aria-label="Mobile Collection Filter"
+                >
+                  <button
+                    type="button"
+                    class="m-filter-pill is-active"
+                    data-rw-collection="all"
+                    data-i18n="filterAllShort"
+                  >
+                    All (10)
+                  </button>
+                  <button
+                    type="button"
+                    class="m-filter-pill"
+                    data-rw-collection="women"
+                    data-i18n="filterWomenShort"
+                  >
+                    Women (5)
+                  </button>
+                  <button
+                    type="button"
+                    class="m-filter-pill"
+                    data-rw-collection="men"
+                    data-i18n="filterMenShort"
+                  >
+                    Men (5)
+                  </button>
+                </div>
+
+                <span
+                  class="rw__sr"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  data-rw-live
+                ></span>
+              </header>
+
+              <div
+                class="rw__stage"
+                data-rw-stage
+                tabindex="0"
+                role="region"
+                aria-roledescription="carousel"
+                aria-label="ALIREZA Runway — use arrow keys or swipe to change look"
+              >
+                <div class="rw__actors" data-rw-actors></div>
+                <div class="rw__heroes" data-rw-heroes></div>
+                <span class="rw__sweep" aria-hidden="true"></span>
+                <span class="rw__cursor" data-rw-cursor aria-hidden="true">
+                  <span class="rw__cursor-in">
+                    <span
+                      class="rw__cursor-label rw__cursor-drag"
+                      data-i18n="cursorDrag"
+                      >Drag</span
+                    >
+                    <span
+                      class="rw__cursor-label rw__cursor-view"
+                      data-i18n="cursorView"
+                      >View</span
+                    >
+                  </span>
+                </span>
+                <span class="rw__walk" aria-hidden="true">
+                  <span class="rw__walk-line"></span>
+                </span>
+              </div>
+
+              <div class="rw__controls">
+                <button
+                  type="button"
+                  class="rw__icon"
+                  data-rw-prev
+                  aria-label="Previous look"
+                >
+                  <svg
+                    class="icon-flip"
+                    width="26"
+                    height="14"
+                    viewBox="0 0 26 14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M25 7H1M7 1L1 7l6 6" />
+                  </svg>
+                </button>
+
+                <div class="rw__ticks" data-rw-ticks></div>
+
+                <button
+                  type="button"
+                  class="rw__icon rw__auto"
+                  data-rw-auto
+                  aria-pressed="false"
+                  aria-label="Autoplay"
+                >
+                  <svg
+                    class="rw__auto-play"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 4.5v15l12.5-7.5z" />
+                  </svg>
+                  <svg
+                    class="rw__auto-pause"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M6.5 4.5h3.5v15H6.5zM14 4.5h3.5v15H14z" />
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  class="rw__icon"
+                  data-rw-next
+                  aria-label="Next look"
+                >
+                  <svg
+                    class="icon-flip"
+                    width="26"
+                    height="14"
+                    viewBox="0 0 26 14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M1 7h24M19 1l6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- View Look Lightbox Popup -->
+              <div
+                class="rw__lb"
+                data-rw-lb
+                role="region"
+                aria-label="View look"
+                aria-hidden="true"
+              >
+                <div class="rw__lb-stage" data-rw-lb-stage></div>
+                <div class="rw__lb-top">
+                  <p class="rw__lb-cap">
+                    <span class="rw__lb-kicker" data-rw-lb-kicker></span>
+                    <span class="rw__lb-name" data-rw-lb-name></span>
+                  </p>
+                  <button
+                    type="button"
+                    class="rw__lb-close"
+                    data-rw-zoom-close
+                    aria-label="Close"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 5l14 14M19 5L5 19" />
+                    </svg>
+                  </button>
+                </div>
+                <p class="rw__lb-hint" data-i18n="lbHint">
+                  Tap a numbered pin to highlight the piece
+                </p>
+              </div>
+            </div>
+
+            <!-- End Column: In This Look Panel -->
+            <aside class="rw__panel has-rule" aria-label="In this look">
+              <div class="rw__panel-inner">
+                <div class="rw__panel-head">
+                  <h3 class="rw__panel-title" data-i18n="panelTitle">
+                    In this look
+                  </h3>
+                  <span class="rw__label" data-rw-pieces>3 pieces</span>
+                </div>
+                <div class="rw__panels" data-rw-panels></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </runway-section>
+    </main>
+
+    <!-- Local Styling Bag Dialog -->
+    <dialog id="bag-dialog" aria-labelledby="bag-dialog-title">
+      <div class="bag-dialog-inner">
+        <div class="bag-heading">
+          <h2 id="bag-dialog-title" data-i18n="bagTitle">
+            Your ALIREZA Styling Bag
+          </h2>
+          <button type="button" id="close-bag" aria-label="Close styling bag">
+            &times;
+          </button>
+        </div>
+        <p class="bag-note" data-i18n="bagNote">
+          A curated local outfit shortlist stored in your browser. Export your
+          list anytime with exact sizes and reference totals.
+        </p>
+        <div id="bag-items" class="bag-items-list"></div>
+        <p id="bag-total"></p>
+        <button type="button" id="export-bag" data-i18n="exportBagBtn">
+          Download outfit shortlist (.txt)
+        </button>
+      </div>
+    </dialog>
+
+    <!-- Toast Notification -->
+    <div id="bag-status" role="status" aria-live="polite"></div>
+  </body>
+</html>

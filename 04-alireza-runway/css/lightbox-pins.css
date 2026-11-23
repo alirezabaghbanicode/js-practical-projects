@@ -1,0 +1,307 @@
+/* ==========================================================================
+   FLIP LIGHTBOX POPUP & NUMBERED HOTSPOT PINS
+   ========================================================================== */
+.rw--popup .rw__hero .rw__pins {
+    display: none !important;
+}
+
+.rw__pin {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.rw__pin:focus-visible {
+    outline: none;
+}
+
+.rw__pin:focus-visible .rw__pin-dot {
+    box-shadow:
+        0 0 0 2px var(--rw-panel),
+        0 0 0 4px var(--rw-accent);
+}
+
+.rw__pin-dot {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--rw-glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--rw-glass-border);
+    color: var(--rw-text);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 14px -4px rgb(0 0 0 / 0.35);
+    transition:
+        transform 0.45s var(--rw-ease-spring),
+        background 0.25s,
+        color 0.25s,
+        box-shadow 0.3s;
+}
+
+.rw__pin-dot::after,
+.rw__pin-dot::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px solid var(--rw-text);
+    opacity: 0;
+    pointer-events: none;
+    animation: rw-ring 2.6s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+.rw__pin-dot::before {
+    animation-delay: 1.3s;
+}
+
+.rw__pin:hover .rw__pin-dot,
+.rw__pin.is-hot .rw__pin-dot {
+    transform: scale(1.28);
+    background: var(--rw-accent);
+    color: var(--rw-on-accent);
+    border-color: var(--rw-accent);
+    box-shadow:
+        0 0 0 6px color-mix(in srgb, var(--rw-accent) 22%, transparent),
+        0 8px 20px -6px rgb(0 0 0 / 0.45);
+}
+
+/* Glass Tooltip */
+.rw__pin::after {
+    content: attr(data-tip);
+    position: absolute;
+    inset-inline-start: calc(100% - 4px);
+    top: 50%;
+    max-width: 190px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: var(--rw-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--rw-glass-border);
+    color: var(--rw-text);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    box-shadow: 0 10px 26px -12px rgb(0 0 0 / 0.4);
+    pointer-events: none;
+    opacity: 0;
+    transform-origin: inline-start center;
+    transform: translate(-6px, -50%) scale(0.96);
+    transition:
+        opacity 0.3s,
+        transform 0.5s var(--rw-ease);
+}
+
+html[dir="rtl"] .rw__pin::after {
+    transform: translate(6px, -50%) scale(0.96);
+}
+
+.rw__pin.is-hot::after,
+.rw__pin:focus-visible::after {
+    opacity: 1;
+    transform: translate(0, -50%) scale(1);
+}
+
+@media (hover: hover) {
+    .rw__pin:hover::after {
+        opacity: 1;
+        transform: translate(0, -50%) scale(1);
+    }
+}
+
+/* Lightbox Overlay */
+.rw__lb {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    visibility: hidden;
+    pointer-events: none;
+    transition: visibility 0s linear 0.9s;
+}
+
+.rw__lb::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--rw-stage);
+    opacity: 0;
+    transition: opacity 0.55s var(--rw-ease) 0.12s;
+}
+
+.rw.rw--zoom .rw__lb {
+    visibility: visible;
+    pointer-events: auto;
+    transition: visibility 0s;
+}
+
+.rw.rw--zoom .rw__lb::before {
+    opacity: 1;
+    transition: opacity 0.4s var(--rw-ease);
+}
+
+.rw.rw--zoom .rw__actors,
+.rw.rw--zoom .rw__heroes,
+.rw.rw--zoom .rw__head,
+.rw.rw--zoom .rw__walk {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.32s var(--rw-ease);
+}
+
+.rw__lb-stage {
+    position: absolute;
+    inset: 82px 44px 44px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    cursor: zoom-out;
+}
+
+.rw__lb-model {
+    position: relative;
+    flex: 0 0 auto;
+    cursor: default;
+    transition: transform 0.9s var(--rw-ease);
+}
+
+.rw__lb-model .rw__pins {
+    display: block !important;
+}
+
+.rw__lb-model .rw__pin-dot {
+    animation: rw-pin-in 0.85s var(--rw-ease-spring) backwards;
+    animation-delay: calc(var(--pi, 1) * 100ms + 0.5s);
+}
+
+.rw__lb-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 28px 32px 0 48px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+        opacity 0.35s,
+        transform 0.45s var(--rw-ease);
+}
+
+.rw.rw--zoom .rw__lb-top {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 0.75s var(--rw-ease) 0.3s,
+        transform 0.9s var(--rw-ease) 0.3s;
+}
+
+.rw__lb-cap {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.rw__lb-kicker {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rw-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.rw__lb-name {
+    font-size: var(--rw-chip);
+    font-weight: 500;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rw__lb-close {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--rw-line);
+    background: var(--rw-glass-bg);
+    backdrop-filter: blur(8px);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex: 0 0 auto;
+    transition:
+        transform 0.55s var(--rw-ease),
+        border-color 0.25s;
+}
+
+.rw__lb-close:hover {
+    transform: rotate(90deg);
+    border-color: var(--rw-accent);
+}
+
+.rw__lb-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 14px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--rw-muted);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s;
+}
+
+.rw.rw--zoom .rw__lb-hint {
+    opacity: 1;
+    transition: opacity 0.9s var(--rw-ease) 0.95s;
+}
+
+@keyframes rw-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.65;
+    }
+
+    100% {
+        transform: scale(1.7);
+        opacity: 0;
+    }
+}
+
+@keyframes rw-pin-in {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

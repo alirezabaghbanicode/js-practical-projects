@@ -1,0 +1,315 @@
+/* ==========================================================================
+   1. DESIGN TOKENS, THEMES (LIGHT GALLERY / DARK STUDIO) & SITE HEADER
+   ========================================================================== */
+:root,
+html[data-theme="light"] {
+    color-scheme: light;
+    --rw-c-stage: #f8f8f7;
+    --rw-c-panel: #ffffff;
+    --rw-c-elevated: #f2f2f0;
+    --rw-c-text: #151413;
+    --rw-c-muted: #66625c;
+    --rw-c-accent: #111111;
+    --rw-c-on-accent: #ffffff;
+    --rw-c-line: #d4d3cf;
+    --rw-c-header-border: #e5e5e2;
+    --rw-shadow-rgb: 20 16 12;
+    --rw-glass-bg: rgb(255 255 255 / 0.86);
+    --rw-glass-border: rgb(21 20 19 / 0.22);
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --rw-c-stage: #0d0f14;
+    --rw-c-panel: #13161d;
+    --rw-c-elevated: #1b1f29;
+    --rw-c-text: #f5f5f4;
+    --rw-c-muted: #9ca3af;
+    --rw-c-accent: #f5f5f4;
+    --rw-c-on-accent: #0d0f14;
+    --rw-c-line: rgba(255, 255, 255, 0.14);
+    --rw-c-header-border: rgba(255, 255, 255, 0.1);
+    --rw-shadow-rgb: 0 0 0;
+    --rw-glass-bg: rgb(24 27 36 / 0.86);
+    --rw-glass-border: rgb(255 255 255 / 0.24);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+    font-family:
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        system-ui,
+        -apple-system,
+        sans-serif;
+    color: var(--rw-c-text);
+    background: var(--rw-c-stage);
+    transition:
+        background-color 0.28s ease,
+        color 0.28s ease;
+}
+
+html[dir="rtl"] body,
+html[dir="rtl"] button,
+html[dir="rtl"] input,
+html[dir="rtl"] select {
+    font-family: "Vazirmatn", system-ui, -apple-system, sans-serif;
+}
+
+html[dir="rtl"] .icon-flip {
+    transform: scaleX(-1);
+}
+
+button,
+input,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--rw-c-accent);
+    outline-offset: 3px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.sr-only,
+.rw__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   SITE HEADER (BRAND ALIREZA + COLLECTION FILTERS + LANGUAGE + THEME + BAG)
+   ========================================================================== */
+.site-header {
+    height: 82px;
+    padding: 0 clamp(18px, 3vw, 40px);
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2.2vw, 28px);
+    border-bottom: 1px solid var(--rw-c-header-border);
+    background: var(--rw-c-panel);
+    position: relative;
+    z-index: 50;
+}
+
+.brand {
+    margin-inline-end: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.brand-mark {
+    display: block;
+    flex-shrink: 0;
+}
+
+.brand-wordmark {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+}
+
+html[dir="rtl"] .brand-wordmark {
+    letter-spacing: 0.08em;
+}
+
+/* Header Collection Filter Tabs */
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-filter-btn {
+    padding: 7px 14px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--rw-c-muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.22s ease;
+}
+
+.nav-filter-btn:hover {
+    color: var(--rw-c-text);
+    background: var(--rw-c-elevated);
+}
+
+.nav-filter-btn.is-active {
+    background: var(--rw-c-accent);
+    color: var(--rw-c-on-accent);
+}
+
+/* Header Right Tools */
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.lang-switcher {
+    display: inline-flex;
+    padding: 3px;
+    border-radius: 999px;
+    background: var(--rw-c-elevated);
+    border: 1px solid var(--rw-c-line);
+    gap: 2px;
+}
+
+.lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--rw-c-muted);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+    color: var(--rw-c-text);
+}
+
+.lang-btn.active {
+    background: var(--rw-c-accent);
+    color: var(--rw-c-on-accent);
+}
+
+.flag-icon {
+    display: block;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.header-icon-btn,
+.header-bag-btn {
+    min-width: 42px;
+    height: 42px;
+    padding: 0 8px;
+    border: 1px solid var(--rw-c-line);
+    border-radius: 999px;
+    background: var(--rw-c-elevated);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.header-icon-btn:hover,
+.header-bag-btn:hover {
+    border-color: var(--rw-c-accent);
+}
+
+.header-bag-btn [data-cart-count] {
+    font-size: 11px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   RUNWAY SECTION SHELL & GRID TOKENS
+   ========================================================================== */
+runway-section.rw {
+    --rw-h: 44px;
+    --rw-sub: 12px;
+    --rw-eyebrow: 10px;
+    --rw-label: 10px;
+    --rw-chip: 18px;
+    --rw-ph: 18px;
+    --rw-pt-size: 13px;
+    --rw-price: 12px;
+    --rw-opt: 11px;
+    --rw-total: 16px;
+    --rw-thumb: 88px;
+    --rw-panel-pad: 28px;
+    --rw-model-h: 560px;
+    --rw-bar-r: 22px;
+    --rw-panel-w: 390px;
+    --rw-speed: 5s;
+    --rw-ax: 50%;
+
+    --rw-stage: var(--rw-c-stage);
+    --rw-panel: var(--rw-c-panel);
+    --rw-elevated: var(--rw-c-elevated);
+    --rw-text: var(--rw-c-text);
+    --rw-muted: var(--rw-c-muted);
+    --rw-accent: var(--rw-c-accent);
+    --rw-on-accent: var(--rw-c-on-accent);
+    --rw-line: var(--rw-c-line);
+
+    --rw-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --rw-ease-silk: cubic-bezier(0.65, 0, 0.35, 1);
+    --rw-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --rw-ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+
+    display: block;
+    position: relative;
+    color: var(--rw-text);
+    background: var(--rw-panel);
+    -webkit-font-smoothing: antialiased;
+}
+
+.rw__sticky {
+    height: var(--rw-frame-h, calc(100dvh - 82px));
+    display: flex;
+    flex-direction: column;
+}
+
+.rw__grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--rw-panel-w);
+    grid-template-rows: minmax(0, 1fr);
+}
